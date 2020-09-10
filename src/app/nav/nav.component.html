@@ -1,0 +1,214 @@
+
+
+<mat-toolbar color="primary">
+
+  <button [matMenuTriggerFor]="StudentMenu" matTooltip="Menu" mat-icon-button>
+    <mat-icon>apps</mat-icon>
+  </button>
+
+  <button [matMenuTriggerFor]="ProfessorMenu"  matTooltip="Menu" mat-icon-button>
+    <mat-icon>apps</mat-icon>
+  </button>
+
+
+
+  <button  mat-icon-button [routerLink]="['home']"
+            matTooltip="Home">
+    <mat-icon>home</mat-icon>
+  </button>
+
+  <span class="spacer"></span>
+
+  <button mat-icon-button  matTooltip="ToDo" >
+    <mat-icon>content_paste</mat-icon>
+  </button>
+ <!-- END -->
+
+
+  <!-- NAV MENU ETUDIANT -->
+  <mat-menu #StudentMenu="matMenu">
+
+
+
+      <button mat-menu-item [matMenuTriggerFor]="profil"><!-- mettre les conditions ne pas rediriger pour prof -->
+        <mat-icon>fingerprint</mat-icon>
+        <span>Profil</span>
+      </button>
+
+      <button mat-menu-item> <!-- mettre les conditions  pas affiché pour prof -->
+        <mat-icon>fastfood</mat-icon>
+        <span>Repas</span>
+      </button>
+
+      <button mat-menu-item>
+        <mat-icon>campaign</mat-icon>
+        <span>Evènements</span>
+      </button>
+
+      <button mat-menu-item [matMenuTriggerFor]="email"><!-- mettre les conditions ne pas rediriger pour prof -->
+        <mat-icon>contact_mail</mat-icon>
+        <span>Email</span>
+      </button>
+
+      <button mat-menu-item>
+        <mat-icon>style</mat-icon>
+        <span>Règles</span>
+      </button>
+
+      <button mat-menu-item matTooltip="Adapte le thème de la page" *ngIf="ThemeLight" type="button" (click)="clickTheme()">
+        <mat-icon>nights_stay</mat-icon> 
+        <span>Thème sombre</span>
+      </button>
+  
+      <button mat-menu-item matTooltip="Adapte le thème de la page" *ngIf="!ThemeLight" (click)="clickTheme()">
+        <mat-icon>wb_sunny</mat-icon> 
+        <span>Thème éclairé</span>
+      </button>
+
+  </mat-menu>
+ <!-- END -->
+
+
+  <!-- 2ND MENU PROFILE -->
+
+  <mat-menu #profil="matMenu">
+
+    <button mat-menu-item>
+      <mat-icon>face</mat-icon>
+      <span>Personnel</span>
+    </button>
+
+    <button mat-menu-item> 
+      <mat-icon>school</mat-icon>
+      <span>Scolaire</span>
+    </button>
+
+    <button mat-menu-item> 
+      <mat-icon>engineering</mat-icon>
+      <span>Travail</span>
+    </button>
+
+  </mat-menu>
+ <!-- END -->
+
+
+ <!-- 3rd MENU EMAIL -->
+
+ <mat-menu #email="matMenu">
+
+  <button mat-menu-item>
+    <mat-icon>face</mat-icon>
+    <span>Au professeur</span>
+  </button>
+
+  <button mat-menu-item>
+    <mat-icon>location_city</mat-icon>
+    <span>A l'école</span>
+  </button>
+
+</mat-menu>
+ <!-- END -->
+
+
+<!-- NAV MENU PROF -->
+
+<mat-menu #ProfessorMenu="matMenu">
+
+  <button mat-menu-item [matMenuTriggerFor]="class">
+    <mat-icon>groups</mat-icon>
+    <span>Classe</span>
+  </button>
+
+  <button mat-menu-item>
+    <mat-icon>campaign</mat-icon>
+    <span>Evènements</span>
+  </button>
+
+    <button mat-menu-item>
+      <mat-icon>fingerprint</mat-icon>
+      <span>Profil</span>
+    </button>
+
+    <button mat-menu-item> 
+      <mat-icon>fastfood</mat-icon>
+      <span>Repas</span>
+    </button>
+
+    <button mat-menu-item [matMenuTriggerFor]="emailProf">
+      <mat-icon>contact_mail</mat-icon>
+      <span>Email</span>
+    </button>
+
+    <button mat-menu-item>
+      <mat-icon>style</mat-icon>
+      <span>Règles</span>
+    </button>
+
+    <button mat-menu-item matTooltip="Adapte le thème de la page" *ngIf="ThemeLight" type="button" (click)="clickTheme()">
+      <mat-icon>nights_stay</mat-icon> 
+      <span>Thème sombre</span>
+    </button>
+
+    <button mat-menu-item matTooltip="Adapte le thème de la page" *ngIf="!ThemeLight"  type="button" (click)="clickTheme()">
+      <mat-icon>wb_sunny</mat-icon> 
+      <span>Thème éclairé</span>
+    </button>
+ <!-- END -->
+
+
+      <!-- 2ND MENU CLASS -->
+
+  <mat-menu #class="matMenu">
+
+    <button mat-menu-item>
+      <mat-icon>show_chart</mat-icon>
+      <span>Résultats</span>
+    </button>
+
+    <button mat-menu-item> 
+      <mat-icon>child_care</mat-icon>
+      <span>Etudiants</span>
+    </button>
+
+    <button mat-menu-item> 
+      <mat-icon>engineering</mat-icon>
+      <span>Travaux</span>
+    </button>
+
+  </mat-menu>
+ <!-- END -->
+
+  <!-- 3rd MENU email -->
+
+  <mat-menu #emailProf="matMenu">
+
+    
+    <button mat-menu-item [matMenuTriggerFor]="StudentList" *ngIf="contactList.length > 0"> 
+      <mat-icon>face</mat-icon>
+      <span>Au contact</span>
+    </button>
+
+    <button mat-menu-item>
+      <mat-icon>location_city</mat-icon>
+      <span>A l'école</span>
+    </button>
+
+
+  </mat-menu>
+ <!-- END -->
+
+
+ <!--  MENU StudentList -->
+
+ <mat-menu #StudentList="matMenu">
+    <button mat-menu-item *ngFor="let user of contactList"> 
+      <mat-icon>face</mat-icon>
+      <span>{{user.fullName}}</span>
+    </button>
+ </mat-menu>
+ <!-- END -->
+
+
+</mat-menu>
+
+</mat-toolbar>
