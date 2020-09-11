@@ -1,6 +1,6 @@
 
 
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" [class.dark-theme]="ThemeLight">
 
   <button [matMenuTriggerFor]="StudentMenu" matTooltip="Menu" mat-icon-button>
     <mat-icon>apps</mat-icon>
@@ -17,25 +17,38 @@
     <mat-icon>home</mat-icon>
   </button>
 
+  <button  mat-icon-button [routerLink]="['login']"
+  matTooltip="login">
+<mat-icon>login</mat-icon>
+</button>
+
   <span class="spacer"></span>
 
   <button mat-icon-button  matTooltip="ToDo" >
     <mat-icon>content_paste</mat-icon>
   </button>
+
+  <button mat-icon-button matTooltip="Adapte le thème de la page" *ngIf="ThemeLight" type="button" (click)="clickTheme()">
+    <mat-icon>nights_stay</mat-icon> 
+  </button>
+
+  <button  mat-icon-button matTooltip="Adapte le thème de la page" *ngIf="!ThemeLight"  type="button" (click)="clickTheme()">
+    <mat-icon>wb_sunny</mat-icon> 
+  </button>
  <!-- END -->
 
 
   <!-- NAV MENU ETUDIANT -->
-  <mat-menu #StudentMenu="matMenu">
+  <mat-menu #StudentMenu="matMenu"> <!-- condition d'affichage -->
 
 
 
-      <button mat-menu-item [matMenuTriggerFor]="profil"><!-- mettre les conditions ne pas rediriger pour prof -->
+      <button mat-menu-item [matMenuTriggerFor]="profil">
         <mat-icon>fingerprint</mat-icon>
         <span>Profil</span>
       </button>
 
-      <button mat-menu-item> <!-- mettre les conditions  pas affiché pour prof -->
+      <button mat-menu-item> 
         <mat-icon>fastfood</mat-icon>
         <span>Repas</span>
       </button>
@@ -45,7 +58,7 @@
         <span>Evènements</span>
       </button>
 
-      <button mat-menu-item [matMenuTriggerFor]="email"><!-- mettre les conditions ne pas rediriger pour prof -->
+      <button mat-menu-item [matMenuTriggerFor]="email">
         <mat-icon>contact_mail</mat-icon>
         <span>Email</span>
       </button>
@@ -55,15 +68,6 @@
         <span>Règles</span>
       </button>
 
-      <button mat-menu-item matTooltip="Adapte le thème de la page" *ngIf="ThemeLight" type="button" (click)="clickTheme()">
-        <mat-icon>nights_stay</mat-icon> 
-        <span>Thème sombre</span>
-      </button>
-  
-      <button mat-menu-item matTooltip="Adapte le thème de la page" *ngIf="!ThemeLight" (click)="clickTheme()">
-        <mat-icon>wb_sunny</mat-icon> 
-        <span>Thème éclairé</span>
-      </button>
 
   </mat-menu>
  <!-- END -->
@@ -144,15 +148,7 @@
       <span>Règles</span>
     </button>
 
-    <button mat-menu-item matTooltip="Adapte le thème de la page" *ngIf="ThemeLight" type="button" (click)="clickTheme()">
-      <mat-icon>nights_stay</mat-icon> 
-      <span>Thème sombre</span>
-    </button>
 
-    <button mat-menu-item matTooltip="Adapte le thème de la page" *ngIf="!ThemeLight"  type="button" (click)="clickTheme()">
-      <mat-icon>wb_sunny</mat-icon> 
-      <span>Thème éclairé</span>
-    </button>
  <!-- END -->
 
 

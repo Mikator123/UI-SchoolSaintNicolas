@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 export class AuthService {
 
   isAuth :boolean= false;
-  mainURL: string = 'http://localhost:5000/api/auth';
+  mainURL: string = 'https://localhost:5001/api/auth';
   user: UserSimplified = new UserSimplified();
   error:string;
 

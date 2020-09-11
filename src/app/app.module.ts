@@ -17,10 +17,12 @@ import { MatMenuModule } from '@angular/material/menu';
 import { HomeComponent } from './Components/home/home.component';
 import { LoginComponent } from './Components/login/login.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatInputModule} from '@angular/material/input';
 import {AuthService}from './Services/Auth/auth.service';
 import {AuthGuardService}from './Services/Auth/auth-guard.service';
 import {UserService} from '../app/Services/User/user.service';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -46,7 +48,9 @@ import { HttpClientModule } from '@angular/common/http';
     MatMenuModule,
     MatTooltipModule,
     HttpClientModule,
-    
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
     
   ],
   providers: [    
