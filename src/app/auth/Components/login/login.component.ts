@@ -4,8 +4,9 @@ import { FormLogin } from 'src/app/Models/User/FormLogin.model';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
+
 @Component({
-  selector: 'app-login',
+  selector: 'auth-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
@@ -53,14 +54,17 @@ export class LoginComponent implements OnInit {
         formLogin.login = this.form.value['login'],
         formLogin.password = this.form.value['password'],
         await this._authService.Login(formLogin);
-        if(this._authService.isAuth)
-          await this.router.navigate([this.returnUrl])
+        if(this._authService.isAuth && this._authService.user.lastResetPwd != null)
+          await this.router.navigate(['reset-password'])
+        else
+          await this.router.navigate(['home'])
 
 
       }
       catch{
         if (this._authService.error.search('login'))
           this.loginInvalid = true;
+          
         if (this._authService.error.search('password'))
           this.passwordInvalid = true;
       }
@@ -69,4 +73,7 @@ export class LoginComponent implements OnInit {
       this.formSubmitAttempt = this.formSubmitAttempt + 1;
 
   }
+
+
+
 }

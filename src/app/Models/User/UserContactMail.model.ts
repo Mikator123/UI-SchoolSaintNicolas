@@ -1,6 +1,7 @@
 export class UserContactMail{
     id: number;
     fullName: string;
+    gender: string;
     contacts: ContactMail[];
 }
 

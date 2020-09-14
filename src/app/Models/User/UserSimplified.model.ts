@@ -6,7 +6,7 @@ export class UserSimplified{
     login:string;
     gender:string;
     token?: string;
-    firstLogin:Date;
+    lastResetPwd:Date;
     statusCode: number;
     classId?: number;
 }

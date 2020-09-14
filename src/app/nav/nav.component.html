@@ -1,6 +1,6 @@
 
 
-<mat-toolbar color="primary" [class.dark-theme]="ThemeLight">
+<mat-toolbar color="primary">
 
   <button [matMenuTriggerFor]="StudentMenu" matTooltip="Menu" mat-icon-button>
     <mat-icon>apps</mat-icon>
@@ -22,17 +22,24 @@
 <mat-icon>login</mat-icon>
 </button>
 
+
+
   <span class="spacer"></span>
+
+  <button  mat-icon-button [routerLink]="['reset-password']"
+matTooltip="reset-password">
+<mat-icon>vpn_key</mat-icon>
+</button>
 
   <button mat-icon-button  matTooltip="ToDo" >
     <mat-icon>content_paste</mat-icon>
   </button>
 
-  <button mat-icon-button matTooltip="Adapte le thème de la page" *ngIf="ThemeLight" type="button" (click)="clickTheme()">
+  <button mat-icon-button (click)="onDarkModeSwitched()" matTooltip="Adapte le thème de la page" *ngIf="!ThemeLight" type="button" >
     <mat-icon>nights_stay</mat-icon> 
   </button>
 
-  <button  mat-icon-button matTooltip="Adapte le thème de la page" *ngIf="!ThemeLight"  type="button" (click)="clickTheme()">
+  <button  mat-icon-button (click)="onDarkModeSwitched()" matTooltip="Adapte le thème de la page" *ngIf="ThemeLight"  type="button" >
     <mat-icon>wb_sunny</mat-icon> 
   </button>
  <!-- END -->
@@ -198,7 +205,8 @@
 
  <mat-menu #StudentList="matMenu">
     <button mat-menu-item *ngFor="let user of contactList"> 
-      <mat-icon>face</mat-icon>
+      <mat-icon *ngIf="user.gender == 'M'">local_fire_department</mat-icon>
+      <mat-icon *ngIf="user.gender == 'F'">local_florist</mat-icon>
       <span>{{user.fullName}}</span>
     </button>
  </mat-menu>

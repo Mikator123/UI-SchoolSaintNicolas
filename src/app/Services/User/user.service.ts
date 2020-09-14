@@ -28,7 +28,7 @@ export class UserService {
     }  
 
     getMails(){/*bien rajouter la vrais class id en fonction du context*/
-      this._client.get<UserContactMail[]>(this.mainURL+'getMails/'+4).subscribe({
+      this._client.get<UserContactMail[]>(this.mainURL+'getMails/'+5).subscribe({
         next: data => {
           this.UserMails = data;
           this.sendUserMails();
