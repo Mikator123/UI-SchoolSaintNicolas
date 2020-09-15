@@ -10,7 +10,7 @@ import { DOCUMENT } from '@angular/common';
 })
 export class AppComponent{
 
-
+  public isDark = false;
   constructor(@Inject(DOCUMENT) 
   private document:Document, 
   private renderer:Renderer2,
@@ -19,6 +19,7 @@ export class AppComponent{
 
   switchMode(isDarkMode: boolean){
     const hostClass = isDarkMode ? 'theme-dark' : 'theme-light';
+    this.isDark = isDarkMode ? true: false;
     this.renderer.setAttribute(this.document.body,'class', hostClass);
   }
 }

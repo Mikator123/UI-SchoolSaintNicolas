@@ -34,12 +34,10 @@ export class NavComponent implements OnInit{
   ngOnInit(): void { 
     this.mySubscription = this._userService.userSubject.subscribe((list : UserContactMail[]) => {this.contactList = list});
     this._userService.getMails();
-
   }
 
   clickTheme(){
     this.ThemeLight = !this.ThemeLight;
-    
   }
 
 

@@ -24,6 +24,8 @@ import { HttpClientModule , HTTP_INTERCEPTORS} from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import {AuthModule} from './auth/auth.module';
+import { CommonModule } from '@angular/common';
+import {MatGridListModule} from '@angular/material/grid-list';
 
 
 @NgModule({
@@ -51,8 +53,9 @@ import {AuthModule} from './auth/auth.module';
     FormsModule,
     ReactiveFormsModule,
     MatDialogModule,
-    AuthModule
-    
+    AuthModule,
+    CommonModule,
+    MatGridListModule,
     
   ],
   providers: [    

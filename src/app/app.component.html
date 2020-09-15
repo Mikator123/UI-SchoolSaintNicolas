@@ -1,5 +1,7 @@
 
-    <app-nav (darkModeSwitched)="switchMode($event)" ></app-nav>
-    <router-outlet >
-    </router-outlet>
-<!-- <app-login *ngIf="isAuth == false"></app-login> -->
+    <body [class]="isDark ? 'backGroundDarkEvent': 'backGroundLightEvent'">
+        <app-nav (darkModeSwitched)="switchMode($event)" ></app-nav>
+            <router-outlet>
+            </router-outlet>
+        </body>
+    <!-- <auth-login *ngIf=" == false"></auth-login> -->

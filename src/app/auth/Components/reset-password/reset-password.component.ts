@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,7 +17,8 @@ export class ResetPasswordComponent implements OnInit {
   passwordInvalid = false;
   formSubmitAttempt = 0;
   returnUrl:string;
-  error:string;
+  error= false;
+  errorMsg:string;
 
   constructor(
     private _builder : FormBuilder,
@@ -28,7 +30,7 @@ export class ResetPasswordComponent implements OnInit {
  
 
 
-  async ngOnInit() {
+  ngOnInit() {
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/home';
     this.initForm();
     }
@@ -43,32 +45,24 @@ export class ResetPasswordComponent implements OnInit {
     })
   }
 
-  async onSubmit(){
+  onSubmit(){
     if (this.checkPassword(this.form))
       {
         let RP = new ResetPwd();
         RP.Id = this._authService.user.id;
         RP.password = this.form.get('password').value;
         RP.lastResetPwd = new Date();
-        await this._authService.ResetPwd(RP);
+        this._authService.ResetPwd(RP)
       }
     else
       this.passwordInvalid = true;
-      this.error = "Le mot de passe n'a pas été correctement confirmé"; 
-
-
-
   }
 
   checkPassword(group: FormGroup){
     let pwd = group.get('password').value;
     let confirmPwd = group.get('confirmPassword').value;
-
     return pwd === confirmPwd ? true: false;
   }
-
-
-
 }
 
 

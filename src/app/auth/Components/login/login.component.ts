@@ -3,6 +3,9 @@ import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms'
 import { FormLogin } from 'src/app/Models/User/FormLogin.model';
 import { AuthService } from 'src/app/Services/Auth/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { mdiMoonFirstQuarter } from '@mdi/js';
+import { first } from 'rxjs/internal/operators/first';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -13,11 +16,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class LoginComponent implements OnInit {
 
   form : FormGroup;
-  loginInvalid = false;
-  passwordInvalid = false;
   formSubmitAttempt = 0;
   returnUrl:string;
-  error:string;
+  error = false;
+  errorMsg: string;
+  
   passwordHide = true;
 
   constructor(
@@ -27,53 +30,39 @@ export class LoginComponent implements OnInit {
     private _authService: AuthService,
   ) { }
 
- 
-
-
-  async ngOnInit() {
+   ngOnInit() {
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/home';
     this.initForm();
     }
 
-
-  
-
   private initForm(){
-    this.form = this._builder.group({
+  this.form = this._builder.group({
       login:[null, Validators.required],
       password:[null, Validators.required]
     })
   }
 
-  async onSubmit(){
+  onSubmit(){
+  let formLogin = new FormLogin();
+  formLogin.login = this.form.value['login'];
+  formLogin.password = this.form.value['password'];
+  this._authService.Login(formLogin).subscribe(
+    data => {this._authService.user = data;
+      if(this._authService.isAuth && this._authService.user.lastResetPwd != null)
+        this.router.navigate(['reset-password'])
+      else
+        this.router.navigate(['home'])},
+    error => {this.getError(error)}
+  );}
 
-    if (this.form.valid)
-    {
-      try{
-        let formLogin = new FormLogin();
-        formLogin.login = this.form.value['login'],
-        formLogin.password = this.form.value['password'],
-        await this._authService.Login(formLogin);
-        if(this._authService.isAuth && this._authService.user.lastResetPwd != null)
-          await this.router.navigate(['reset-password'])
-        else
-          await this.router.navigate(['home'])
-
-
-      }
-      catch{
-        if (this._authService.error.search('login'))
-          this.loginInvalid = true;
-          
-        if (this._authService.error.search('password'))
-          this.passwordInvalid = true;
-      }
-    }
-    else
-      this.formSubmitAttempt = this.formSubmitAttempt + 1;
-
+  getError(error: HttpErrorResponse){
+    this.error = true;
+    this.errorMsg = "";
+    if(error.error.detail == "Login doesnt exist")
+      this.errorMsg =  "Le login n'est pas connu.";
+    else if (error.error.detail == "Password doesnt match with the current login")
+      this.errorMsg = "Le mot de passe ne correspond pas au login.";
+    else 
+      this.errorMsg = "Serveur déconnecté";
   }
-
-
-
 }
