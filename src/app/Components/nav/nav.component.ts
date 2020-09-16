@@ -12,7 +12,6 @@ import { UserService } from '../../Modules/User/Services/user.service';
 })
 export class NavComponent implements OnInit{
 
-  isAuth = false;
   user : UserSimplified = null;
   ThemeLight: boolean = false;
   contactList : UserContactMail[] = [];

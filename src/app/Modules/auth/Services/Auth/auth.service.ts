@@ -12,7 +12,7 @@ import { ResetPwd } from '../../Models/ResetPwd.model';
 })
 export class AuthService {
 
-  isAuth :boolean = false;
+  isAuth : boolean = false;
   mainURL: string = 'https://localhost:5001/api/auth';
   user: UserSimplified;
   userSubject : BehaviorSubject<UserSimplified>= new BehaviorSubject(null);
@@ -27,6 +27,7 @@ export class AuthService {
 
    get user$(): Observable<UserSimplified> {
      return this.userSubject.asObservable();
+     
    }
 
   Login(form : FormLogin) {
@@ -36,6 +37,7 @@ export class AuthService {
       localStorage.setItem('user', JSON.stringify(user));
       this.userSubject.next(user);
       return user}));
+      
   }
 
   Logout(){

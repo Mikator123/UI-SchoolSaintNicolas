@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import {UserContactMail} from '../Models/UserContactMail.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { AuthService } from '../../auth/Services/Auth/auth.service';
+import {UserDetailed} from '../Models/UserDetailed.model';
 
 @Injectable({
   providedIn: 'root'
@@ -35,5 +36,9 @@ export class UserService {
         },
         error: error =>  console.log(error)
       })
+    }
+
+    geById(Id : number): Observable<UserDetailed>{
+      return this._client.get<UserDetailed>(this.mainURL+Id);
     }
 }
