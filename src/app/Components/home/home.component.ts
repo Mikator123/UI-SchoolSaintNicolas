@@ -1,6 +1,5 @@
-import { HttpErrorResponse } from '@angular/common/http';
+
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/Services/Auth/auth.service';
 
 @Component({
   selector: 'app-home',

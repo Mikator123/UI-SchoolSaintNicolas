@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-content>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <H2>Enregistrement</H2>
+      <H2>Connection</H2>
       <mat-error *ngIf="error == true">
         {{this.errorMsg}}
       </mat-error>
@@ -31,8 +31,6 @@
       type="submit" 
       color="primary" 
       [disabled]="form.invalid">Valider</button>
-      
-
     </form>
   </mat-card-content>
 

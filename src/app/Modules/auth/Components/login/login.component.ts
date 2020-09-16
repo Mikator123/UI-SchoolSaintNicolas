@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators, FormGroup, FormBuilder } from '@angular/forms';
-import { FormLogin } from 'src/app/Models/User/FormLogin.model';
-import { AuthService } from 'src/app/Services/Auth/auth.service';
+import { Validators, FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { mdiMoonFirstQuarter } from '@mdi/js';
-import { first } from 'rxjs/internal/operators/first';
 import { HttpErrorResponse } from '@angular/common/http';
+import { AuthService } from '../../Services/Auth/auth.service';
+import { FormLogin } from '../../Models/FormLogin.model';
 
 
 @Component({
@@ -19,7 +17,7 @@ export class LoginComponent implements OnInit {
   formSubmitAttempt = 0;
   returnUrl:string;
   error = false;
-  errorMsg: string;
+  errorMsg: string = null;
   
   passwordHide = true;
 
@@ -46,13 +44,17 @@ export class LoginComponent implements OnInit {
   let formLogin = new FormLogin();
   formLogin.login = this.form.value['login'];
   formLogin.password = this.form.value['password'];
+
   this._authService.Login(formLogin).subscribe(
-    data => {this._authService.user = data;
-      if(this._authService.isAuth && this._authService.user.lastResetPwd != null)
-        this.router.navigate(['reset-password'])
+
+    data => {
+      if(data.lastResetPwd == null)
+        this.router.navigate(['reset-password']);
       else
         this.router.navigate(['home'])},
+
     error => {this.getError(error)}
+
   );}
 
   getError(error: HttpErrorResponse){

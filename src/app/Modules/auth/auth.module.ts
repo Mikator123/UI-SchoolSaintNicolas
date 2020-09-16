@@ -22,7 +22,11 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
-  declarations: [ResetPasswordComponent, LoginComponent],
+  declarations: [
+    ResetPasswordComponent, 
+    LoginComponent
+  
+  ],
   imports: [
     CommonModule,
     AuthRoutingModule,
@@ -44,6 +48,10 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatFormFieldModule,
     
     
+  ],
+  providers: [  
+
+
   ],
   exports : [
     ResetPasswordComponent, 

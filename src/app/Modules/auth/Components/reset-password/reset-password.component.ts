@@ -2,12 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormLogin } from 'src/app/Models/User/FormLogin.model';
-import { ResetPwd } from 'src/app/Models/User/ResetPwd.model';
-import { AuthService } from 'src/app/Services/Auth/auth.service';
+import { ResetPwd } from '../../Models/ResetPwd.model';
+import { AuthService } from '../../Services/Auth/auth.service';
 
 @Component({
-  selector: 'app-reset-password',
+  selector: 'auth-reset-password',
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss']
 })
@@ -49,7 +48,7 @@ export class ResetPasswordComponent implements OnInit {
     if (this.checkPassword(this.form))
       {
         let RP = new ResetPwd();
-        RP.Id = this._authService.user.id;
+        RP.Id = this._authService.userSubject.value.id;
         RP.password = this.form.get('password').value;
         RP.lastResetPwd = new Date();
         this._authService.ResetPwd(RP)

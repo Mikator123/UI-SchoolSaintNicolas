@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { UserSimplified }from '../../Models/User/UserSimplified.model';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { UserSimplified }from '../../Models/UserSimplified.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import{FormLogin} from '../../Models/User/FormLogin.model';
-import { Observable, Subject } from 'rxjs';
-import {ResetPwd} from '../../Models/User/ResetPwd.model';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
+import { FormLogin } from '../../Models/FormLogin.model';
+import { ResetPwd } from '../../Models/ResetPwd.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +15,7 @@ export class AuthService {
   isAuth :boolean = false;
   mainURL: string = 'https://localhost:5001/api/auth';
   user: UserSimplified;
-  error : HttpErrorResponse;
-  private userSubject : Subject<UserSimplified>;
+  userSubject : BehaviorSubject<UserSimplified>= new BehaviorSubject(null);
 
   constructor(
     private _client: HttpClient,
@@ -26,21 +25,30 @@ export class AuthService {
     
    }
 
+   get user$(): Observable<UserSimplified> {
+     return this.userSubject.asObservable();
+   }
+
   Login(form : FormLogin) {
     
     return this._client.post<UserSimplified>(this.mainURL, form)
     .pipe(map(user => {
       localStorage.setItem('user', JSON.stringify(user));
       this.userSubject.next(user);
-      return user}))
+      return user}));
+  }
+
+  Logout(){
+    this.userSubject.next(null);
+    this.user = null;
+    localStorage.clear();
   }
 
   ResetPwd(RP: ResetPwd){
-    this._client.put(this.mainURL,RP, this.HttpOptions(this.user.token)).subscribe({
+    this._client.put(this.mainURL,RP, this.HttpOptions(this.userSubject.value.token)).subscribe({
       next:() => {
         this._router.navigate(['home']);
-      },
-      error: error => this.error = error,
+      }
     })
   }
 
@@ -52,4 +60,6 @@ export class AuthService {
     };
     return options;
   }
+
+  
 }

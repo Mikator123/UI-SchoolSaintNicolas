@@ -1,15 +1,23 @@
 
-
 <mat-toolbar color="primary">
+<mat-toolbar color="primary" *ngIf="user$ | async as user">
 
-  <button [matMenuTriggerFor]="StudentMenu" matTooltip="Menu" mat-icon-button>
+
+
+  <button 
+  [matMenuTriggerFor]="StudentMenu" 
+  matTooltip="Menu" 
+  *ngIf="user.statusCode == 1 || user.statusCode == 4 || user.statusCode == 8"
+  mat-icon-button>
     <mat-icon>apps</mat-icon>
   </button>
 
-  <button [matMenuTriggerFor]="ProfessorMenu"  matTooltip="Menu" mat-icon-button>
+  <button [matMenuTriggerFor]="ProfessorMenu"
+    matTooltip="Menu"
+    *ngIf="user.statusCode == 2 || user.statusCode == 4 || user.statusCode == 8"
+     mat-icon-button>
     <mat-icon>apps</mat-icon>
   </button>
-
 
 
   <button  mat-icon-button [routerLink]="['home']"
@@ -18,8 +26,17 @@
   </button>
 
   <button  mat-icon-button [routerLink]="['login']"
-  matTooltip="login">
+  matTooltip="login"
+  *ngIf="user == null">
 <mat-icon>login</mat-icon>
+</button>
+
+
+<button mat-icon-button 
+[routerLink]="['login']"
+matTooltip="logout" 
+(click)="logout()">
+<mat-icon>logout</mat-icon>
 </button>
 
 
@@ -27,9 +44,9 @@
   <span class="spacer"></span>
 
   <button  mat-icon-button [routerLink]="['reset-password']"
-matTooltip="reset-password">
-<mat-icon>vpn_key</mat-icon>
-</button>
+    matTooltip="reset-password">
+  <mat-icon>vpn_key</mat-icon>
+  </button>
 
   <button mat-icon-button  matTooltip="ToDo" >
     <mat-icon>content_paste</mat-icon>
@@ -215,4 +232,5 @@ matTooltip="reset-password">
 
 </mat-menu>
 
+</mat-toolbar>
 </mat-toolbar>

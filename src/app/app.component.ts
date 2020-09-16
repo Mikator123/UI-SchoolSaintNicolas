@@ -1,6 +1,4 @@
-import { Component, HostBinding, Inject, Renderer2 } from '@angular/core';
-import {AuthService} from '../app/Services/Auth/auth.service';
-import { ɵangular_packages_router_router_h } from '@angular/router';
+import { Component, Inject, Renderer2 } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
 
 @Component({
@@ -11,10 +9,10 @@ import { DOCUMENT } from '@angular/common';
 export class AppComponent{
 
   public isDark = false;
+  
   constructor(@Inject(DOCUMENT) 
   private document:Document, 
-  private renderer:Renderer2,
-  private _auth: AuthService){}
+  private renderer:Renderer2,){}
 
 
   switchMode(isDarkMode: boolean){
