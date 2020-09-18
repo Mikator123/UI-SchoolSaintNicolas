@@ -2,11 +2,12 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './Components/login/login.component';
 import { ResetPasswordComponent } from './Components/reset-password/reset-password.component';
+import { AuthGuardService } from './Services/Auth/Auth-guard.service';
 
 const routes: Routes = [
   
   {path: 'login', component : LoginComponent},
-  {path: 'reset-password', component : ResetPasswordComponent},
+  // {path: 'reset-password', canActivate : [AuthGuardService], component : ResetPasswordComponent},
 ];
 
 @NgModule({

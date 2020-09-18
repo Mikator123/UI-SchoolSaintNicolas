@@ -41,4 +41,13 @@ export class UserService {
     geById(Id : number): Observable<UserDetailed>{
       return this._client.get<UserDetailed>(this.mainURL+Id);
     }
+
+    private HttpOptions(token:string){
+      let options = {
+        headers: new HttpHeaders({
+          Authorization: 'Bearer ' + token
+        })
+      };
+      return options;
+    }
 }

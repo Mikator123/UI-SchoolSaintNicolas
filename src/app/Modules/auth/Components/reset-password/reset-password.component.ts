@@ -21,8 +21,6 @@ export class ResetPasswordComponent implements OnInit {
 
   constructor(
     private _builder : FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
     private _authService: AuthService,
   ) { }
 
@@ -30,7 +28,6 @@ export class ResetPasswordComponent implements OnInit {
 
 
   ngOnInit() {
-    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/home';
     this.initForm();
     }
 
@@ -62,6 +59,8 @@ export class ResetPasswordComponent implements OnInit {
     let confirmPwd = group.get('confirmPassword').value;
     return pwd === confirmPwd ? true: false;
   }
+
+  
 }
 
 

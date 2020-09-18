@@ -1,0 +1,46 @@
+// mat-grid-list {
+//     display: flex;
+//     flex-direction: column;
+//     background-color: lightcoral;
+//     height: 30vh;
+// }
+
+// .mainDiv{
+//     display: flex;
+//     flex-direction: inherit;
+// }
+
+// .userProfileDiv{
+// height: auto;
+
+// }
+
+// .contactProfileDiv{
+// height: auto;
+
+// }
+
+// .lunchDiv{
+// height: auto;
+
+// }
+
+mat-card-avatar{
+    width: 150px;
+    height: 150px;
+}
+mat-card{
+    margin:10px;
+}
+.userProfile{
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-date-class {
+    background: #fcba03;
+    border-radius: 100%;
+  }
+
+
+
