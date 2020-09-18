@@ -1,0 +1,29 @@
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>Liste de la classe</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+        <mat-list *ngFor="let student of studentList">
+            <mat-list-item *ngIf="student.statusCode == 1"> 
+                <img mat-card-avatar [src]="student.photo"> 
+                {{student.firstName}} {{student.lastName}} 
+                
+                <button  mat-icon-button [routerLink]="['../home']"
+                        matTooltip="Details">
+                        <mat-icon>description</mat-icon>
+                </button>
+                <button  mat-icon-button [routerLink]="['../home']"
+                matTooltip="Ajouter une note trimestrielle personnelle">
+                <mat-icon>note_add</mat-icon>
+                </button>
+                <button  mat-icon-button [routerLink]="['../home']"
+                matTooltip="Resultats">
+                <mat-icon>show_chart</mat-icon>
+                </button>
+                <mat-divider></mat-divider>    
+            </mat-list-item>
+            
+        </mat-list>
+    </mat-card-content>
+</mat-card>

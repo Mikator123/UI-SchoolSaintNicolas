@@ -25,6 +25,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {UserModule} from './Modules/User/user.module';
 import {NavComponent} from './Components/nav/nav.component';
 import {MatBadgeModule} from '@angular/material/badge';
+import {ProfessorModule} from './Modules/professor/professor.module';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import {MatBadgeModule} from '@angular/material/badge';
     CommonModule,
     MatGridListModule,
     UserModule,
-    MatBadgeModule
+    MatBadgeModule,
+    ProfessorModule
     
     
 
