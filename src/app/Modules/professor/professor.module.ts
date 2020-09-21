@@ -10,10 +10,21 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import {MatListModule} from '@angular/material/list';
 import {MatDividerModule} from '@angular/material/divider';
+import { TrimestrialNoteComponent } from './Components/trimestrial-note/trimestrial-note.component';
+import {MatExpansionModule} from '@angular/material/expansion';
+import { DeleteComponent } from './Components/trimestrial-note/delete/delete.component';
+import { StudentDetailedComponent } from './Components/student-list/student-detailed/student-detailed.component';
+
 
 
 @NgModule({
-  declarations: [StudentListComponent],
+  declarations: [
+    StudentListComponent,
+    TrimestrialNoteComponent,
+    DeleteComponent,
+    StudentDetailedComponent,
+  ],
+
   imports: [
     CommonModule,
     ProfessorRoutingModule,
@@ -24,6 +35,8 @@ import {MatDividerModule} from '@angular/material/divider';
     MatButtonModule,
     MatListModule,
     MatDividerModule,
+    MatExpansionModule,
+
   ],
 
   exports:[

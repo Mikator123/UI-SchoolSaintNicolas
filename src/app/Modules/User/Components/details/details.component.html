@@ -13,7 +13,7 @@ gutterSize="3px">
             </mat-card-header>
 
             <mat-card-content>
-                <p>Date de naissance: {{userDetailed.birthdate}}.</p>
+                <!-- <p>Date de naissance: {{ userDetailed.birthdate | birthdate }}.</p> -->
                 <p>Adresse: {{userDetailed.adStreet}} n°{{userDetailed.adNumber}} 
                 <label *ngIf="userDetailed.adBox != null"> boite {{userDetailed.adBox}}</label>
                 , {{userDetailed.adPostalCode}} {{userDetailed.adCity}}</p>

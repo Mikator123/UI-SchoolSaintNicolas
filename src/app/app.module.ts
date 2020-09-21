@@ -26,6 +26,8 @@ import {UserModule} from './Modules/User/user.module';
 import {NavComponent} from './Components/nav/nav.component';
 import {MatBadgeModule} from '@angular/material/badge';
 import {ProfessorModule} from './Modules/professor/professor.module';
+import { BirthdatePipe } from './Pipes/birthdate.pipe';
+import { PipesModule } from './Pipes/pipes.module';
 
 
 @NgModule({
@@ -60,7 +62,7 @@ import {ProfessorModule} from './Modules/professor/professor.module';
     MatGridListModule,
     UserModule,
     MatBadgeModule,
-    ProfessorModule
+    ProfessorModule,
     
     
 

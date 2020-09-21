@@ -7,14 +7,14 @@
         <mat-list *ngFor="let student of studentList">
             <mat-list-item *ngIf="student.statusCode == 1"> 
                 <img mat-card-avatar [src]="student.photo"> 
-                {{student.firstName}} {{student.lastName}} 
+                <label style="margin-left: 5px;">{{student.firstName}} {{student.lastName}} </label>
                 
                 <button  mat-icon-button [routerLink]="['../home']"
                         matTooltip="Details">
                         <mat-icon>description</mat-icon>
                 </button>
-                <button  mat-icon-button [routerLink]="['../home']"
-                matTooltip="Ajouter une note trimestrielle personnelle">
+                <button  mat-icon-button [routerLink]="['../noteTrimestrielle/'+student.id]"
+                matTooltip="consulter les notes trimestrielles">
                 <mat-icon>note_add</mat-icon>
                 </button>
                 <button  mat-icon-button [routerLink]="['../home']"

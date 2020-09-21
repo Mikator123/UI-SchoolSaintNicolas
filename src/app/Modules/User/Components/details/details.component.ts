@@ -40,15 +40,20 @@ export class DetailsComponent implements OnInit {
         this.userDetailed.photo = "http://www.tmf-operating.com/wp-content/uploads/2015/12/avatar-femme-300x176.jpg";
     if (this.userDetailed.contacts == null)
       this.profileColSpan = "3";
-    this.userDetailed.lunches.forEach(lunch => {
-      const dateParsed = new Date(lunch.date);
-      this.daysSelected.push(dateParsed.getDate()+"/"+dateParsed.getMonth()+"/"+dateParsed.getFullYear());  
-    });
+    if (this.userDetailed.lunches != null)
+      this.userDetailed.lunches.forEach(lunch => {
+        const dateParsed = new Date(lunch.date);
+          this.daysSelected.push(dateParsed.getDate()+"/"+dateParsed.getMonth()+"/"+dateParsed.getFullYear());  
+      });
   }
 
   openDialog(){
-    this.dialog.open(ResetPasswordComponent)
+    this.dialog.open(ResetPasswordComponent, {
+      width: '400px',
+    });
   }
+
+
 
   dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
 

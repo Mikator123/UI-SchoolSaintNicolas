@@ -1,0 +1,27 @@
+<div>
+    <button mat-button color="war" [routerLink]="['../../listeEtudiant']">Retour</button>
+    <button mat-button color="primary" [routerLink]="['../create']">Créer</button>
+
+    
+</div>
+
+<div *ngIf="notes != null">
+    <div *ngFor="let note of notes">
+        <mat-accordion>
+            <mat-expansion-panel (opened)="panelState = true"
+                                    (closed)="panelState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <label>Classe {{note.className}} </label>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <label>Trimestre {{note.trimester}}</label>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>              
+                <p> {{note.description}} </p>
+                <button mat-button color="accent" (click)="openDeleteDialog(note.id)">Supprimer</button>
+                <button mat-button color="primary" [routerLink]="['../update/'+note.id]">Mettre à jour</button>     
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>

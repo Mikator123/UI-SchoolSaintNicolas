@@ -25,7 +25,10 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 
 @NgModule({
-  declarations: [DetailsComponent, ],
+  declarations: [
+    DetailsComponent,
+  ],
+
   imports: [
     CommonModule,
     UserRoutingModule,
@@ -38,7 +41,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
     MatIconModule,
     MatTooltipModule,
     MatDialogModule,
-    MatSnackBarModule
+    MatSnackBarModule,
 
 
   ]
