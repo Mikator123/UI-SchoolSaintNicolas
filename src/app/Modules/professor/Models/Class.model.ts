@@ -4,6 +4,7 @@ export class Class{
     description: string;
     schoolYear: number;
     schoolYearCategoryId: number;
+    users: User;
 }
 
 export class User{

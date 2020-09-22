@@ -1,7 +1,9 @@
 <H2 mat-dialog-title>Modifier la note</H2>
 <mat-dialog-content>
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
-
+    <mat-error *ngIf="error == true">
+      {{this.errorTxt}}
+    </mat-error>
    
       <p>
         Classe : {{data.className}}
@@ -27,8 +29,10 @@
 
 
       <mat-form-field class="txtArea">
+        <p>Description: </p>
+
         <textarea 
-            style="width: 400px"
+            style="height: 40vh"
             matInput
             formControlName="description" 
             required
@@ -47,7 +51,6 @@
     >Annuller</button>
 
     <button 
-    mat-dialog-close
     mat-raised-button 
     type="submit" 
     color="primary"

@@ -25,6 +25,5 @@ export class StudentListComponent implements OnInit {
     this._auth.user$.subscribe(data => this.actualClassId = data.classId)
     this._profService.getStudents(this.actualClassId);
     this.mySubscription = this._profService.studentSubject.subscribe((list: Student[]) => {this.studentList = list});
-
   }
 }

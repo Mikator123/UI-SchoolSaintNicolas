@@ -12,7 +12,6 @@ import {MatListModule} from '@angular/material/list';
 import {MatDividerModule} from '@angular/material/divider';
 import { TrimestrialNoteComponent } from './Components/trimestrial-note/trimestrial-note.component';
 import {MatExpansionModule} from '@angular/material/expansion';
-import { DeleteComponent } from './Components/trimestrial-note/delete/delete.component';
 import { StudentDetailedComponent } from './Components/student-list/student-detailed/student-detailed.component';
 import { UpdateComponent } from './Components/trimestrial-note/update/update.component';
 import { CreateComponent } from './Components/trimestrial-note/create/create.component';
@@ -20,6 +19,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
+import { TestResultComponent } from './Components/test-result/test-result.component';
+import { MatMenuModule } from '@angular/material/menu';
+
 
 
 
@@ -29,10 +31,10 @@ import {MatSelectModule} from '@angular/material/select';
   declarations: [
     StudentListComponent,
     TrimestrialNoteComponent,
-    DeleteComponent,
     StudentDetailedComponent,
     UpdateComponent,
     CreateComponent,
+    TestResultComponent,
   ],
 
   imports: [
@@ -51,16 +53,17 @@ import {MatSelectModule} from '@angular/material/select';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    MatMenuModule,
 
   ],
 
   exports:[
     StudentListComponent,
     TrimestrialNoteComponent,
-    DeleteComponent,
     StudentDetailedComponent,
     UpdateComponent,
     CreateComponent,
+    TestResultComponent
   ]
 })
 export class ProfessorModule { }

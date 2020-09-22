@@ -15,6 +15,8 @@ export class ProfessorService {
   classURL: string= 'https://localhost:5001/api/class/';
   students: Student[]= [];
   studentSubject: Subject<Student[]> = new Subject<Student[]>();
+  class = new Class();
+  classSubject: Subject<Class> = new Subject<Class>();
 
 
   constructor(
@@ -23,9 +25,7 @@ export class ProfessorService {
 
 
 
-  sendStudents(){
-    this.studentSubject.next(this.students.slice());
-  }
+
 
   getStudents(classId: number)
   {
@@ -38,7 +38,18 @@ export class ProfessorService {
         student.photo = "http://www.haneffebasket.be/wp-content/uploads/2017/04/avatar-vide.jpeg":
         student.photo = "http://www.tmf-operating.com/wp-content/uploads/2015/12/avatar-femme-300x176.jpg";
     });
-        this.sendStudents();
+      this.studentSubject.next(this.students.slice());
+      },
+      error: error => console.log(error)
+    });
+  }
+
+  getClassById(classId:number)
+  {
+    this._client.get<Class>(this.classURL+classId).subscribe({
+      next: data => {
+        this.class = data;
+        this.classSubject.next(this.class);
       },
       error: error => console.log(error)
     });

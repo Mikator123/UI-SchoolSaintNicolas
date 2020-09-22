@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ResetPwd } from '../../Models/ResetPwd.model';
 import { AuthService } from '../../Services/Auth/auth.service';
@@ -13,8 +14,6 @@ import { AuthService } from '../../Services/Auth/auth.service';
 export class ResetPasswordComponent implements OnInit {
 
   form : FormGroup;
-  passwordInvalid = false;
-  formSubmitAttempt = 0;
   returnUrl:string;
   error= false;
   errorMsg:string;
@@ -22,6 +21,7 @@ export class ResetPasswordComponent implements OnInit {
   constructor(
     private _builder : FormBuilder,
     private _authService: AuthService,
+    public dialogRef: MatDialogRef<ResetPasswordComponent>,
   ) { }
 
  
@@ -42,25 +42,34 @@ export class ResetPasswordComponent implements OnInit {
   }
 
   onSubmit(){
-    if (this.checkPassword(this.form))
+    this.error = false;
+    this.errorMsg = null;
+    if (this.checkPassword(this.form.get('password').value, this.form.get('confirmPassword').value) && this.SpacesOnly(this.form.get('password').value))
       {
         let RP = new ResetPwd();
         RP.Id = this._authService.userSubject.value.id;
         RP.password = this.form.get('password').value;
         RP.lastResetPwd = new Date();
         this._authService.ResetPwd(RP)
+        this.dialogRef.close();
       }
     else
-      this.passwordInvalid = true;
+      this.error = true;
+      if (!this.checkPassword(this.form.get('password').value, this.form.get('confirmPassword').value))
+        this.errorMsg = "Le mot de passe doit correspondre à la confirmation";
+      else 
+        this.errorMsg = "Le mot de passe ne peut pas être rempli d'espaces.";
+        
+        
   }
 
-  checkPassword(group: FormGroup){
-    let pwd = group.get('password').value;
-    let confirmPwd = group.get('confirmPassword').value;
-    return pwd === confirmPwd ? true: false;
+  checkPassword(value1:string, value2:string){
+    return value1 === value2 ? true: false;
   }
 
-  
+  SpacesOnly(prop:string): Boolean{
+    return prop.match(/^ *$/) !== null ? false : true;
+  }
 }
 
 

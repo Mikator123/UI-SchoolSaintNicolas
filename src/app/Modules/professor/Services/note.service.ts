@@ -14,6 +14,7 @@ export class NoteService {
   noteURL: string = 'https://localhost:5001/api/TrimestrialInfo/';
   notes : Note[] = [];
   noteSubject : Subject<Note[]> = new Subject<Note[]>();
+  header : HttpHeaders = new HttpHeaders({ 'Content-Type': 'application/json'});
 
 
   constructor(
@@ -50,6 +51,7 @@ export class NoteService {
   }
 
   updateNote(note:Note): void{
+    
     this._client.put<Note>(this.noteURL, note).subscribe({
       next:()=> {this.getNotes(note.userId);},
       error: error => console.log(error)
@@ -57,10 +59,11 @@ export class NoteService {
   }
 
   createNote(note:Note): void{
-    this._client.post<Note>(this.noteURL, note).subscribe({
-      next: () => {this.getNotes(note.userId);},
+    console.log(note)
+    this._client.post<Note>(this.noteURL,note, {headers : this.header}).subscribe({
+      next:()=> {this.getNotes(note.userId);},
       error: error => console.log(error)
-    })
+    });
   }
 
 

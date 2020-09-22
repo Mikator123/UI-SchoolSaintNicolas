@@ -56,8 +56,6 @@ export class DetailsComponent implements OnInit {
 
 
   dateClass: MatCalendarCellClassFunction<Date> = (cellDate, view) => {
-
-    
     if (view === 'month')
     {
 
