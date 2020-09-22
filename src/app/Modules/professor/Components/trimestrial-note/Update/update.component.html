@@ -1,0 +1,58 @@
+<H2 mat-dialog-title>Modifier la note</H2>
+<mat-dialog-content>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+
+   
+      <p>
+        Classe : {{data.className}}
+      </p>
+      <mat-divider></mat-divider> 
+      <p>
+        Etudiant : {{data.userId}}
+      </p>
+      <mat-divider></mat-divider> 
+
+    <mat-form-field>
+      <mat-label>Selectionnez un trimestre</mat-label>
+      <mat-select [(value)]="selectedTrimeste" formControlName="trimester">
+        <mat-option [value]="trim.value" *ngFor="let trim of trimester">{{trim.viewValue}}</mat-option>
+      </mat-select>
+      <mat-error>
+        La sélection du trimestre est obligatoire.
+      </mat-error>
+  </mat-form-field>
+  <br/>
+  <mat-divider></mat-divider> 
+
+
+
+      <mat-form-field class="txtArea">
+        <textarea 
+            style="width: 400px"
+            matInput
+            formControlName="description" 
+            required
+            >
+        </textarea>
+        <mat-error>
+              Une description est obligatoire.
+        </mat-error>
+      </mat-form-field>
+      <br/>
+
+    <button
+    mat-dialog-close
+    mat-raised-button
+    color="accent"
+    >Annuller</button>
+
+    <button 
+    mat-dialog-close
+    mat-raised-button 
+    type="submit" 
+    color="primary"
+    [disabled]="form.invalid">Valider</button>
+    
+
+  </form>
+</mat-dialog-content>

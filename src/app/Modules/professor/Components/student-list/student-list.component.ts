@@ -25,12 +25,6 @@ export class StudentListComponent implements OnInit {
     this._auth.user$.subscribe(data => this.actualClassId = data.classId)
     this._profService.getStudents(this.actualClassId);
     this.mySubscription = this._profService.studentSubject.subscribe((list: Student[]) => {this.studentList = list});
-    // this.studentList.forEach(student => {
-      // if (student.photo == null)
-      //   student.gender === 'M' ? 
-      //   student.photo = "http://www.haneffebasket.be/wp-content/uploads/2017/04/avatar-vide.jpeg":
-      //   student.photo = "http://www.tmf-operating.com/wp-content/uploads/2015/12/avatar-femme-300x176.jpg";
-      // EN DB DIRECT ?
-    // });
+
   }
 }

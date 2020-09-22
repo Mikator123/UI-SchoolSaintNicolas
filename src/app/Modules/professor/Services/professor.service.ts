@@ -12,12 +12,8 @@ export class ProfessorService {
 
 
   userURL: string = 'https://localhost:5001/api/user/';
-  classURL: string= 'https://localhost:5001/api/class/'
-  noteURL: string = 'https://localhost:5001/api/TrimestrialInfo/';
-  // studentList$ : Observable<Student[]>;
-  notes : Note[] = [];
+  classURL: string= 'https://localhost:5001/api/class/';
   students: Student[]= [];
-  noteSubject : Subject<Note[]> = new Subject<Note[]>();
   studentSubject: Subject<Student[]> = new Subject<Student[]>();
 
 
@@ -25,9 +21,7 @@ export class ProfessorService {
     private _client : HttpClient,
   ) { }
 
-  sendNotes(){
-    this.noteSubject.next(this.notes.slice());
-  }
+
 
   sendStudents(){
     this.studentSubject.next(this.students.slice());
@@ -50,34 +44,7 @@ export class ProfessorService {
     });
   }
 
-  getNotes(studentId : number)
-  {
-    this._client.get<Note[]>(this.noteURL+"GetbyuserId/"+studentId).subscribe({
-      next: data => {
-        this.notes = data;
-        this.sendNotes();
-      },
-      error : error => console.log(error)      
-    });
-  }
-
-  getNoteById(noteId: number): Observable<Note>
-  {
-    return this._client.get<Note>(this.noteURL+noteId);
-  }
-
-  deleteNote(noteId: number, studentId: number):void{
-
-    this._client.delete<number>(this.noteURL+noteId).subscribe({
-      next:()=>{this.getNotes(studentId);},
-      error:error => console.log(error)
-    });
-
-  }
-
-  // getClasses(classId: number): Observable<Class[]>{
-  //   return this._client.get(this.classURL+classId);
-  // }
+ 
   
 
   

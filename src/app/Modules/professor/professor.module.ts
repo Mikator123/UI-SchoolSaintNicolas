@@ -14,6 +14,14 @@ import { TrimestrialNoteComponent } from './Components/trimestrial-note/trimestr
 import {MatExpansionModule} from '@angular/material/expansion';
 import { DeleteComponent } from './Components/trimestrial-note/delete/delete.component';
 import { StudentDetailedComponent } from './Components/student-list/student-detailed/student-detailed.component';
+import { UpdateComponent } from './Components/trimestrial-note/update/update.component';
+import { CreateComponent } from './Components/trimestrial-note/create/create.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+
+
 
 
 
@@ -23,6 +31,8 @@ import { StudentDetailedComponent } from './Components/student-list/student-deta
     TrimestrialNoteComponent,
     DeleteComponent,
     StudentDetailedComponent,
+    UpdateComponent,
+    CreateComponent,
   ],
 
   imports: [
@@ -36,11 +46,21 @@ import { StudentDetailedComponent } from './Components/student-list/student-deta
     MatListModule,
     MatDividerModule,
     MatExpansionModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
 
   ],
 
   exports:[
-    StudentListComponent
+    StudentListComponent,
+    TrimestrialNoteComponent,
+    DeleteComponent,
+    StudentDetailedComponent,
+    UpdateComponent,
+    CreateComponent,
   ]
 })
 export class ProfessorModule { }
