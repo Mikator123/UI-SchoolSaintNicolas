@@ -1,9 +1,9 @@
-<H2 mat-dialog-title>Créer une note</H2>
+<H2 mat-dialog-title>Modifier la note</H2>
 <mat-dialog-content>
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
-    <mat-error *ngIf="error">
-        {{this.errorTxt}}
-      </mat-error>
+    <mat-error *ngIf="error == true">
+      {{this.errorTxt}}
+    </mat-error>
    
       <p>
         Classe : {{data.className}}
@@ -16,7 +16,7 @@
 
     <mat-form-field>
       <mat-label>Selectionnez un trimestre</mat-label>
-      <mat-select formControlName="trimester">
+      <mat-select [(value)]="selectedTrimeste" formControlName="trimester">
         <mat-option [value]="trim.value" *ngFor="let trim of trimester">{{trim.viewValue}}</mat-option>
       </mat-select>
       <mat-error>
@@ -26,8 +26,11 @@
   <br/>
   <mat-divider></mat-divider> 
 
+
+
       <mat-form-field class="txtArea">
         <p>Description: </p>
+
         <textarea 
             style="height: 40vh"
             matInput

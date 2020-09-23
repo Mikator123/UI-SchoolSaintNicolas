@@ -5,7 +5,8 @@ import { DetailsComponent } from './Components/details/details.component';
 import {UserResolverService} from './Services/Resolvers/user-resolver.service';
 
 const routes: Routes = [
-  {path: 'userDetails', resolve : {userDetailed : UserResolverService }, canActivate : [AuthGuardService], component : DetailsComponent},
+  {path: 'user/:id', resolve : {userDetailed : UserResolverService }, canActivate : [AuthGuardService], component : DetailsComponent},
+
 
 ];
 

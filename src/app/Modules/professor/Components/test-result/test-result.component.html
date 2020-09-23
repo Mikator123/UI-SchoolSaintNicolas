@@ -1,6 +1,10 @@
 <div>
-    <button mat-button color="war" [routerLink]="['../../listeEtudiant']">Retour</button>
-    <button mat-button color="primary" (click)="openCreateDialog(this.studentId)">Créer</button>
+    <button mat-button 
+    *ngIf="statusCode > 1"
+    color="war" [routerLink]="['../../Etudiants']">Retour</button>
+    <button mat-button 
+    *ngIf="statusCode > 1"
+    color="primary" (click)="openCreateDialog(this.studentId)">Créer</button>
 
     
 </div>
@@ -35,8 +39,12 @@
                                 <p> {{result.description}} </p>
                                 <button mat-icon-button ><mat-icon>picture_as_pdf</mat-icon></button>
                                 <mat-divider></mat-divider>
-                                <button mat-button color="accent" (click)="openDeleteDialog(result.id)">Supprimer</button>
-                                <button mat-button color="primary" (click)="openUpdateDialog(result)">Mettre à jour</button>     
+                                <button 
+                                *ngIf="statusCode > 1"
+                                mat-button color="accent" (click)="openDeleteDialog(result.id)">Supprimer</button>
+                                <button 
+                                *ngIf="statusCode > 1"
+                                mat-button color="primary" (click)="openUpdateDialog(result)">Mettre à jour</button>     
                         </mat-expansion-panel>
                     </mat-accordion>
             </mat-expansion-panel>

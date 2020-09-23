@@ -6,6 +6,8 @@ import {MatCalendarCellClassFunction} from '@angular/material/datepicker';
 import { ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ResetPasswordComponent } from 'src/app/Modules/auth/Components/reset-password/reset-password.component';
+import { Subscription } from 'rxjs';
+import { UserService } from '../../Services/user.service';
 
 
 
@@ -18,6 +20,7 @@ import { ResetPasswordComponent } from 'src/app/Modules/auth/Components/reset-pa
 export class DetailsComponent implements OnInit {
   @ViewChild(MatCalendar, {static: true}) calendar: MatCalendar<any>
 
+  userId: number;
   dates: string;
   selectedDate= new Date();
   daysSelected: any[] = [];
@@ -28,12 +31,13 @@ export class DetailsComponent implements OnInit {
 
   constructor(
     private _route: ActivatedRoute,
-    public dialog: MatDialog
+    public dialog: MatDialog,
   ) {
    }
 
   ngOnInit(): void {
     this.userDetailed = this._route.snapshot.data['userDetailed'];
+
     if (this.userDetailed.photo == null)
       this.userDetailed.gender === 'M' ? 
         this.userDetailed.photo = "http://www.haneffebasket.be/wp-content/uploads/2017/04/avatar-vide.jpeg":
@@ -50,6 +54,8 @@ export class DetailsComponent implements OnInit {
   openDialog(){
     this.dialog.open(ResetPasswordComponent, {
       width: '400px',
+      disableClose:true,
+      
     });
   }
 

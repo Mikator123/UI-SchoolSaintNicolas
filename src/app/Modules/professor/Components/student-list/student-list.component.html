@@ -6,18 +6,15 @@
     <mat-card-content>
         <mat-list *ngFor="let student of studentList">
             <mat-list-item *ngIf="student.statusCode == 1"> 
-                <img mat-card-avatar [src]="student.photo"> 
+                <a [routerLink]="['./'+student.id]"><img matTooltip="Details" mat-card-avatar [src]="student.photo"> </a>
+
                 <label style="margin-left: 5px;">{{student.firstName}} {{student.lastName}} </label>
                 
-                <button  mat-icon-button [routerLink]="['../home']"
-                        matTooltip="Details">
-                        <mat-icon>description</mat-icon>
-                </button>
                 <button  mat-icon-button [routerLink]="['../notesTrimestrielle/'+student.id]"
                 matTooltip="consulter les notes trimestrielles">
-                <mat-icon>note_add</mat-icon>
+                <mat-icon>folder_shared</mat-icon>
                 </button>
-                <button  mat-icon-button [routerLink]="['../testResult/'+student.id]"
+                <button  mat-icon-button [routerLink]="['../Resultats/'+student.id]"
                 matTooltip="Resultats">
                 <mat-icon>show_chart</mat-icon>
                 </button>
@@ -27,3 +24,7 @@
         </mat-list>
     </mat-card-content>
 </mat-card>
+
+<mat-dialog-content>
+<router-outlet></router-outlet>
+</mat-dialog-content>

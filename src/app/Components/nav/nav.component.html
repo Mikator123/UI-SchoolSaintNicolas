@@ -68,7 +68,6 @@ matTooltip="logout"
 
       <button mat-menu-item 
       [matMenuTriggerFor]="profil"
-      
       >
         <mat-icon>fingerprint</mat-icon>
         <span>Profil</span>
@@ -104,12 +103,13 @@ matTooltip="logout"
   <mat-menu #profil="matMenu">
 
     <button mat-menu-item
-    [routerLink]="['userDetails']">
+    [routerLink]="['user/'+userId]">
       <mat-icon>face</mat-icon>
       <span>Personnel</span>
     </button>
 
-    <button mat-menu-item> 
+    <button mat-menu-item
+    [routerLink]="['testResult/'+userId]"> 
       <mat-icon>school</mat-icon>
       <span>Scolaire</span>
     </button>
@@ -156,7 +156,7 @@ matTooltip="logout"
   </button>
 
     <button mat-menu-item
-    [routerLink]="['userDetails']">
+    [routerLink]="['user/'+userId]">
       <mat-icon>fingerprint</mat-icon>
       <span>Profil</span>
     </button>
@@ -190,7 +190,7 @@ matTooltip="logout"
     </button>
 
     <button mat-menu-item
-    [routerLink]="['listeEtudiant']"> 
+    [routerLink]="['Etudiants']"> 
       <mat-icon>child_care</mat-icon>
       <span>Etudiants</span>
     </button>

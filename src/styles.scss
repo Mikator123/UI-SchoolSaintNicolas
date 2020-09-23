@@ -5,15 +5,17 @@
 
 $mat-theming-primary-light : mat-palette($mat-teal, 300);
 $mat-theming-primary-dark : mat-palette($mat-teal, 700);
-$mat-theming-accent : mat-palette($mat-pink, A200, A100, A400);
+$mat-theming-accent-light : mat-palette($mat-pink, 300);
+$mat-theming-accent-dark : mat-palette($mat-pink, 700);
 $mat-theming-warn: mat-palette($mat-red, 350);
 
-$mat-theming-theme: mat-light-theme($mat-theming-primary-light, $mat-theming-accent, $mat-theming-warn);
-$mat-theming-theme-dark: mat-dark-theme($mat-theming-primary-dark, $mat-theming-accent, $mat-theming-warn);
+$mat-theming-theme-light: mat-light-theme($mat-theming-primary-light, $mat-theming-accent-light, $mat-theming-warn);
+$mat-theming-theme-dark: mat-dark-theme($mat-theming-primary-dark, $mat-theming-accent-dark, $mat-theming-warn);
 
-@include angular-material-theme($mat-theming-theme);
+@include angular-material-theme($mat-theming-theme-light);
 
 html, body { height: 100%; }
+
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .theme-dark{
@@ -21,6 +23,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 }
 
 .theme-light{
-    @include angular-material-theme($mat-theming-theme);
+    @include angular-material-theme($mat-theming-theme-light);
 
 }

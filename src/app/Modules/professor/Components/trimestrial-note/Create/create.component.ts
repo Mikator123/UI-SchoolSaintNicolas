@@ -50,13 +50,13 @@ export class CreateComponent implements OnInit {
 
     onSubmit(){
       if (this.SpacesOnly(this.form.value['description'])){
-        
         let newNote= new Note();
         newNote.className = this.data.className;
         newNote.trimester = this.form.value['trimester'];
-        newNote.userId = this.data.userId;
+        newNote.userId = parseInt(this.data.userId.toString());
         newNote.description = this.form.value['description'];
         this._noteService.createNote(newNote);
+        this._noteService.getNotes(this.data.userId);
         this.dialogRef.close();
       }
       else{

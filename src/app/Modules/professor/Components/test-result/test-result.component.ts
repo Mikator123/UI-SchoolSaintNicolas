@@ -3,10 +3,20 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { DeleteComponent } from 'src/app/Components/confirmBox/Delete/delete.component';
+import { AuthService } from 'src/app/Modules/auth/Services/Auth/auth.service';
 import { Category } from '../../Models/Category.model';
 import { TestResult } from '../../Models/testResult.model';
 import {ResultService} from '../../Services/result.service';
 
+export interface UpdateDialogData {
+  id: number,
+  result : number,
+  date: Date,
+  description: string;
+  categoryId: number;
+  classId: number;
+  studentId: number;
+}
 
 @Component({
   selector: 'app-test-result',
@@ -15,10 +25,11 @@ import {ResultService} from '../../Services/result.service';
 })
 export class TestResultComponent implements OnInit {
 
+  statusCode: number;
   catPanelState = false;
   resultPanelState = false;
   studentId: number;
-  results: TestResult[];
+  results: TestResult[] = [];
   resultSubscription: Subscription;
   categories: Category[];
 
@@ -26,14 +37,15 @@ export class TestResultComponent implements OnInit {
     private _resultService: ResultService,
     private _routing: ActivatedRoute,
     public dialog: MatDialog, 
+    private _authService: AuthService,
   ) { }
 
   ngOnInit(): void {
+    this._authService.user$.subscribe(data => this.statusCode = data.statusCode)
     this.studentId = this._routing.snapshot.params['studentId'];
     this._resultService.getByStudentId(this.studentId);
     this.resultSubscription = this._resultService.testSubject.subscribe((list:TestResult[]) => {this.results = list});
     this._resultService.getCategories().subscribe(data => this.categories = data);
-    
   }
 
   openDeleteDialog(id:number){

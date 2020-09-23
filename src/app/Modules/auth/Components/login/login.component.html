@@ -1,8 +1,8 @@
 <mat-card>
   <mat-card-content>
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <H2>Connection</H2>
-      <mat-error *ngIf="error == true">
+      <H2>Connexion</H2>
+      <mat-error *ngIf="error">
         {{this.errorMsg}}
       </mat-error>
       <mat-form-field>

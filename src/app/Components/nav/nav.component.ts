@@ -12,11 +12,11 @@ import { UserService } from '../../Modules/User/Services/user.service';
 })
 export class NavComponent implements OnInit{
 
+  userId: number = null;
   user : UserSimplified = null;
   ThemeLight: boolean = false;
   contactList : UserContactMail[] = [];
   myMailsSubscription : Subscription;
-  public myUserSubscription :  Subscription;
 
   @Output()
   readonly darkModeSwitched = new EventEmitter<Boolean>();
@@ -34,12 +34,12 @@ export class NavComponent implements OnInit{
   }
 
   ngOnInit(): void { 
-    this.myMailsSubscription = this._userService.userSubject.subscribe((list : UserContactMail[]) => {this.contactList = list});
+    this.myMailsSubscription = this._userService.mailSubject.subscribe((list : UserContactMail[]) => {this.contactList = list});
     this.user$ = this._auth.userSubject;
-
     this.user$.subscribe(user => {
       if (user == null || user.classId == null) return;
       this._userService.getMails(user.classId);
+      this.userId = user.id;
 
     })
   }

@@ -59,7 +59,6 @@ export class NoteService {
   }
 
   createNote(note:Note): void{
-    console.log(note)
     this._client.post<Note>(this.noteURL,note, {headers : this.header}).subscribe({
       next:()=> {this.getNotes(note.userId);},
       error: error => console.log(error)

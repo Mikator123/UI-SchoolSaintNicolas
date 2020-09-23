@@ -63,6 +63,7 @@ export class TrimestrialNoteComponent implements OnInit {
     let actualeNoteId = noteId;
     let ref = this.dialog.open(DeleteComponent, {
       width: '500px',
+      disableClose: true,
     });
 
     ref.afterClosed().subscribe(result => {
@@ -85,7 +86,8 @@ export class TrimestrialNoteComponent implements OnInit {
         userId: note.userId,
         trimester: note.trimester,
         description: note.description,
-      }
+      },
+      disableClose:true,
     });
   }
 
@@ -96,7 +98,8 @@ export class TrimestrialNoteComponent implements OnInit {
     data:{
       userId: studentId,
       className: this.class.name
-      }
+      },
+    disableClose:true,
     });
   }
 

@@ -48,9 +48,6 @@ export class LoginComponent implements OnInit {
   this._authService.Login(formLogin).subscribe(
 
     data => {
-      if(data.lastResetPwd == null)
-        this.router.navigate(['reset-password']);
-      else
         this.router.navigate(['home'])},
 
     error => {this.getError(error)}
