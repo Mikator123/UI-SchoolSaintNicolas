@@ -1,48 +1,85 @@
-<H2 mat-dialog-title>Modifier la note</H2>
+<H2 mat-dialog-title>Modifier le résultat</H2>
 <mat-dialog-content>
   <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
     <mat-error *ngIf="error == true">
       {{this.errorTxt}}
     </mat-error>
    
-      <p>
-        Classe : {{data.className}}
-      </p>
+    <mat-form-field>
+      <mat-label>Classe:</mat-label>
+      <input matInput disabled [value]="getClassName(data.classId)">
+      </mat-form-field>
       <mat-divider></mat-divider> 
-      <p>
-        Etudiant : {{data.userId}}
-      </p>
+
+      <mat-form-field>
+      <mat-label>Etudiant:</mat-label>
+      <input matInput disabled [value]="getStudentName(data.studentId)">
+      </mat-form-field>
       <mat-divider></mat-divider> 
 
     <mat-form-field>
-      <mat-label>Selectionnez un trimestre</mat-label>
-      <mat-select [(value)]="selectedTrimeste" formControlName="trimester">
-        <mat-option [value]="trim.value" *ngFor="let trim of trimester">{{trim.viewValue}}</mat-option>
+      <mat-label>Selectionnez une categorie</mat-label>
+      <mat-select [(value)]="selectedCategory.id" formControlName="category">
+        <mat-option [value]="cat.id" *ngFor="let cat of categories">{{cat.name}}</mat-option>
       </mat-select>
       <mat-error>
-        La sélection du trimestre est obligatoire.
+        La sélection de la catégorie est obligatoire.
       </mat-error>
   </mat-form-field>
   <br/>
   <mat-divider></mat-divider> 
 
+    
+  <mat-form-field>
+    <mat-label>date:</mat-label>
+    <input 
+      matInput 
+      [matDatepicker]="dp"
+      formControlName="date" 
+      [matDatepickerFilter]="myFilter"
+      required
+      >
+      <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+      <mat-datepicker #dp></mat-datepicker>
+    <mat-error>
+      La date est obligatoire.
+    </mat-error>
+  </mat-form-field>
+  <mat-divider></mat-divider> 
 
 
-      <mat-form-field class="txtArea">
-        <p>Description: </p>
+  
+  <mat-form-field>
+    <mat-label>résultat:</mat-label>
+    <input 
+      matInput
+      formControlName="result" 
+      required
+      type="number"
+      min="0"
+      max="20">
+    <mat-error>
+      {{getResultValidatorError()}}
+    </mat-error>
+  </mat-form-field>
+  <mat-divider></mat-divider> 
 
-        <textarea 
-            style="height: 40vh"
-            matInput
-            formControlName="description" 
-            required
-            >
-        </textarea>
-        <mat-error>
-              Une description est obligatoire.
-        </mat-error>
-      </mat-form-field>
-      <br/>
+
+  <mat-form-field class="txtArea">
+    <mat-label>Description:</mat-label>
+
+    <textarea 
+      style="height: 30vh"
+      matInput
+      formControlName="description" 
+      required
+    >
+    </textarea>
+    <mat-error>
+      Une description est obligatoire.
+    </mat-error>
+  </mat-form-field>
+    <br/>
 
     <button
     mat-dialog-close

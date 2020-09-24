@@ -24,6 +24,7 @@ export class StudentListComponent implements OnInit {
   ngOnInit(): void {
     this._auth.user$.subscribe(data => this.actualClassId = data.classId)
     this._profService.getStudents(this.actualClassId);
+    this._profService.getClasses();
     this.mySubscription = this._profService.studentSubject.subscribe((list: Student[]) => {this.studentList = list});
   }
 }

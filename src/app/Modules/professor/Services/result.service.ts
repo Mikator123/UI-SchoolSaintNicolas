@@ -44,7 +44,10 @@ export class ResultService {
   }
 
   update(test:TestResult){
-
+    this._client.put<TestResult>(this.testResultUrl, test).subscribe({
+      next:() => {this.getByStudentId(test.studentId)},
+      error: error => console.log(error)
+    })
   }
 
   create(test:TestResult){

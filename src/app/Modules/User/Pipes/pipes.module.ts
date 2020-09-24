@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {BirthdatePipe} from '../Pipes/birthdate.pipe';
+import {BirthdatePipe} from './birthdate.pipe';
 
 
 

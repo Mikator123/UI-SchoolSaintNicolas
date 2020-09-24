@@ -16,6 +16,7 @@ export class ProfessorService {
   students: Student[]= [];
   studentSubject: Subject<Student[]> = new Subject<Student[]>();
   class = new Class();
+  classes : Class []= [];
   classSubject: Subject<Class> = new Subject<Class>();
 
 
@@ -23,8 +24,9 @@ export class ProfessorService {
     private _client : HttpClient,
   ) { }
 
-
-
+  get Student$() { return this.students};
+  get classes$() {return this.classes};
+  
 
 
   getStudents(classId: number)
@@ -53,6 +55,15 @@ export class ProfessorService {
       },
       error: error => console.log(error)
     });
+  }
+
+  getClasses()
+  {
+    this._client.get<Class[]>(this.classURL).subscribe({
+      next: data => {
+        this.classes = data;
+      }
+    })
   }
 
  

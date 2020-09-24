@@ -61,5 +61,4 @@ export class BirthdatePipe implements PipeTransform {
         return "Décembre";
     }
   }
-
 }

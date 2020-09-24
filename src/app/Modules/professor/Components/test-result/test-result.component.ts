@@ -7,6 +7,7 @@ import { AuthService } from 'src/app/Modules/auth/Services/Auth/auth.service';
 import { Category } from '../../Models/Category.model';
 import { TestResult } from '../../Models/testResult.model';
 import {ResultService} from '../../Services/result.service';
+import { UpdateResultComponent } from './update-result/update-result.component';
 
 export interface UpdateDialogData {
   id: number,
@@ -14,6 +15,11 @@ export interface UpdateDialogData {
   date: Date,
   description: string;
   categoryId: number;
+  classId: number;
+  studentId: number;
+}
+
+export interface CreateDialogData {
   classId: number;
   studentId: number;
 }
@@ -65,7 +71,23 @@ export class TestResultComponent implements OnInit {
   }
 
   openUpdateDialog(result: TestResult){
+    let ref = this.dialog.open(UpdateResultComponent,{
+      width: '80vw',
+      height: '80vh',
+      disableClose:true,
+      data: {
+        id : result.id,
+        result : result.result,
+        date : result.date,
+        description: result.description,
+        categoryId : result.categoryId,
+        classId: result.classId,
+        studentId : result.studentId,
 
+
+
+      }
+    })
   }
 
   openCreateDialog(studentId:number)

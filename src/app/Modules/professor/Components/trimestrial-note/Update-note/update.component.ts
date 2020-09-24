@@ -19,7 +19,7 @@ interface Trimester{
   templateUrl: './update.component.html',
   styleUrls: ['./update.component.scss']
 })
-export class UpdateComponent implements OnInit {
+export class UpdateNoteComponent implements OnInit {
 
   
   form : FormGroup;
@@ -37,7 +37,7 @@ export class UpdateComponent implements OnInit {
     private _builder: FormBuilder,
     private _noteService: NoteService,
     private _profService: ProfessorService,
-    public dialogRef: MatDialogRef<UpdateComponent>,
+    public dialogRef: MatDialogRef<UpdateNoteComponent>,
     @Inject(MAT_DIALOG_DATA) public data: UpdateDialogData
   ) { }
 

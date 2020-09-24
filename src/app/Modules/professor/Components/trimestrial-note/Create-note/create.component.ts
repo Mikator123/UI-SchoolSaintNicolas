@@ -16,7 +16,7 @@ interface Trimester{
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss']
 })
-export class CreateComponent implements OnInit {
+export class CreateNoteComponent implements OnInit {
 
  
   form : FormGroup;
@@ -32,7 +32,7 @@ export class CreateComponent implements OnInit {
   constructor(
     private _builder: FormBuilder,
     private _noteService: NoteService,
-    public dialogRef: MatDialogRef<CreateComponent>,
+    public dialogRef: MatDialogRef<CreateNoteComponent>,
     @Inject(MAT_DIALOG_DATA) public data: CreateDialogData
   ) { }
 

@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import {  Subscription } from 'rxjs';
 import {Note} from '../../Models/Note.model';
 import { ProfessorService } from '../../Services/professor.service';
 import { DeleteComponent } from '../../../../Components/confirmBox/Delete/delete.component';
-import { UpdateComponent } from './update/update.component';
+
 import {NoteService} from '../../Services/note.service';
-import { CreateComponent } from './create/create.component';
+import { CreateNoteComponent } from './Create-note/create.component';
 import { AuthService } from 'src/app/Modules/auth/Services/Auth/auth.service';
 import { Class } from '../../Models/Class.model';
+import { UpdateNoteComponent } from './Update-note/update.component';
 
 export interface UpdateDialogData {
   id: number,
@@ -77,7 +78,7 @@ export class TrimestrialNoteComponent implements OnInit {
   }
 
   openUpdateDialog(note: Note){
-    let ref= this.dialog.open(UpdateComponent, {
+    let ref= this.dialog.open(UpdateNoteComponent, {
       width: '80vw',
       height: '80vh',
       data:{
@@ -92,7 +93,7 @@ export class TrimestrialNoteComponent implements OnInit {
   }
 
   openCreateDialog(studentId: number){
-  this.dialog.open(CreateComponent, {
+  this.dialog.open(CreateNoteComponent, {
     width: '80vw',
     height: '80vh',
     data:{
