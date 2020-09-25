@@ -1,18 +1,19 @@
 <mat-card>
     <mat-card-header>
         <mat-card-title>Liste de la classe</mat-card-title>
+        <mat-card-subtitle> {{ className }}</mat-card-subtitle>
     </mat-card-header>
 
     <mat-card-content>
         <mat-list *ngFor="let student of studentList">
             <mat-list-item *ngIf="student.statusCode == 1"> 
-                <a [routerLink]="['./'+student.id]"><img matTooltip="Details" mat-card-avatar [src]="student.photo"> </a>
+                <a (click)="openDetailDialog(student.id)"><img matTooltip="Details" mat-card-avatar [src]="student.photo"> </a>
 
-                <label style="margin-left: 5px;">{{student.firstName}} {{student.lastName}} </label>
+                <label (click)="openDetailDialog(student.id)" matTooltip="Details" style="margin-left: 5px;">{{student.firstName}} {{student.lastName}} </label>
                 
                 <button  mat-icon-button [routerLink]="['../notesTrimestrielle/'+student.id]"
                 matTooltip="consulter les notes trimestrielles">
-                <mat-icon>folder_shared</mat-icon>
+                <mat-icon>notes</mat-icon>
                 </button>
                 <button  mat-icon-button [routerLink]="['../Resultats/'+student.id]"
                 matTooltip="Resultats">

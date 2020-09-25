@@ -9,7 +9,7 @@ export class UserDetailed{
     adStreet: string;
     adNumber: number;
     adBox: string;
-    MobilePhone: string;
+    mobilePhone: string;
     login: string;
     password? : string;
     gender: string;
@@ -24,16 +24,7 @@ export class UserDetailed{
     contacts: userContact[];
     lunches: userLunch[];
 
-    // get Avatar(): string {
-    //     const defaultPhoto: string = this.gender === 'M' ? "http://www.haneffebasket.be/wp-content/uploads/2017/04/avatar-vide.jpeg": "http://www.tmf-operating.com/wp-content/uploads/2015/12/avatar-femme-300x176.jpg";
-    //     return this.photo || defaultPhoto; 
-    // }
 
-    // constructor(obj?: UserDetailed) {
-    //     this.id = obj && obj.id || 0;
-    //     this.photo = obj && obj.photo || null;
-
-    // }
 }
 
 export class userContact{
@@ -47,7 +38,7 @@ export class userContact{
     adStreet: string;
     adNumber: number;
     adBox: string; 
-    MobilePhone: string;
+    mobilePhone: string;
     gender: string;
     email: string;
     personalNote: string;

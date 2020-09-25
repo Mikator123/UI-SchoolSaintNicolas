@@ -15,7 +15,7 @@ export class ResetPasswordComponent implements OnInit {
 
   form : FormGroup;
   returnUrl:string;
-  error= false;
+  error = false;
   errorMsg:string;
 
   constructor(
@@ -51,7 +51,7 @@ export class ResetPasswordComponent implements OnInit {
         RP.password = this.form.get('password').value;
         RP.lastResetPwd = new Date();
         this._authService.ResetPwd(RP)
-        this.dialogRef.close();
+        this.dialogRef.close(true);
       }
     else
       this.error = true;

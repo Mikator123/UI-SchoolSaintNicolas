@@ -21,6 +21,7 @@ export class ResultService {
     private _client : HttpClient,
   ) {}
 
+  get categories$() {return this.categories};
 
   getCategories(): Observable<Category[]>{
     return this._client.get<Category[]>(this.categoryUrl)
@@ -51,7 +52,10 @@ export class ResultService {
   }
 
   create(test:TestResult){
-
+    this._client.post<TestResult>(this.testResultUrl, test).subscribe({
+      next:() => {this.getByStudentId(test.studentId)},
+      error: error => console.log(error)
+    })
   }
   
   private HttpOptions(token:string){

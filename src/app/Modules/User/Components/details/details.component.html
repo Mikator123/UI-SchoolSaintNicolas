@@ -1,74 +1,89 @@
-<mat-grid-list 
-[cols]="3" 
-rows="2" 
-rowHeight="2:2"   
-gutterSize="3px">
-    <mat-grid-tile rowspan="2" [colspan]="profileColSpan">
+<mat-card class="slide-in-bck-center">
+    <mat-card-header>
+        <img mat-card-avatar [src]="userDetailed.photo">
+        <mat-card-title> {{userDetailed.lastName}}</mat-card-title>
+        <mat-card-subtitle> {{userDetailed.firstName}}</mat-card-subtitle>
+    </mat-card-header>
 
-        <mat-card>
-            <mat-card-header>
-                <img mat-card-avatar [src]="userDetailed.photo">
-                <mat-card-title> {{userDetailed.lastName}}</mat-card-title>
-                <mat-card-subtitle> {{userDetailed.firstName}}</mat-card-subtitle>
-            </mat-card-header>
-
-            <mat-card-content>
-                <!-- <p>Date de naissance: {{ userDetailed.birthdate | birthdate }}.</p> -->
-                <p>Adresse: {{userDetailed.adStreet}} n°{{userDetailed.adNumber}} 
+    <mat-card-content>
+        <!-- <p>Date de naissance: {{ userDetailed.birthdate | birthdate }}.</p> -->
+        <mat-list>
+            <mat-list-item>
+                Adresse: {{userDetailed.adStreet}} n°{{userDetailed.adNumber}} 
                 <label *ngIf="userDetailed.adBox != null"> boite {{userDetailed.adBox}}</label>
-                , {{userDetailed.adPostalCode}} {{userDetailed.adCity}}</p>
-                <p>GSM: {{userDetailed.MobilePhone ? userDetailed.MobilePhone : "N/A"}}</p>
-                <p>Email: {{userDetailed.email ? userDetailed.email : "N/A"}}</p>
-                <br>
-
-                <button 
+                , {{userDetailed.adPostalCode}} {{userDetailed.adCity}}
+            </mat-list-item>
+            <mat-list-item>
+                GSM: {{userDetailed.mobilePhone}}
+            </mat-list-item>
+            <mat-list-item>
+                Email: {{userDetailed.email}}
+            </mat-list-item>
+        </mat-list>
+        <button 
                 mat-icon-button  
                 (click)="openDialog()"
                 matTooltip="Changer votre mot de passe"
-                > <mat-icon>vpn_key</mat-icon></button>
-                <button 
-                mat-icon-button 
-                [matMenuTriggerFor]="appMenu" 
-                *ngIf="userDetailed.lunches"
-                matTooltip="Repas"
+                > <mat-icon >vpn_key</mat-icon></button>
+
+        <button mat-icon-button
+        [color]="showContact ? 'primary': ''"
+        *ngIf="userDetailed.contacts != null"
+        (click)="openContacts()"
+        matTooltip="Contact(s)">
+            <mat-icon>people</mat-icon>
+        </button>
+        <input hidden [matDatepicker]="picker">
+        <mat-datepicker touchUi #picker [dateClass]="dateClass" ></mat-datepicker>
+
+        <button 
+            [color]=""
+            mat-icon-button 
+            (click)="picker.open()"
+            *ngIf="userDetailed.lunches"
+            matTooltip="Repas"
                 >
                     <mat-icon>calendar_today</mat-icon>
-                  </button>
-                  <mat-menu #appMenu="matMenu" class="drop-calendar" >
-                      <div (click)="$event.stopPropagation()">
-                          <mat-calendar   [dateClass]="dateClass" (selectedChange)="null"></mat-calendar>
-                          <mat-datepicker touchUi ></mat-datepicker>
-                      </div>
-                  </mat-menu>
-            </mat-card-content>
-        </mat-card>
-    </mat-grid-tile>
-
-    <mat-grid-tile [rowspan]="contactRawSpan" *ngIf="userDetailed.contacts">
-        <div>
-        <mat-card *ngFor="let contact of userDetailed.contacts">
-            <mat-card-header>
-                <mat-card-title>
-                    {{contact.lastName}}
-                </mat-card-title>
-                <mat-card-subtitle>
-                    {{contact.firstName}}
-                </mat-card-subtitle>
-            </mat-card-header>
-
-            <mat-card-content>
-                <p>Adresse: {{contact.adStreet}} n°{{contact.adNumber}}
-                    <label *ngIf="contact.adBox != null"> boite {{contact.adBox}}</label>
-                    , {{contact.adPostalCode}} {{userDetailed.adCity}}
-                </p>
-                <p>GSM: {{contact.MobilePhone ? contact.MobilePhone: "N/A"}}</p>
-                <p>Email: {{contact.email ? contact.email:"N/A"}}</p>
-            </mat-card-content>
-            <br>
-        </mat-card>
+        </button>
+        <div *ngIf="showContact">
+            <div *ngFor="let contact of userDetailed.contacts">
+                <mat-accordion>
+                    <mat-expansion-panel (opened)="panelState = true"
+                                        (closed)="panelState = false">
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                                <label><b>{{contact.lastName + " " + contact.firstName}}</b></label>
+                            </mat-panel-title>
+                            <mat-panel-description>
+                                <label>{{contact.mobilePhone}}</label>
+                            </mat-panel-description>
+                        </mat-expansion-panel-header>  
+                        <mat-list>
+                            <mat-list-item> 
+                                <b>Adresse</b>: {{contact.adStreet}} n°{{contact.adNumber}}
+                                <label *ngIf="contact.adBox != null"> boite {{contact.adBox}}</label>
+                                , {{contact.adPostalCode}} {{userDetailed.adCity}} 
+                            </mat-list-item>
+                            <mat-divider></mat-divider>   
+                            <mat-list-item>
+                                <b>Email</b>:  {{contact.email}}
+                            </mat-list-item>
+                            <mat-divider></mat-divider>   
+                            <mat-list-item>
+                               <b>Date de naissance</b>:  {{contact.birthDate}}
+                            </mat-list-item>
+                            <mat-divider></mat-divider> 
+                            <mat-list-item *ngIf="contact.personalNote">
+                                <b>Note</b>: {{contact.personalNote}}
+                            </mat-list-item>
+                        </mat-list>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
         </div>
-        <br>
-    </mat-grid-tile>
+    </mat-card-content>
+</mat-card>
 
 
-</mat-grid-list>
+
+

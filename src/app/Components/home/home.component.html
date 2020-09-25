@@ -1,7 +1,7 @@
-<mat-card>
+<mat-card *ngIf="user$ | async as user"  class="focus-in-expand-fwd">
     <mat-card-content>
-        
-<p>FLASH NEWS !!</p>
+        <p>{{ WelcomeMsg }}</p>
+
  
     </mat-card-content>
 </mat-card>

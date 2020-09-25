@@ -18,6 +18,16 @@ export class Student{
     statusCode: number;
     contacts: userContact[];
     lunches: userLunch[];
+
+    // constructor(obj: any) {
+
+    //     this.firstName = obj && obj.firstName || '';
+    //     this.lastName = obj && obj.lastName || '';
+    // }
+
+    // get FullName(): string {
+    //     return this.lastName+ ' '+ this.firstName;
+    // }
 }
 
 export class userContact{
@@ -26,11 +36,12 @@ export class userContact{
     lastName:string;
     firstName:string;
     birthDate: Date;
-    MobilePhone: string;
+    mobilePhone: string;
     gender: string;
     email: string;
     personalNote: string;
 }
+
 
 export class userLunch{
     id: number;

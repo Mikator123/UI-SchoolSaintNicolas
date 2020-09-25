@@ -20,7 +20,6 @@ import { ProfessorService } from '../../../Services/professor.service';
 
 })
 export class UpdateResultComponent implements OnInit {
-  @ViewChild(MatDatepicker, {static: true}) calendar: MatDatepicker<any>
 
   form : FormGroup;
   error= false;
@@ -71,7 +70,7 @@ export class UpdateResultComponent implements OnInit {
       updatedResult.result = this.form.value['result'];
       updatedResult.studentId = this.data.studentId;
       this._resultService.update(updatedResult);
-      this.dialogRef.close();
+      this.dialogRef.close(true);
     }
     else{
       this.error = true;
@@ -136,7 +135,6 @@ export class UpdateResultComponent implements OnInit {
     }
     return returnDate;
   }
-
   
   SpacesOnly(prop:string): Boolean{
     return prop.match(/^ *$/) !== null ? false : true;

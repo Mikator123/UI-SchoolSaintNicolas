@@ -109,7 +109,7 @@ matTooltip="logout"
     </button>
 
     <button mat-menu-item
-    [routerLink]="['testResult/'+userId]"> 
+    [routerLink]="['Resultats/'+userId]"> 
       <mat-icon>school</mat-icon>
       <span>Scolaire</span>
     </button>
@@ -227,8 +227,7 @@ matTooltip="logout"
 
  <mat-menu #StudentList="matMenu">
     <button mat-menu-item *ngFor="let user of contactList"> 
-      <mat-icon *ngIf="user.gender == 'M'">local_fire_department</mat-icon>
-      <mat-icon *ngIf="user.gender == 'F'">local_florist</mat-icon>
+      <img matCardAvatar [src]="user.gender == 'M' ? 'http://www.haneffebasket.be/wp-content/uploads/2017/04/avatar-vide.jpeg':'http://www.tmf-operating.com/wp-content/uploads/2015/12/avatar-femme-300x176.jpg'">
       <span>{{user.fullName}}</span>
     </button>
  </mat-menu>

@@ -11,6 +11,7 @@ import { CreateNoteComponent } from './Create-note/create.component';
 import { AuthService } from 'src/app/Modules/auth/Services/Auth/auth.service';
 import { Class } from '../../Models/Class.model';
 import { UpdateNoteComponent } from './Update-note/update.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 export interface UpdateDialogData {
   id: number,
@@ -47,12 +48,13 @@ export class TrimestrialNoteComponent implements OnInit {
     private _profService : ProfessorService,
     private _noteService: NoteService,
     private _routing: ActivatedRoute,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private _snackBar :MatSnackBar,
   ) { }
 
   ngOnInit(): void {
     this.studentId = this._routing.snapshot.params['studentId'];
-    this._authService.user$.subscribe(data => this.classId = data.classId)
+    this._authService.user$.subscribe(data => this.classId = data && data.classId || 0)
     this._noteService.getNotes(this.studentId);
     this.myNoteSubscritption = this._noteService.noteSubject.subscribe((list : Note[]) => {this.notes = list});
     this._profService.getClassById(this.classId);
@@ -68,17 +70,18 @@ export class TrimestrialNoteComponent implements OnInit {
     });
 
     ref.afterClosed().subscribe(result => {
-      let validation = result
-      if (validation == true)
+      if (result == true)
       {
         this._noteService.deleteNote(actualeNoteId, this.studentId);
+        this._snackBar.open("Suppression effectuée.", null, {duration : 3000})
+        
       }
     })
     
   }
 
   openUpdateDialog(note: Note){
-    let ref= this.dialog.open(UpdateNoteComponent, {
+    let ref = this.dialog.open(UpdateNoteComponent, {
       width: '80vw',
       height: '80vh',
       data:{
@@ -88,12 +91,15 @@ export class TrimestrialNoteComponent implements OnInit {
         trimester: note.trimester,
         description: note.description,
       },
-      disableClose:true,
+    })
+    ref.afterClosed().subscribe(success => {
+      if (success == true)
+        this._snackBar.open("Mise à jour de la note validée.", null, {duration : 3000})
     });
   }
 
   openCreateDialog(studentId: number){
-  this.dialog.open(CreateNoteComponent, {
+  let ref = this.dialog.open(CreateNoteComponent, {
     width: '80vw',
     height: '80vh',
     data:{
@@ -101,6 +107,10 @@ export class TrimestrialNoteComponent implements OnInit {
       className: this.class.name
       },
     disableClose:true,
+    });
+  ref.afterClosed().subscribe(success => {
+      if (success == true)
+        this._snackBar.open("La note est créée", null, {duration : 3000, panelClass:"snack"})
     });
   }
 

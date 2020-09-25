@@ -24,22 +24,16 @@ export class ProfessorService {
     private _client : HttpClient,
   ) { }
 
-  get Student$() { return this.students};
+  get Student$() {return this.students};
   get classes$() {return this.classes};
   
-
+    
 
   getStudents(classId: number)
   {
     this._client.get<Student[]>(this.userURL+"getByClassId/"+classId).subscribe({
       next: data =>{
         this.students = data;
-            this.students.forEach(student => {
-      if (student.photo == null)
-        student.gender === 'M' ? 
-        student.photo = "http://www.haneffebasket.be/wp-content/uploads/2017/04/avatar-vide.jpeg":
-        student.photo = "http://www.tmf-operating.com/wp-content/uploads/2015/12/avatar-femme-300x176.jpg";
-    });
       this.studentSubject.next(this.students.slice());
       },
       error: error => console.log(error)

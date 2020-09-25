@@ -3,7 +3,8 @@
 
         <button 
         mat-raised-button 
-        mat-dialog-close
+        (click)="validation == false"
+        [mat-dialog-close]="validation"
         color="war"
         >Retour</button>
   

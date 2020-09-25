@@ -49,7 +49,7 @@ export class AuthService {
   ResetPwd(RP: ResetPwd){
     this._client.put(this.mainURL,RP, this.HttpOptions(this.userSubject.value.token)).subscribe({
       next:() => {
-        this._router.navigate(['userDetails']);
+        this._router.navigate(['user/'+RP.Id]);
       }
     })
   }

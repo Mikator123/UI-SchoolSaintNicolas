@@ -57,7 +57,7 @@ export class CreateNoteComponent implements OnInit {
         newNote.description = this.form.value['description'];
         this._noteService.createNote(newNote);
         this._noteService.getNotes(this.data.userId);
-        this.dialogRef.close();
+        this.dialogRef.close(true);
       }
       else{
         this.error = true;

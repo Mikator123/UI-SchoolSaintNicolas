@@ -1,0 +1,61 @@
+
+        <mat-card>
+            <mat-card-header>
+                <img mat-card-avatar [src]="userDetailed.photo">
+                <mat-card-title> {{userDetailed.lastName}}</mat-card-title>
+                <mat-card-subtitle> {{userDetailed.firstName}}</mat-card-subtitle>
+            </mat-card-header>
+
+            <mat-card-content>
+                <!-- <p>Date de naissance: {{ userDetailed.birthdate | birthdate }}.</p> -->
+                <p>Adresse: {{userDetailed.adStreet}} n°{{userDetailed.adNumber}} 
+                <label *ngIf="userDetailed.adBox != null"> boite {{userDetailed.adBox}}</label>
+                , {{userDetailed.adPostalCode}} {{userDetailed.adCity}}</p>
+                <p>GSM: {{userDetailed.mobilePhone}}</p>
+                <p>Email: {{userDetailed.email}}</p>
+                <br>
+                <button 
+                [color]="showContact ? 'primary': ''"
+                mat-icon-button
+                *ngIf="userDetailed.contacts != null"
+                (click)="openContacts()">
+                    <mat-icon>people</mat-icon>
+                </button>
+                <div *ngIf="showContact">
+                    <div *ngFor="let contact of userDetailed.contacts">
+                        <mat-accordion>
+                            <mat-expansion-panel (opened)="panelState = true"
+                                                (closed)="panelState = false">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <label >{{contact.lastName + " " + contact.firstName}}</label>
+                                    </mat-panel-title>
+                                    <mat-panel-description>
+                                        <label>{{contact.mobilePhone}}</label>
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>  
+                                <mat-list>
+                                    <mat-list-item> 
+                                        Adresse: {{contact.adStreet}} n°{{contact.adNumber}}
+                                        <label *ngIf="contact.adBox != null"> boite {{contact.adBox}}</label>
+                                        , {{contact.adPostalCode}} {{userDetailed.adCity}} 
+                                    </mat-list-item>
+                                    <mat-divider></mat-divider>   
+                                    <mat-list-item>
+                                        Email: {{contact.email}}
+                                    </mat-list-item>
+                                    <mat-divider></mat-divider>   
+                                    <mat-list-item>
+                                        Date de naissance: {{contact.birthDate}}
+                                    </mat-list-item>
+                                    <mat-divider></mat-divider> 
+                                    <mat-list-item *ngIf="contact.personalNote">
+                                        Note: {{contact.personalNote}}
+                                    </mat-list-item>
+                                </mat-list>
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>

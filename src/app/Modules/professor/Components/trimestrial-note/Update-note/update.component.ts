@@ -65,7 +65,7 @@ export class UpdateNoteComponent implements OnInit {
       updatedNote.userId = this.data.userId;
       updatedNote.description = this.form.value['description'];
       this._noteService.updateNote(updatedNote);
-      this.dialogRef.close();
+      this.dialogRef.close(true);
     }
     else{
       

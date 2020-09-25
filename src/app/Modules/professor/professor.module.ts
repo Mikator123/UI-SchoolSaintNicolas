@@ -10,6 +10,7 @@ import { UpdateNoteComponent } from './Components/trimestrial-note/Update-note/u
 import { CreateNoteComponent } from './Components/trimestrial-note/Create-note/create.component';
 import {UpdateResultComponent} from './Components/test-result/update-result/update-result.component';
 import {CreateResultComponent} from './Components/test-result/create-result/create-result.component';
+import { StudentDetailedComponent } from './Components/student-list/student-detailed/student-detailed.component';
 
 
 
@@ -27,6 +28,7 @@ import {CreateResultComponent} from './Components/test-result/create-result/crea
     TestResultComponent,
     UpdateResultComponent,
     CreateResultComponent,
+    StudentDetailedComponent,
   ],
 
   imports: [
@@ -45,6 +47,7 @@ import {CreateResultComponent} from './Components/test-result/create-result/crea
     UpdateNoteComponent,
     UpdateResultComponent,
     CreateResultComponent,
+    StudentDetailedComponent,
   ]
 })
 export class ProfessorModule { }
