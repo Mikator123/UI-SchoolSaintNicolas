@@ -5,14 +5,14 @@
   <button 
   [matMenuTriggerFor]="StudentMenu" 
   matTooltip="Menu" 
-  *ngIf="user.statusCode == 1 || user.statusCode == 4 || user.statusCode == 8"
+  *ngIf="user.statusCode != 2"
   mat-icon-button>
     <mat-icon>apps</mat-icon>
   </button>
 
   <button [matMenuTriggerFor]="ProfessorMenu"
     matTooltip="Menu"
-    *ngIf="user.statusCode == 2 || user.statusCode == 4 || user.statusCode == 8"
+    *ngIf="user.statusCode != 1"
      mat-icon-button>
     <mat-icon>apps</mat-icon>
   </button>
@@ -187,7 +187,8 @@ matTooltip="logout"
 
   <mat-menu #class="matMenu">
 
-    <button mat-menu-item>
+    <button mat-menu-item
+    [routerLink]="['Resultats']">
       <mat-icon>show_chart</mat-icon>
       <span>Résultats</span>
     </button>

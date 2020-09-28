@@ -26,11 +26,9 @@
         </mat-error>
       </mat-form-field>
       
-      <button 
-      mat-raised-button 
-      type="submit" 
-      color="primary" 
-      [disabled]="form.invalid">Valider</button>
+      <mat-spinner-button [options]="spinnerButtonOptions" [disabled]="form.invalid" >
+      </mat-spinner-button>
+
       <a [routerLink]="['login']"  class="forgotPwdLabel">Mot de passe oublié ?</a>
     </form>
   </mat-card-content>

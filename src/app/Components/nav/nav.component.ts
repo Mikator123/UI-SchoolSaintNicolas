@@ -37,13 +37,11 @@ export class NavComponent implements OnInit{
     this.myMailsSubscription = this._userService.mailSubject.subscribe((list : UserContactMail[]) => {this.contactList = list});
     this.user$ = this._auth.userSubject;
     this.user$.subscribe(user => {
-      if (user == null || user.classId == null) return;
-      this._userService.getMails(user.classId);
+      if (user == null) return;
+      if (user.classId != null)
+        this._userService.getMails(user.classId);
       this.user = user;
     })
-
-
-
   }
 
   clickTheme(){

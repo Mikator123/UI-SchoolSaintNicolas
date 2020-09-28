@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UserRoutingModule } from './user-routing.module';
 import { DetailsComponent } from './Components/details/details.component';
 import { SharedModule } from '../shared/shared.module';
+import { PhotoComponent } from './Components/photo/photo.component';
 
 
 
@@ -10,6 +11,7 @@ import { SharedModule } from '../shared/shared.module';
 @NgModule({
   declarations: [
     DetailsComponent,
+    PhotoComponent,
   ],
 
   imports: [

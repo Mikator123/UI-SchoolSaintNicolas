@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../Services/Auth/auth.service';
 import { FormLogin } from '../../Models/FormLogin.model';
+import {MatProgressButtonOptions} from 'mat-progress-buttons';
 
 
 @Component({
@@ -18,7 +19,17 @@ export class LoginComponent implements OnInit {
   returnUrl:string;
   error = false;
   errorMsg: string = null;
-  
+  spinnerButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: "Valider",
+    spinnerSize: 19,
+    raised: true,
+    stroked: false,
+    buttonColor: 'primary',
+    spinnerColor: 'accent',
+    fullWidth: false,
+    disabled: false,
+    mode: 'indeterminate'}
   passwordHide = true;
 
   constructor(
@@ -41,6 +52,7 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(){
+  this.spinnerButtonOptions.active = true;
   let formLogin = new FormLogin();
   formLogin.login = this.form.value['login'];
   formLogin.password = this.form.value['password'];
@@ -63,5 +75,6 @@ export class LoginComponent implements OnInit {
       this.errorMsg = "Le mot de passe ne correspond pas au login.";
     else 
       this.errorMsg = "Serveur déconnecté";
+      this.spinnerButtonOptions.active = false;
   }
 }

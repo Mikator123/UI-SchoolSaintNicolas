@@ -23,6 +23,7 @@
     "@angular/router": "~10.0.9",
     "@mdi/js": "^5.5.55",
     "chart.js": "^2.9.3",
+    "mat-progress-buttons": "^9.1.1",
     "ng2-charts": "^2.4.2",
     "ngx-mask": "^10.0.1",
     "rxjs": "~6.5.5",

@@ -7,8 +7,11 @@ import { ViewEncapsulation } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ResetPasswordComponent } from 'src/app/Modules/auth/Components/reset-password/reset-password.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { PhotoComponent } from '../photo/photo.component';
 
-
+export interface PhotoDialogData{
+  photo: string;
+}
 
 @Component({
   selector: 'app-details',
@@ -76,6 +79,14 @@ export class DetailsComponent implements OnInit {
     }
     else 
       return '';
+  }
+
+  openPhotoDialog(){
+    let ref = this.dialog.open(PhotoComponent,{
+      data: {
+        photo: this.userDetailed.photo
+      }
+    })
   }
 
 
