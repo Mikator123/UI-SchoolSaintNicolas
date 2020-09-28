@@ -1,5 +1,9 @@
 <mat-card>
-<div>
+    <mat-card-header *ngIf="statusCode > 1">
+        <mat-card-title>Notes de <b>{{student.lastName}} {{student.firstName}}</b></mat-card-title>
+    </mat-card-header>
+
+<div *ngIf="statusCode > 1">
     <button mat-button color="war" [routerLink]="['../../Etudiants']">Retour</button>
     <button mat-button color="primary" (click)="openCreateDialog(this.studentId)">Créer</button>
 
@@ -20,8 +24,12 @@
                     </mat-panel-description>
                 </mat-expansion-panel-header>              
                 <p> {{note.description}} </p>
-                <button mat-button color="accent" (click)="openDeleteDialog(note.id)">Supprimer</button>
-                <button mat-button color="primary" (click)="openUpdateDialog(note)">Mettre à jour</button>     
+                <button 
+                        *ngIf="statusCode > 1"
+                    mat-button color="accent" (click)="openDeleteDialog(note.id)">Supprimer</button>
+                <button 
+                    *ngIf="statusCode > 1"
+                    mat-button color="primary" (click)="openUpdateDialog(note)">Mettre à jour</button>     
             </mat-expansion-panel>
         </mat-accordion>
     </div>

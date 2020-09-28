@@ -58,7 +58,9 @@ export class TestResultComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this._authService.user$.subscribe(data => {this.statusCode = data.statusCode, this.classId = data.classId, this.userId = data.id})
+    this._authService.user$.subscribe(data => {
+      if (data == null) return;
+      this.statusCode = data.statusCode, this.classId = data.classId, this.userId = data.id})
     this.studentId = parseInt(this._routing.snapshot.params['studentId']);
     this._resultService.getByStudentId(this.studentId);
     this.resultSubscription = this._resultService.testSubject.subscribe((list:TestResult[]) => {this.results = list});

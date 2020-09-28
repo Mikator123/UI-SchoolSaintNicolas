@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {UserContactMail} from '../Models/UserContactMail.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { AuthService } from '../../auth/Services/Auth/auth.service';
 import {UserDetailed} from '../Models/UserDetailed.model';
 
@@ -12,17 +12,18 @@ export class UserService {
 
   mainURL: string = 'https://localhost:5001/api/user/';
   UserMails : UserContactMail[] = [];
-  mailSubject : Subject<UserContactMail[]> = new Subject<UserContactMail[]>();
-  User = new UserDetailed();
-  userSubject : Subject<UserDetailed> = new Subject<UserDetailed>();
+  mailSubject : Subject<UserContactMail[]>= new Subject<UserContactMail[]>();
 
   constructor(
-    private _auth: AuthService,
     private _client: HttpClient,
   ) { }
 
+  get mails$(): Observable<UserContactMail[]>{
+    return this.mailSubject.asObservable()}
+  
 
-    getMails(classId:number){
+
+  getMails(classId:number){
       this._client.get<UserContactMail[]>(this.mainURL+'getMails/'+classId).subscribe({
         next: data => {
           this.UserMails = data;
@@ -32,7 +33,7 @@ export class UserService {
       })
     }
 
-    getById(Id : number): Observable<UserDetailed>{
+  getById(Id : number): Observable<UserDetailed>{
       return this._client.get<UserDetailed>(this.mainURL+Id);
     }
 

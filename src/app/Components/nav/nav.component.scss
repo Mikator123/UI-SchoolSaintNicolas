@@ -31,3 +31,42 @@
 .sideBarButton{
   align-self: flex-end;
 }
+
+
+@keyframes focus-in-expand-fwd {
+  0% {
+    letter-spacing: -0.5em;
+    transform: translateZ(-800px);
+    filter: blur(12px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateZ(0);
+    filter: blur(0);
+    opacity: 1;
+  }
+}
+
+.focus-in-expand-fwd {
+animation: focus-in-expand-fwd 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+
+
+@keyframes blur-out-contract {
+  0% {
+    -webkit-filter: blur(0.01);
+            filter: blur(0.01);
+  }
+  100% {
+    letter-spacing: -0.5em;
+    -webkit-filter: blur(12px) opacity(0%);
+            filter: blur(12px) opacity(0%);
+  }
+}
+
+
+.blur-out-contract {
+	-webkit-animation: blur-out-contract 0.8s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+	        animation: blur-out-contract 0.8s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+}

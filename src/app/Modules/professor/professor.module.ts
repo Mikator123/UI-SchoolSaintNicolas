@@ -11,6 +11,7 @@ import { CreateNoteComponent } from './Components/trimestrial-note/Create-note/c
 import {UpdateResultComponent} from './Components/test-result/update-result/update-result.component';
 import {CreateResultComponent} from './Components/test-result/create-result/create-result.component';
 import { StudentDetailedComponent } from './Components/student-list/student-detailed/student-detailed.component';
+import { ResultsComponent } from './Components/test-result/results/results/results.component';
 
 
 
@@ -29,6 +30,7 @@ import { StudentDetailedComponent } from './Components/student-list/student-deta
     UpdateResultComponent,
     CreateResultComponent,
     StudentDetailedComponent,
+    ResultsComponent,
   ],
 
   imports: [

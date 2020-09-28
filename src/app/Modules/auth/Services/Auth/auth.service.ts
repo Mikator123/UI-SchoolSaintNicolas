@@ -20,24 +20,19 @@ export class AuthService {
   constructor(
     private _client: HttpClient,
     private _router: Router,
-
-  ) {
-    
-   }
+  ) {}
 
    get user$(): Observable<UserSimplified> {
      return this.userSubject.asObservable();
-     
    }
 
+
   Login(form : FormLogin) {
-    
     return this._client.post<UserSimplified>(this.mainURL, form)
     .pipe(map(user => {
       localStorage.setItem('user', JSON.stringify(user));
       this.userSubject.next(user);
       return user}));
-      
   }
 
   Logout(){

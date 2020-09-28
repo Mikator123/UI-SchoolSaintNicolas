@@ -8,9 +8,6 @@ import { UserSimplified } from '../../Models/UserSimplified.model';
   providedIn: 'root'
 })
 export class AuthGuardService {
-
-user$ : Observable<UserSimplified>;
-
   constructor(
     private _auth: AuthService,
     private route:Router,

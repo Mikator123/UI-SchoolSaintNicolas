@@ -11,6 +11,13 @@ import {NavComponent} from './Components/nav/nav.component';
 import {ProfessorModule} from './Modules/professor/professor.module';
 import { DeleteComponent } from './Components/confirmBox/Delete/delete.component';
 import { SharedModule } from './Modules/shared/shared.module';
+import { DashComponent } from './dash/dash.component';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { LayoutModule } from '@angular/cdk/layout';
 
 
 @NgModule({
@@ -19,6 +26,7 @@ import { SharedModule } from './Modules/shared/shared.module';
     HomeComponent,
     NavComponent,
     DeleteComponent,
+    DashComponent,
 
   ],
   imports: [
@@ -29,9 +37,14 @@ import { SharedModule } from './Modules/shared/shared.module';
     UserModule,
     ProfessorModule,
     SharedModule,
+    MatGridListModule,
+    MatCardModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    LayoutModule,
   ],
-  providers: [   
-
+  providers: [ 
   ],
   bootstrap: [AppComponent]
 })

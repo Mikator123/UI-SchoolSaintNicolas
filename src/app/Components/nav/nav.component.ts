@@ -39,9 +39,11 @@ export class NavComponent implements OnInit{
     this.user$.subscribe(user => {
       if (user == null || user.classId == null) return;
       this._userService.getMails(user.classId);
-      this.userId = user.id;
-
+      this.user = user;
     })
+
+
+
   }
 
   clickTheme(){
@@ -50,6 +52,7 @@ export class NavComponent implements OnInit{
 
   logout(){
     this._auth.Logout();
+    this.user = null;
   }
 
 

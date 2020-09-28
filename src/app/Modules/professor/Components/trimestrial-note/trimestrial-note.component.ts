@@ -12,6 +12,7 @@ import { AuthService } from 'src/app/Modules/auth/Services/Auth/auth.service';
 import { Class } from '../../Models/Class.model';
 import { UpdateNoteComponent } from './Update-note/update.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Student } from '../../Models/Student.model';
 
 export interface UpdateDialogData {
   id: number,
@@ -42,6 +43,9 @@ export class TrimestrialNoteComponent implements OnInit {
   notes : Note[];
   myNoteSubscritption: Subscription;
   class : Class;
+  student: Student;
+  statusCode: number;
+
 
   constructor(
     private _authService: AuthService,
@@ -50,15 +54,20 @@ export class TrimestrialNoteComponent implements OnInit {
     private _routing: ActivatedRoute,
     public dialog: MatDialog,
     private _snackBar :MatSnackBar,
+
   ) { }
 
   ngOnInit(): void {
-    this.studentId = this._routing.snapshot.params['studentId'];
-    this._authService.user$.subscribe(data => this.classId = data && data.classId || 0)
+    this.studentId = parseInt(this._routing.snapshot.params['studentId']);
+    this._authService.user$.subscribe(data => {
+      if (data == null) return;
+      this.classId = data.classId;
+      this.statusCode = data.statusCode})
     this._noteService.getNotes(this.studentId);
     this.myNoteSubscritption = this._noteService.noteSubject.subscribe((list : Note[]) => {this.notes = list});
     this._profService.getClassById(this.classId);
-    this._profService.classSubject.subscribe((data: Class) => { this.class = data})
+    this._profService.classSubject.subscribe((data: Class) => { this.class = data});
+    this.student = this._profService.Student$.find(s => s.id == this.studentId)
     
   }
 

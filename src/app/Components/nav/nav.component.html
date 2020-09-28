@@ -1,8 +1,6 @@
 
 <mat-toolbar color="primary">
-<mat-toolbar color="primary" *ngIf="user$ | async as user">
-
-
+<mat-toolbar color="primary" *ngIf="user" class="focus-in-expand-fwd">
 
   <button 
   [matMenuTriggerFor]="StudentMenu" 
@@ -40,13 +38,12 @@ matTooltip="logout"
 </button>
 
 
-
   <span class="spacer"></span>
-
   <button mat-icon-button  
   matTooltip="ToDo" 
   matBadge="5" 
   matBadgeColor="accent"
+  routerLink='dash'
  >
     <mat-icon>content_paste</mat-icon>
   </button>
@@ -103,15 +100,21 @@ matTooltip="logout"
   <mat-menu #profil="matMenu">
 
     <button mat-menu-item
-    [routerLink]="['user/'+userId]">
+    [routerLink]="['user/'+user.id]">
       <mat-icon>face</mat-icon>
       <span>Personnel</span>
     </button>
 
     <button mat-menu-item
-    [routerLink]="['Resultats/'+userId]"> 
+    [routerLink]="['notesTrimestrielle/'+user.id]"> 
       <mat-icon>school</mat-icon>
-      <span>Scolaire</span>
+      <span>infos</span>
+    </button>
+
+    <button mat-menu-item
+    [routerLink]="['Resultats/'+user.id]"> 
+      <mat-icon>leaderboard</mat-icon>
+      <span>Résultats</span>
     </button>
 
     <button mat-menu-item> 
@@ -156,7 +159,7 @@ matTooltip="logout"
   </button>
 
     <button mat-menu-item
-    [routerLink]="['user/'+userId]">
+    [routerLink]="['user/'+user.id]">
       <mat-icon>fingerprint</mat-icon>
       <span>Profil</span>
     </button>
