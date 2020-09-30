@@ -29,9 +29,9 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import {MatSelectModule} from '@angular/material/select';
 import {MatBadgeModule} from '@angular/material/badge';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {ChartsModule} from 'ng2-charts';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatProgressButtonsModule } from 'node_modules/mat-progress-buttons';
+import {ChartsModule} from 'ng2-charts';
 
 
 

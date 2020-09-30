@@ -15,8 +15,10 @@ export class ResultService {
   tests: TestResult[];
   testSubject: Subject<TestResult[]> = new Subject<TestResult[]>();
   categories: Category[];
-  
+  allResultSubject : Subject<TestResult[]> = new Subject<TestResult[]>();
+  allResult: TestResult[];
 
+  
   constructor(
     private _client : HttpClient,
   ) {}
@@ -32,6 +34,16 @@ export class ResultService {
       next: data => {
         this.tests = data;
         this.testSubject.next(this.tests.slice());
+      },
+      error: error => console.log(error)
+    })
+  }
+
+  getResultByClassId(classId: number){
+    this._client.get<TestResult[]>(this.testResultUrl+'byClassId/'+classId).subscribe({
+      next: data => {
+        this.allResult = data;
+        this.allResultSubject.next(this.allResult.slice());
       },
       error: error => console.log(error)
     })
@@ -57,6 +69,8 @@ export class ResultService {
       error: error => console.log(error)
     })
   }
+
+
   
   private HttpOptions(token:string){
     let options = {

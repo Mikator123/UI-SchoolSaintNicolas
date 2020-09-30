@@ -1,6 +1,6 @@
 
 <mat-toolbar color="primary">
-<mat-toolbar color="primary" *ngIf="user" class="focus-in-expand-fwd">
+<mat-toolbar color="primary" *ngIf="user" class="bounce-in-top">
 
   <button 
   [matMenuTriggerFor]="StudentMenu" 
@@ -38,12 +38,13 @@ matTooltip="logout"
 </button>
 
 
-  <span class="spacer"></span>
+  <span class="spacer">
+    <div [class]="greetingClass">{{WelcomeMsg}}</div>
+  </span>
   <button mat-icon-button  
   matTooltip="ToDo" 
   matBadge="5" 
   matBadgeColor="accent"
-  routerLink='dash'
  >
     <mat-icon>content_paste</mat-icon>
   </button>

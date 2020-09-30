@@ -12,7 +12,7 @@
           <mat-card-content class="dashboard-card-content">
             <mat-label>Selectionnez une categorie</mat-label>
             <mat-select [value]="startingCategoryId" >
-                <mat-option [value]="cat.id" *ngFor="let cat of categories">{{cat.name}}</mat-option>
+                <mat-option  [value]="cat.id" *ngFor="let cat of categories">{{cat.name}}</mat-option>
               </mat-select>
           </mat-card-content>
         </mat-card>
@@ -42,7 +42,16 @@
             </mat-card-title>
           </mat-card-header>
           <mat-card-content class="dashboard-card-content">
-            <div>Card Content Here</div>
+            <div>
+                <canvas baseChart 
+                    [datasets]="LineChartData"
+                    [labels]="LineChartLabels"
+                    [options]="LineChart"
+                    [legend]="LineChartLegend"
+                    [chartType]="LineChartType"
+                    >
+                </canvas>
+            </div>
           </mat-card-content>
         </mat-card>
       </mat-grid-tile>

@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
     raised: true,
     stroked: false,
     buttonColor: 'primary',
-    spinnerColor: 'accent',
+    spinnerColor: 'primary',
     fullWidth: false,
     disabled: false,
     mode: 'indeterminate'}

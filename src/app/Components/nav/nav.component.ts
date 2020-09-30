@@ -15,6 +15,7 @@ export class NavComponent implements OnInit{
   userId: number = null;
   user : UserSimplified = null;
   ThemeLight: boolean = false;
+  greetingClass:string;
   contactList : UserContactMail[] = [];
   myMailsSubscription : Subscription;
 
@@ -42,6 +43,8 @@ export class NavComponent implements OnInit{
         this._userService.getMails(user.classId);
       this.user = user;
     })
+    this.greetingClass = 'bounce-in-top';
+    setTimeout(() => {this.greetingClass = 'bounce-out-top';}, 6000)
   }
 
   clickTheme(){
@@ -53,9 +56,21 @@ export class NavComponent implements OnInit{
     this.user = null;
   }
 
-
-
-
+  get WelcomeMsg():string{
+    let name = this.user.firstName + " " + this.user.lastName
+    let msg = "";
+    let date = new Date();
+    let time = date.getHours();
+    if (time >= 6 && time < 8)
+      msg = "Déjà au travail "+ name + " !";
+    if (time >= 8 && time < 18)
+      msg = "Bonjour "+name +".";
+    if (time >=18 && time < 22)
+      msg = "Bonsoir "+name +".";
+    if (time >= 22 && time < 6)
+      msg = "Encore au travail "+ name +" !";
+    return msg;
+  }
 
 }
 

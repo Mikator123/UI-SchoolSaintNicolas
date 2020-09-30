@@ -40,6 +40,8 @@ export class ProfessorService {
     });
   }
 
+  
+
   getClassById(classId:number)
   {
     this._client.get<Class>(this.classURL+classId).subscribe({
