@@ -9,6 +9,7 @@ import { Student } from 'src/app/Modules/professor/Models/Student.model';
 import { TestResult } from 'src/app/Modules/professor/Models/testResult.model';
 import { ProfessorService } from 'src/app/Modules/professor/Services/professor.service';
 import { ResultService } from 'src/app/Modules/professor/Services/result.service';
+import {DatePipe, formatDate} from '@angular/common';
 
 
 
@@ -63,11 +64,18 @@ export class ResultsComponent implements OnInit {
       display:true,
       text:'Evolution des résultats en temps réel',
     },
-    axisY:{
-      title: "Résultats",
-    },
-    axisX:{
-      title:"Dates",  
+    scales: {
+      yAxes: [{
+          ticks: {
+              beginAtZero: true,
+              max: 20
+          }
+      }],
+      xAxes:[{
+        // type:'time',
+        // time:{displayFormats:{week:'ll'}}
+        // valueFormatString:"MMM"
+      }]
     },
     animationEnable:true,
   
@@ -81,8 +89,8 @@ export class ResultsComponent implements OnInit {
     //Props
     categories: Category[] = [];
     startingCategoryId = 0;
-    students: Student[] = [];
-    startingStudentId = 0;
+    // students: Student[] = [];
+    // startingStudentId = 0;
     ActualClassId: number;
     results: TestResult[] = [];
     
@@ -110,11 +118,11 @@ export class ResultsComponent implements OnInit {
       this.categories.push({id:0 , name : 'Toutes'})
     });
     this._profService.getStudents(this.ActualClassId);
-    this._profService.studentSubject.subscribe(student => {
-      if (student == null) return;
-      this.students = student.filter(x => x.statusCode != 2);
-      this.students.push({id:0, firstName: 'Tous', lastName:'', birthdate:new Date(), gender:'', photo:'', statusCode:1});
-    });
+    // this._profService.studentSubject.subscribe(student => {
+    //   if (student == null) return;
+    //   this.students = student.filter(x => x.statusCode != 2);
+    //   this.students.push({id:0, firstName: 'Tous', lastName:'', birthdate:new Date(), gender:'', photo:'', statusCode:1});
+    // });
     this._resultService.getResultByClassId(this.ActualClassId)
     this._resultService.allResultSubject.subscribe(results => {
       if (results == null) return;

@@ -12,7 +12,7 @@ import {UpdateResultComponent} from './Components/test-result/update-result/upda
 import {CreateResultComponent} from './Components/test-result/create-result/create-result.component';
 import { StudentDetailedComponent } from './Components/student-list/student-detailed/student-detailed.component';
 import { ResultsComponent } from './Components/test-result/results/results/results.component';
-import { OpenFileComponent } from './Components/test-result/openFile/open-file/open-file.component';
+import { ViewFileComponent } from './Components/test-result/view-file/view-file.component';
 
 
 
@@ -32,7 +32,7 @@ import { OpenFileComponent } from './Components/test-result/openFile/open-file/o
     CreateResultComponent,
     StudentDetailedComponent,
     ResultsComponent,
-    OpenFileComponent,
+    ViewFileComponent,
   ],
 
   imports: [

@@ -14,6 +14,7 @@ import { ProfessorService } from '../../Services/professor.service';
 import {ResultService} from '../../Services/result.service';
 import { CreateResultComponent } from './create-result/create-result.component';
 import { UpdateResultComponent } from './update-result/update-result.component';
+import { ViewFileComponent } from './view-file/view-file.component';
 
 export interface UpdateDialogData {
   id: number,
@@ -25,6 +26,16 @@ export interface UpdateDialogData {
   studentId: number;
   
 }
+
+// export interface data{
+//   Id:number;
+//   data: ChartDataSets[];
+// }
+
+// export interface label{
+//   Id:number;
+//   label: Date[];
+// }
 
 export interface CreateDialogData {
   classId: number;
@@ -61,18 +72,34 @@ export class TestResultComponent implements OnInit {
       display:true,
       text:'Evolution des résultats en temps réel'
     },
+    scales: {
+      yAxes: [{
+          ticks: {
+              beginAtZero: true,
+              max: 20
+          }
+      }]}
     };
-  public LineChartLabels : Date[] = [];
+  public LineChartLabels : [];
   public LineChartType = 'line';
   public LineChartLegend = false;
-  public LineChartData : ChartDataSets[] = [];
+  public LineChartData : [];
   //BarChart
   public BarChart = {
     responsive: true,
     title:{
       display:true,
       text:'Moyenne des résultats en temps réel'
-    }};
+    },
+    scales: {
+      yAxes: [{
+          ticks: {
+              beginAtZero: true,
+              max: 20
+          }
+      }]
+  },
+  };
   public BarChartLabels: string[] = [];
   public BarChartType= 'bar';
   public BarChartLegend = false;
@@ -98,13 +125,14 @@ export class TestResultComponent implements OnInit {
     this._resultService.getCategories().subscribe(data => {
       this.categories = data
       this.categories.forEach(cat => {
-        let ActualCategories = this.categories.filter(x => x)
-        this.BarChartLabels.push(cat.name)});
+        this.BarChartLabels.push(cat.name);
+        });
     });
     this.student = this._profService.Student$.find(s => s.id == this.studentId)
     this._resultService.getByStudentId(this.studentId);
     this.resultSubscription = this._resultService.testSubject.subscribe((list:TestResult[]) => {
     this.results = list;
+
     if (this.results.length != 0 && this.categories.length != 0){
       let numbers : number[] = [];
       for (let i = 0; i < this.categories.length; i ++){
@@ -119,7 +147,7 @@ export class TestResultComponent implements OnInit {
         numbers.push(average/passage);
       }
       if (numbers.length != 0){
-        this.BarChartData[0] = ({data: numbers, label:'Categories', backgroundColor:"#48C9B0"})
+        this.BarChartData[0] = ({data: numbers, label:'Categories', backgroundColor: ['#48C9B06A','#EF9A9A6A','#CE93D86A','#9FA8DA6A','#90CAF96A','#FFAB916A', '#80CBC46A',  '#E6EE9C6A', '#FFE0826A', '#FFE0826A', '#F48FB16A','#FFAB916A','#BCAAA46A', 'B0BEC56A', '#FFCC806A', '#FFF59D6A', '#A5D6A76A']})
       }
     }
   });
@@ -163,29 +191,29 @@ export class TestResultComponent implements OnInit {
   // });
   }
 
-  getDataByCategory(categoryId: number): Date[] {
-    if (this.results == null) return;
-    let data = [];
+  getLabelsByCategory(categoryId: number): Date[] {
+    if (this.results.length == 0) return [];
+    let label = [];
     if (this.results != null && this.results.length != 0){
       this.results.forEach(result => {
         if (categoryId == result.categoryId)
-        data.push(result.date);
+        label.push(result.date);
       });
     }
-    return data;
+    return label;
   }
 
-  getLabelsByCategory(categoryId: number): ChartDataSets[] {
-    if(this.results == null) return;
-    let dataSets : Date[] = [];
+  getDataByCategory(categoryId: number): ChartDataSets[] {
+    if(this.results == null) return [];
+    let labelSets : Date[] = [];
     let chartData: ChartDataSets[] = [];
-    dataSets = this.getDataByCategory(categoryId);
+    labelSets = this.getLabelsByCategory(categoryId);
     let currentCategory = this.categories.find( x => x.id == categoryId);
-    if (this.results.length != 0 && this.categories.length != 0 && dataSets.length != 0){
+    if (this.results.length != 0 && this.categories.length != 0 && labelSets.length != 0){
       let tests = {numbers:[], dates:[]};
-      for (let i = 0; i < dataSets.length; i++){
+      for (let i = 0; i < labelSets.length; i++){
         this.results.forEach(result => {
-          if (categoryId == result.categoryId && result.date == dataSets[i]){
+          if (categoryId == result.categoryId && result.date == labelSets[i]){
             tests.numbers.push(result.result);
             tests.dates.push(result.date);
             }
@@ -193,19 +221,18 @@ export class TestResultComponent implements OnInit {
       }
       if (tests.numbers.length != 0 && tests.dates.length != 0){
         let resultToGO : number[] = [];
-        resultToGO.length = dataSets.length;
+        resultToGO.length = labelSets.length;
         for(let k = 0; k < resultToGO.length; k++)
         {
-          if(dataSets.includes(tests.dates[k])){
-            let index = dataSets.findIndex(date => date == tests.dates[k]);
+          if(labelSets.includes(tests.dates[k])){
+            let index = labelSets.findIndex(date => date == tests.dates[k]);
             resultToGO[index] = tests.numbers[k];
           }
         }
-        chartData = [{data: resultToGO, label: currentCategory.name, borderColor: this.borderColor[categoryId], backgroundColor: "#FFFFFF00"}]
-        
-        console.log(chartData)
+        chartData = [{data: resultToGO, label: currentCategory.name, borderColor: this.borderColor[categoryId], backgroundColor: "#FFFFFF0B"}]
       }
     }
+    console.log(chartData, false)
     return chartData;
   }
 
@@ -286,5 +313,13 @@ export class TestResultComponent implements OnInit {
     return (sum/divideBy);
   }
   
-
+  openFile(resultId:number){
+    let resultDocument = this.results.filter(x => x.id == resultId)
+    let ref = this.dialog.open(ViewFileComponent,{
+      disableClose:false,
+      data:{
+        document: resultDocument
+      }
+    })
+  }
 }

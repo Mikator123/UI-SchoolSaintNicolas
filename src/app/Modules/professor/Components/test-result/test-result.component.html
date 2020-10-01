@@ -34,11 +34,11 @@
                                     <label> {{result.date | date: 'dd/MM/yyyy'}} </label>
                                 </mat-panel-title>
                                 <mat-panel-description>
-                                    <label [style]="result.result > 13 ? 'color:#42f5a7':result.result < 10? 'color:#db4527':'color:#db9c27'"> {{result.result | number: '1.1-1'}}</label>
+                                    <label [style]="result.result > 13 ? 'color:#48C9B0':result.result < 10? 'color:#db4527':'color:#db9c27'"> {{result.result | number: '1.1-1'}}</label>
                                 </mat-panel-description>
                             </mat-expansion-panel-header>              
                                 <p> {{result.description}} </p>
-                                <button mat-icon-button ><mat-icon>picture_as_pdf</mat-icon></button>
+                                <button mat-icon-button (click)="openFile(result.id)" ><mat-icon>picture_as_pdf</mat-icon></button>
                                 <mat-divider></mat-divider>
                                 <button 
                                 *ngIf="statusCode > 1"
@@ -52,8 +52,8 @@
                     <!-- <mat-card>
                     <div class="dashboard-card-content">
                         <canvas baseChart 
-                            [datasets]="getDataByCategory(cat.id) == null ? [] : getDataByCategory(cat.id)"
-                            [labels]="getLabelsByCategory(cat.id) == null ? [] :getLabelsByCategory(cat.id)"
+                            [labels]=""
+                            [datasets]=""
                             [options]="LineChart"
                             [legend]="LineChartLegend"
                             [chartType]="LineChartType"
@@ -69,11 +69,6 @@
 </mat-card>
 
 <mat-card>
-    <mat-card-header>
-        <mat-card-title>
-            Graphique
-        </mat-card-title>
-    </mat-card-header>
     <mat-card-content class="dashboard-card-content">
         <div>
             <canvas baseChart 
