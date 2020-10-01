@@ -54,6 +54,7 @@ export class UpdateResultComponent implements OnInit {
       category:[this.data.categoryId, Validators.required],
       description:[this.data.description, Validators.required],
       
+      
     })
   }
 
@@ -69,6 +70,7 @@ export class UpdateResultComponent implements OnInit {
       updatedResult.description = this.form.value['description'];
       updatedResult.result = this.form.value['result'];
       updatedResult.studentId = this.data.studentId;
+      // updatedResult.document =  
       this._resultService.update(updatedResult);
       this.dialogRef.close(true);
     }

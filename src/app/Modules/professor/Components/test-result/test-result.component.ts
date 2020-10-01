@@ -75,7 +75,7 @@ export class TestResultComponent implements OnInit {
     }};
   public BarChartLabels: string[] = [];
   public BarChartType= 'bar';
-  public BarChartLegend = true;
+  public BarChartLegend = false;
   public BarChartData : ChartDataSets[] = [];
 
 
@@ -119,7 +119,7 @@ export class TestResultComponent implements OnInit {
         numbers.push(average/passage);
       }
       if (numbers.length != 0){
-        this.BarChartData[0] = ({data: numbers, label:'Categorie', backgroundColor:this.borderColor[3]})
+        this.BarChartData[0] = ({data: numbers, label:'Categories', backgroundColor:"#48C9B0"})
       }
     }
   });
@@ -178,7 +178,7 @@ export class TestResultComponent implements OnInit {
   getLabelsByCategory(categoryId: number): ChartDataSets[] {
     if(this.results == null) return;
     let dataSets : Date[] = [];
-    let chartData: ChartDataSets [] = [];
+    let chartData: ChartDataSets[] = [];
     dataSets = this.getDataByCategory(categoryId);
     let currentCategory = this.categories.find( x => x.id == categoryId);
     if (this.results.length != 0 && this.categories.length != 0 && dataSets.length != 0){
@@ -201,9 +201,8 @@ export class TestResultComponent implements OnInit {
             resultToGO[index] = tests.numbers[k];
           }
         }
-        chartData = [{
-          data: resultToGO, label: currentCategory.name, borderColor: this.borderColor[categoryId], backgroundColor: "#FFFFFF00"
-        }];
+        chartData = [{data: resultToGO, label: currentCategory.name, borderColor: this.borderColor[categoryId], backgroundColor: "#FFFFFF00"}]
+        
         console.log(chartData)
       }
     }

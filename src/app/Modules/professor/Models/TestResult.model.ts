@@ -6,4 +6,5 @@ export class TestResult{
     categoryId: number;
     classId: number;
     studentId: number;
+    document: string;
 }

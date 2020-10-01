@@ -131,7 +131,8 @@ export class ResultsComponent implements OnInit {
           for (let k = 0; k < this.LineChartLabels.length; k++){
             let average = 0;
             let passage = 0;
-            let date;            
+            let date; 
+
             this.results.forEach(R => {
               if (R.date == this.LineChartLabels[k] && R.categoryId == this.categories[i].id){
                 average += R.result;
@@ -143,7 +144,6 @@ export class ResultsComponent implements OnInit {
               tests.numbers.push(average/passage)
               tests.dates.push(date)
             }
-
           }
           if (tests.numbers.length != 0 && tests.dates.length != 0){
             let numbers : number[] = [];

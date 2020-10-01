@@ -1,13 +1,18 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { mdiTruckDelivery } from '@mdi/js';
+import { catchError, map } from 'rxjs/operators';
 import { Category } from '../../../Models/Category.model';
 import { TestResult } from '../../../Models/testResult.model';
 import { ProfessorService } from '../../../Services/professor.service';
 import { ResultService } from '../../../Services/result.service';
 import {CreateDialogData} from '../test-result.component';
+import {UploadFileService } from '../../../Services/upload-file.service';
+import { of } from 'rxjs';
+import { MatProgressButtonOptions } from 'mat-progress-buttons';
 
 @Component({
   selector: 'app-create-result',
@@ -15,6 +20,10 @@ import {CreateDialogData} from '../test-result.component';
   styleUrls: ['./create-result.component.scss']
 })
 export class CreateResultComponent implements OnInit {
+  @ViewChild('fileUpload', {static: false}) fileUpload: ElementRef;
+  files = []; // au cas où il faut uploader plusieurs fichiers.
+  FileLink : string;
+
 
   form : FormGroup;
   error= false;
@@ -24,12 +33,27 @@ export class CreateResultComponent implements OnInit {
   today = new Date();
 
 
+  //spinner button
+  spinnerButtonOptions: MatProgressButtonOptions = {
+    active: false,
+    text: "Charger",
+    spinnerSize: 19,
+    raised: true,
+    stroked: false,
+    buttonColor: 'primary',
+    spinnerColor: 'primary',
+    fullWidth: false,
+    disabled: false,
+    mode: 'indeterminate'}
+
+
   constructor(
     private _builder: FormBuilder,
     private _resultService: ResultService,
     public dialogRef: MatDialogRef<CreateResultComponent>,
     private _dateAdapter: DateAdapter<any>,
     private _profService: ProfessorService,
+    private _uploadFile: UploadFileService,
     @Inject(MAT_DIALOG_DATA) public data: CreateDialogData
   ) { }
 
@@ -48,6 +72,7 @@ export class CreateResultComponent implements OnInit {
       date:[this.today, Validators.required],
       category:['', Validators.required],
       description:['', Validators.required],
+      document:[''],
       
     })
   }
@@ -55,14 +80,15 @@ export class CreateResultComponent implements OnInit {
 
   onSubmit(){
     if (this.SpacesOnly(this.form.value['description'])){
-      let updatedResult= new TestResult();
-      updatedResult.categoryId= this.form.value['category'];
-      updatedResult.classId = this.data.classId;
-      updatedResult.date = this.form.value['date'];
-      updatedResult.description = this.form.value['description'];
-      updatedResult.result = this.form.value['result'];
-      updatedResult.studentId = parseInt(this.data.studentId.toString());
-      this._resultService.create(updatedResult);
+      let createdResult= new TestResult();
+      createdResult.categoryId= this.form.value['category'];
+      createdResult.classId = this.data.classId;
+      createdResult.date = this.form.value['date'];
+      createdResult.description = this.form.value['description'];
+      createdResult.result = this.form.value['result'];
+      createdResult.studentId = parseInt(this.data.studentId.toString());
+      createdResult.document = this.FileLink;
+      this._resultService.create(createdResult);
       this.dialogRef.close(true);
     }
     else{
@@ -108,6 +134,54 @@ export class CreateResultComponent implements OnInit {
   
   SpacesOnly(prop:string): Boolean{
     return prop.match(/^ *$/) !== null ? false : true;
+  }
+
+  uploadFile(file: any): void {
+    const formData = new FormData();
+    formData.append('file', file.data);
+    file.inProgress = true;
+    // if (formData == null) return;
+    this._uploadFile
+      .upload(formData)
+      .pipe(
+        map((event) => {
+          switch (event.type) {
+            case HttpEventType.UploadProgress:
+              file.progress = Math.round((event.loaded * 100) / event.total);
+              break;
+            case HttpEventType.Response:
+              return event;
+          }
+        }),
+        catchError((error: HttpErrorResponse) => {
+          file.inProgress = false;
+          this.error = true;
+          this.errorTxt = `${file.data.name} n'a pas pu être enregistré.`
+          return of(`${file.data.name} n'a pas pu être enregistré.`);
+        })
+      )
+      .subscribe((event: any) => {
+        if (typeof event === 'object') {
+          this.FileLink = event.body.link;
+        }
+      });
+  }
+  private uploadFiles(): void {
+    this.fileUpload.nativeElement.value = '';
+    this.files.forEach((file) => {
+      this.uploadFile(file);
+    });
+  }
+  onUploadClick(): void {
+    const fileUpload = this.fileUpload.nativeElement;
+    fileUpload.onchange = () => {
+      for (let index = 0; index < fileUpload.files.length; index++) {
+        const file = fileUpload.files[index];
+        this.files.push({ data: file, inProgress: false, progress: 0 });
+      }
+      this.uploadFiles();
+    };
+    fileUpload.click();
   }
 
 }

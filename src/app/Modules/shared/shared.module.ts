@@ -32,6 +32,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatProgressButtonsModule } from 'node_modules/mat-progress-buttons';
 import {ChartsModule} from 'ng2-charts';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 
 
@@ -71,6 +72,7 @@ import {ChartsModule} from 'ng2-charts';
     ChartsModule,
     MatProgressSpinnerModule,
     MatProgressButtonsModule,
+    MatProgressBarModule,
 
     
 
@@ -105,6 +107,7 @@ import {ChartsModule} from 'ng2-charts';
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
     MatProgressButtonsModule,
-    ChartsModule,]
+    ChartsModule,
+    MatProgressBarModule]
 })
 export class SharedModule { }

@@ -70,7 +70,7 @@
     <mat-label>Description:</mat-label>
 
     <textarea 
-      style="height: 30vh"
+      style="height: 15vh"
       matInput
       formControlName="description" 
       required
@@ -81,6 +81,28 @@
     </mat-error>
   </mat-form-field>
     <br/>
+
+    <div style="text-align:center">
+      <mat-card style="margin-top: 10px; width: 90%;">
+          <mat-card-content>
+              <ul>
+                  <li *ngFor="let file of files">
+                      <mat-progress-bar [value]="file.progress"></mat-progress-bar>
+                      <span id="file-label">
+                      </span>
+                  </li>
+              </ul>
+          </mat-card-content>
+          <mat-card-actions>
+              <button mat-button type="button" color="primary" (click)="onUploadClick()">
+                  <mat-icon>file_upload</mat-icon>
+                  Charger
+              </button>
+          </mat-card-actions>
+      </mat-card>
+      <input type="file" formControlName="document" #fileUpload id="fileUpload" name="fileUpload"
+           style="display:none;"/>
+  </div>
 
     <button
     mat-dialog-close
