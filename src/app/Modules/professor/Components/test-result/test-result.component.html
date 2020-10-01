@@ -45,14 +45,45 @@
                                 mat-button color="accent" (click)="openDeleteDialog(result.id)">Supprimer</button>
                                 <button 
                                 *ngIf="statusCode > 1"
-                                mat-button color="primary" (click)="openUpdateDialog(result)">Mettre à jour</button>     
+                                mat-button color="primary" (click)="openUpdateDialog(result)">Mettre à jour</button> 
+ 
                         </mat-expansion-panel>
                     </mat-accordion>
+                    <!-- <mat-card>
+                    <div class="dashboard-card-content">
+                        <canvas baseChart 
+                            [datasets]="getDataByCategory(cat.id) == null ? [] : getDataByCategory(cat.id)"
+                            [labels]="getLabelsByCategory(cat.id) == null ? [] :getLabelsByCategory(cat.id)"
+                            [options]="LineChart"
+                            [legend]="LineChartLegend"
+                            [chartType]="LineChartType"
+                            >
+                        </canvas>
+                    </div>   
+                </mat-card>  -->
             </mat-expansion-panel>
         </mat-accordion>
     </div>
 </div>
-</mat-card>
-<mat-card>
 
 </mat-card>
+
+<mat-card>
+    <mat-card-header>
+        <mat-card-title>
+            Graphique
+        </mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="dashboard-card-content">
+        <div>
+            <canvas baseChart 
+                [datasets]="BarChartData"
+                [labels]="BarChartLabels"
+                [options]="BarChart"
+                [legend]="BarChartLegend"
+                [chartType]="BarChartType"
+                >
+            </canvas>
+        </div>
+    </mat-card-content>
+<mat-card>

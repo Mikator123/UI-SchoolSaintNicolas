@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { ChartDataSets } from 'chart.js';
 import { Subscription } from 'rxjs';
 import { DeleteComponent } from 'src/app/Components/confirmBox/Delete/delete.component';
 import { AuthService } from 'src/app/Modules/auth/Services/Auth/auth.service';
@@ -42,11 +44,42 @@ export class TestResultComponent implements OnInit {
   studentId: number;
   results: TestResult[] = [];
   resultSubscription: Subscription;
-  categories: Category[];
+  categories: Category[] = [];
   classId : number;
   userId: number;
   passage = 0;
   student: Student;
+
+
+  //chart
+  borderColor: string[] = ['#EF9A9A','#CE93D8','#9FA8DA','#90CAF9','#FFAB91', '#80CBC4',  '#E6EE9C', '#FFE082', '#FFE082', '#F48FB1','#FFAB91','#BCAAA4', 'B0BEC5', '#FFCC80', '#FFF59D', '#A5D6A7']
+  //LineChart
+  public LineChart = {
+    scaleShowVerticalLines: false,
+    responsive: true,
+    title:{
+      display:true,
+      text:'Evolution des résultats en temps réel'
+    },
+    };
+  public LineChartLabels : Date[] = [];
+  public LineChartType = 'line';
+  public LineChartLegend = false;
+  public LineChartData : ChartDataSets[] = [];
+  //BarChart
+  public BarChart = {
+    responsive: true,
+    title:{
+      display:true,
+      text:'Moyenne des résultats en temps réel'
+    }};
+  public BarChartLabels: string[] = [];
+  public BarChartType= 'bar';
+  public BarChartLegend = true;
+  public BarChartData : ChartDataSets[] = [];
+
+
+
 
   constructor(
     private _resultService: ResultService,
@@ -62,11 +95,121 @@ export class TestResultComponent implements OnInit {
       if (data == null) return;
       this.statusCode = data.statusCode, this.classId = data.classId, this.userId = data.id})
     this.studentId = parseInt(this._routing.snapshot.params['studentId']);
-    this._resultService.getByStudentId(this.studentId);
-    this.resultSubscription = this._resultService.testSubject.subscribe((list:TestResult[]) => {this.results = list});
-    this._resultService.getCategories().subscribe(data => this.categories = data);
+    this._resultService.getCategories().subscribe(data => {
+      this.categories = data
+      this.categories.forEach(cat => {
+        let ActualCategories = this.categories.filter(x => x)
+        this.BarChartLabels.push(cat.name)});
+    });
     this.student = this._profService.Student$.find(s => s.id == this.studentId)
+    this._resultService.getByStudentId(this.studentId);
+    this.resultSubscription = this._resultService.testSubject.subscribe((list:TestResult[]) => {
+    this.results = list;
+    if (this.results.length != 0 && this.categories.length != 0){
+      let numbers : number[] = [];
+      for (let i = 0; i < this.categories.length; i ++){
+        let average = 0;
+        let passage = 0;
+        this.results.forEach(R => {
+          if (R.categoryId == this.categories[i].id){
+            average += R.result;
+            passage += 1;
+          }
+        });
+        numbers.push(average/passage);
+      }
+      if (numbers.length != 0){
+        this.BarChartData[0] = ({data: numbers, label:'Categorie', backgroundColor:this.borderColor[3]})
+      }
+    }
+  });
+
+    // list.forEach(R => {
+    //   if (!this.LineChartLabels.includes(R.date))
+    //     this.LineChartLabels.push(R.date)
+    // });
+
+
+    // full lineChart
+    // if (this.results.length != 0 && this.categories.length != 0){
+    //   let index = 0;
+    //   for (let i = 0; i < this.categories.length; i++)
+    //   {
+    //     let tests = {numbers:[], dates:[]};
+    //     // let numbers : number[] = [];
+    //     for (let k = 0; k < this.LineChartLabels.length; k++){
+    //       this.results.forEach(R => {
+    //         if (R.date == this.LineChartLabels[k] && R.categoryId == this.categories[i].id){
+    //           tests.numbers.push(R.result)
+    //           tests.dates.push(R.date)
+    //         }
+    //       })
+    //     }
+    //     if (tests.numbers.length != 0 && tests.dates.length != 0){
+    //       let numbers : number[] = [];
+    //       numbers.length = this.LineChartLabels.length;
+    //       for (let x = 0; x < numbers.length; x++){
+    //         if (this.LineChartLabels.includes(tests.dates[x])){
+    //           let index = this.LineChartLabels.findIndex(date => date == tests.dates[x]);
+    //           numbers[index] = tests.numbers[x];
+    //         }
+    //       }
+    //       this.LineChartData[index] = ({data: numbers, label: this.categories[i].name, borderColor:this.borderColor[i], backgroundColor:"#FFFFFF00", spanGaps:true})
+    //       index += 1;
+
+    //     }
+    //   }
+    // }
+  // });
   }
+
+  getDataByCategory(categoryId: number): Date[] {
+    if (this.results == null) return;
+    let data = [];
+    if (this.results != null && this.results.length != 0){
+      this.results.forEach(result => {
+        if (categoryId == result.categoryId)
+        data.push(result.date);
+      });
+    }
+    return data;
+  }
+
+  getLabelsByCategory(categoryId: number): ChartDataSets[] {
+    if(this.results == null) return;
+    let dataSets : Date[] = [];
+    let chartData: ChartDataSets [] = [];
+    dataSets = this.getDataByCategory(categoryId);
+    let currentCategory = this.categories.find( x => x.id == categoryId);
+    if (this.results.length != 0 && this.categories.length != 0 && dataSets.length != 0){
+      let tests = {numbers:[], dates:[]};
+      for (let i = 0; i < dataSets.length; i++){
+        this.results.forEach(result => {
+          if (categoryId == result.categoryId && result.date == dataSets[i]){
+            tests.numbers.push(result.result);
+            tests.dates.push(result.date);
+            }
+        })
+      }
+      if (tests.numbers.length != 0 && tests.dates.length != 0){
+        let resultToGO : number[] = [];
+        resultToGO.length = dataSets.length;
+        for(let k = 0; k < resultToGO.length; k++)
+        {
+          if(dataSets.includes(tests.dates[k])){
+            let index = dataSets.findIndex(date => date == tests.dates[k]);
+            resultToGO[index] = tests.numbers[k];
+          }
+        }
+        chartData = [{
+          data: resultToGO, label: currentCategory.name, borderColor: this.borderColor[categoryId], backgroundColor: "#FFFFFF00"
+        }];
+        console.log(chartData)
+      }
+    }
+    return chartData;
+  }
+
 
   openDeleteDialog(id:number){
     let actualeTestId = id;
