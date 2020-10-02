@@ -15,8 +15,6 @@ import {MatProgressButtonOptions} from 'mat-progress-buttons';
 export class LoginComponent implements OnInit {
 
   form : FormGroup;
-  formSubmitAttempt = 0;
-  returnUrl:string;
   error = false;
   errorMsg: string = null;
   spinnerButtonOptions: MatProgressButtonOptions = {
@@ -40,7 +38,6 @@ export class LoginComponent implements OnInit {
   ) { }
 
    ngOnInit() {
-    this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/home';
     this.initForm();
     }
 

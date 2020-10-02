@@ -14,13 +14,15 @@ export class AuthService {
 
   isAuth : boolean = false;
   mainURL: string = 'https://localhost:5001/api/auth';
-  user: UserSimplified;
   userSubject : BehaviorSubject<UserSimplified>= new BehaviorSubject(null);
 
   constructor(
     private _client: HttpClient,
     private _router: Router,
-  ) {}
+  ) {
+    this.userSubject = new BehaviorSubject<UserSimplified>(JSON.parse(localStorage.getItem('user')));
+
+  }
 
    get user$(): Observable<UserSimplified> {
      return this.userSubject.asObservable();
@@ -37,8 +39,7 @@ export class AuthService {
 
   Logout(){
     this.userSubject.next(null);
-    this.user = null;
-    localStorage.clear();
+    localStorage.removeItem('user');
   }
 
   ResetPwd(RP: ResetPwd){
