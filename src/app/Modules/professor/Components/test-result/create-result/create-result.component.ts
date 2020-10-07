@@ -13,6 +13,7 @@ import {CreateDialogData} from '../test-result.component';
 import {UploadFileService } from '../../../Services/upload-file.service';
 import { of } from 'rxjs';
 import { MatProgressButtonOptions } from 'mat-progress-buttons';
+import { MatProgressBar } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'app-create-result',
@@ -24,6 +25,7 @@ export class CreateResultComponent implements OnInit {
   files = []; // au cas où il faut uploader plusieurs fichiers.
   FileLink : string;
 
+  @ViewChild('progressBar', {static:false}) progressBar: MatProgressBar;
 
   form : FormGroup;
   error= false;
@@ -31,6 +33,9 @@ export class CreateResultComponent implements OnInit {
   categories: Category[] = [];
   selectedCategory : Category = new Category();
   today = new Date();
+  progressColor= "accent";
+  progressUploaded = true;
+  LoadButton = "file_upload";
 
 
   //spinner button
@@ -72,7 +77,7 @@ export class CreateResultComponent implements OnInit {
       date:[this.today, Validators.required],
       category:['', Validators.required],
       description:['', Validators.required],
-      document:[''],
+      document:['', Validators.required],
       
     })
   }
@@ -148,6 +153,10 @@ export class CreateResultComponent implements OnInit {
           switch (event.type) {
             case HttpEventType.UploadProgress:
               file.progress = Math.round((event.loaded * 100) / event.total);
+              if (event.loaded == event.total)
+                this.progressColor = "primary";
+                this.progressUploaded = false;
+                this.LoadButton = "done_outline"
               break;
             case HttpEventType.Response:
               return event;
@@ -183,5 +192,7 @@ export class CreateResultComponent implements OnInit {
     };
     fileUpload.click();
   }
+
+
 
 }

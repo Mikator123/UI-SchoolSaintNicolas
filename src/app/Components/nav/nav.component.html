@@ -41,6 +41,7 @@ matTooltip="logout"
   <span class="spacer">
     <div [class]="greetingClass">{{WelcomeMsg}}</div>
   </span>
+
   <button mat-icon-button  
   matTooltip="ToDo" 
   matBadge="5" 
@@ -76,7 +77,8 @@ matTooltip="logout"
         <span>Repas</span>
       </button>
 
-      <button mat-menu-item>
+      <button mat-menu-item
+      [routerLink]="['evenements']">
         <mat-icon>campaign</mat-icon>
         <span>Evènements</span>
       </button>
@@ -131,12 +133,14 @@ matTooltip="logout"
 
  <mat-menu #email="matMenu">
 
-  <button mat-menu-item>
+  <button mat-menu-item
+  (click)="this.openEmailDialog(professor.email)">
     <mat-icon>face</mat-icon>
     <span>Au professeur</span>
   </button>
 
-  <button mat-menu-item>
+  <button mat-menu-item
+  (click)="this.openEmailDialog('SchoolEmail@school.com')">
     <mat-icon>location_city</mat-icon>
     <span>A l'école</span>
   </button>
@@ -154,7 +158,8 @@ matTooltip="logout"
     <span>Classe</span>
   </button>
 
-  <button mat-menu-item>
+  <button mat-menu-item
+  [routerLink]="['evenements']">
     <mat-icon>campaign</mat-icon>
     <span>Evènements</span>
   </button>
@@ -165,7 +170,8 @@ matTooltip="logout"
       <span>Profil</span>
     </button>
 
-    <button mat-menu-item> 
+    <button mat-menu-item
+    [routerLink]="['repas']"> 
       <mat-icon>fastfood</mat-icon>
       <span>Repas</span>
     </button>
@@ -175,7 +181,10 @@ matTooltip="logout"
       <span>Email</span>
     </button>
 
-    <button mat-menu-item>
+    <button 
+    mat-menu-item
+    [routerLink]="['regles']"
+    >
       <mat-icon>style</mat-icon>
       <span>Règles</span>
     </button>
@@ -218,7 +227,7 @@ matTooltip="logout"
       <span>Au contact</span>
     </button>
 
-    <button mat-menu-item>
+    <button mat-menu-item (click)="this.openEmailDialog('SchoolEmail@school.com')">
       <mat-icon>location_city</mat-icon>
       <span>A l'école</span>
     </button>
@@ -231,7 +240,7 @@ matTooltip="logout"
  <!--  MENU StudentList -->
 
  <mat-menu #StudentList="matMenu">
-    <button mat-menu-item *ngFor="let user of contactList"> 
+    <button mat-menu-item *ngFor="let user of contactList" (click)="this.openEmailDialog(null,user)"> 
       <img matCardAvatar [src]="user.gender == 'M' ? 'http://www.haneffebasket.be/wp-content/uploads/2017/04/avatar-vide.jpeg':'http://www.tmf-operating.com/wp-content/uploads/2015/12/avatar-femme-300x176.jpg'">
       <span>{{user.fullName}}</span>
     </button>

@@ -52,6 +52,8 @@ import { ViewFileComponent } from './Components/test-result/view-file/view-file.
     UpdateResultComponent,
     CreateResultComponent,
     StudentDetailedComponent,
+    ResultsComponent,
+    ViewFileComponent,
   ]
 })
 export class ProfessorModule { }

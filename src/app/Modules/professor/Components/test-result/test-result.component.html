@@ -1,6 +1,6 @@
 <mat-card>
     <mat-card-header  *ngIf="statusCode > 1">
-        <mat-card-title >Résultats de <b>{{student.lastName}} {{student.firstName}}</b></mat-card-title>
+        <mat-card-title *ngIf="student != null">Résultats de <b>{{student.lastName}} {{student.firstName}}</b></mat-card-title>
     </mat-card-header>
 
 <div *ngIf="statusCode > 1">
@@ -68,7 +68,7 @@
 
 </mat-card>
 
-<mat-card>
+<mat-card *ngIf="results.length != 0">
     <mat-card-content class="dashboard-card-content">
         <div>
             <canvas baseChart 

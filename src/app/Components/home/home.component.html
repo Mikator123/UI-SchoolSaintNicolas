@@ -1,13 +1,12 @@
 <div class="grid-container">
     <div class="bounce-in-top">
-    <h1 class="mat-h1">Home works: </h1>
     <mat-grid-list cols="4" rowHeight="10vh">
 
       <mat-grid-tile [colspan]="2" [rowspan]="3">
         <mat-card class="dashboard-card">
           <mat-card-header>
             <mat-card-title>
-              content1:
+              <app-lunch></app-lunch>
             </mat-card-title>
           </mat-card-header>
           <mat-card-content class="dashboard-card-content">
@@ -20,12 +19,14 @@
         <mat-card class="dashboard-card">
           <mat-card-header>
             <mat-card-title>
-              content2:
             </mat-card-title>
           </mat-card-header>
-          <mat-card-content class="dashboard-card-content">
-
-          </mat-card-content>
+          <mat-card-content class="dashboard-card-content" *ngIf="user.statusCode == 2">
+            <app-school-event></app-school-event>
+        </mat-card-content>
+        <mat-card-content class="dashboard-card-content" *ngIf="user.statusCode == 1">
+          <app-school-rules></app-school-rules>
+      </mat-card-content>
         </mat-card>
       </mat-grid-tile>
       
@@ -33,12 +34,15 @@
         <mat-card class="dashboard-card">
           <mat-card-header>
             <mat-card-title>
-              Content3:
+              
             </mat-card-title>
           </mat-card-header>
-          <mat-card-content class="dashboard-card-content">
-
+          <mat-card-content class="dashboard-card-content" *ngIf="user.statusCode == 2">
+              <app-results></app-results>
           </mat-card-content>
+          <mat-card-content class="dashboard-card-content" *ngIf="user.statusCode == 1">
+            <app-school-event></app-school-event>
+        </mat-card-content>
         </mat-card>
       </mat-grid-tile>
 

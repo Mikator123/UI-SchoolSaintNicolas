@@ -17,6 +17,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { LayoutModule } from '@angular/cdk/layout';
+import { SchoolModule } from './Modules/school/school.module';
+import { FourOFourComponent } from './Components/four-ofour/four-ofour.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SendMailComponent } from './Components/send-mail/send-mail.component';
 
 
 @NgModule({
@@ -25,6 +29,8 @@ import { LayoutModule } from '@angular/cdk/layout';
     HomeComponent,
     NavComponent,
     DeleteComponent,
+    FourOFourComponent,
+    SendMailComponent,
 
   ],
   imports: [
@@ -34,6 +40,7 @@ import { LayoutModule } from '@angular/cdk/layout';
     CommonModule,
     UserModule,
     ProfessorModule,
+    SchoolModule,
     SharedModule,
     MatGridListModule,
     MatCardModule,
@@ -41,6 +48,7 @@ import { LayoutModule } from '@angular/cdk/layout';
     MatIconModule,
     MatButtonModule,
     LayoutModule,
+    BrowserAnimationsModule,
   ],
   providers: [ 
   ],

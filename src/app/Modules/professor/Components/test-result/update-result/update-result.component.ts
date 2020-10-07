@@ -1,5 +1,5 @@
 import {Category} from '../../../Models/Category.model';
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import {UpdateDialogData} from '../test-result.component';
@@ -8,6 +8,10 @@ import { TestResult } from '../../../Models/testResult.model';
 import { MatDatepicker } from '@angular/material/datepicker';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { ProfessorService } from '../../../Services/professor.service';
+import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
+import { UploadFileService } from '../../../Services/upload-file.service';
+import { catchError, map } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 
 
@@ -20,12 +24,19 @@ import { ProfessorService } from '../../../Services/professor.service';
 
 })
 export class UpdateResultComponent implements OnInit {
+  @ViewChild('fileUpload', {static: false}) fileUpload: ElementRef;
+  files = []; // au cas où il faut uploader plusieurs fichiers.
+  FileLink : string;
+
 
   form : FormGroup;
   error= false;
   errorTxt : string;
   categories: Category[] = [];
   selectedCategory : Category = new Category();
+  progressColor= "accent";
+  progressUploaded = true;
+  LoadButton = "file_upload";
 
 
   constructor(
@@ -34,6 +45,8 @@ export class UpdateResultComponent implements OnInit {
     public dialogRef: MatDialogRef<UpdateResultComponent>,
     private _dateAdapter: DateAdapter<any>,
     private _profService: ProfessorService,
+    private _uploadFile: UploadFileService,
+
     @Inject(MAT_DIALOG_DATA) public data: UpdateDialogData
   ) { }
 
@@ -53,6 +66,7 @@ export class UpdateResultComponent implements OnInit {
       date:[this.data.date, Validators.required],
       category:[this.data.categoryId, Validators.required],
       description:[this.data.description, Validators.required],
+      document:['']
       
       
     })
@@ -140,5 +154,57 @@ export class UpdateResultComponent implements OnInit {
   
   SpacesOnly(prop:string): Boolean{
     return prop.match(/^ *$/) !== null ? false : true;
+  }
+
+  uploadFile(file: any): void {
+    const formData = new FormData();
+    formData.append('file', file.data);
+    file.inProgress = true;
+    // if (formData == null) return;
+    this._uploadFile
+      .upload(formData)
+      .pipe(
+        map((event) => {
+          switch (event.type) {
+            case HttpEventType.UploadProgress:
+              file.progress = Math.round((event.loaded * 100) / event.total);
+              if (event.loaded == event.total)
+                this.progressColor = "primary";
+                this.progressUploaded = false;
+                this.LoadButton = "done_outline"
+              break;
+            case HttpEventType.Response:
+              return event;
+          }
+        }),
+        catchError((error: HttpErrorResponse) => {
+          file.inProgress = false;
+          this.error = true;
+          this.errorTxt = `${file.data.name} n'a pas pu être enregistré.`
+          return of(`${file.data.name} n'a pas pu être enregistré.`);
+        })
+      )
+      .subscribe((event: any) => {
+        if (typeof event === 'object') {
+          this.FileLink = event.body.link;
+        }
+      });
+  }
+  private uploadFiles(): void {
+    this.fileUpload.nativeElement.value = '';
+    this.files.forEach((file) => {
+      this.uploadFile(file);
+    });
+  }
+  onUploadClick(): void {
+    const fileUpload = this.fileUpload.nativeElement;
+    fileUpload.onchange = () => {
+      for (let index = 0; index < fileUpload.files.length; index++) {
+        const file = fileUpload.files[index];
+        this.files.push({ data: file, inProgress: false, progress: 0 });
+      }
+      this.uploadFiles();
+    };
+    fileUpload.click();
   }
 }

@@ -18,5 +18,4 @@ export class PhotoComponent implements OnInit {
   ngOnInit(): void {
     this.photo = this.data.photo;
   }
-
 }

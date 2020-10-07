@@ -1,0 +1,44 @@
+<h1 mat-dialog-title>Envoi d'email</h1>
+<mat-dialog-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+        <mat-error *ngIf="error">
+            {{this.errorTxt}}
+        </mat-error>
+        <mat-form-field style="width: 50vw">
+            <mat-label>Vers:</mat-label>
+            <input 
+                matInput 
+                formControlName="emailAdress"/>
+            <mat-error>
+              Au minimum une adresse email est obligatoire.
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field class="txtArea">
+            <mat-label>Contenu:</mat-label>
+            <textarea
+                matInput
+                style="height: 40vh"
+                formControlName="emailContent"
+                >
+            </textarea>
+            <mat-error>
+                Un contenu est nécessaire.
+            </mat-error>
+
+        </mat-form-field>
+
+    <button
+    mat-dialog-close
+    mat-raised-button
+    color="accent"
+    >Annuler</button>
+
+    <button 
+    mat-raised-button 
+    type="submit" 
+    color="primary"
+    [disabled]="form.invalid">Envoyer</button>
+
+</form>
+
+</mat-dialog-content>
