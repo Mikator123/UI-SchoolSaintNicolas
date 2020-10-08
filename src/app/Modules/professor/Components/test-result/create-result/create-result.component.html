@@ -97,6 +97,7 @@
               <button mat-button type="button" color="primary" (click)="onUploadClick()" [disabled]="!progressUploaded">
                   <mat-icon>{{LoadButton}}</mat-icon>
                   <span *ngIf="progressUploaded">Charger le document</span>
+                  <span *ngIf="!progressUploaded"> {{FileDataName}}</span>
               </button>
           </mat-card-actions>
       </mat-card>

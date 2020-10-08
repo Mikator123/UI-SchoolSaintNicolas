@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators/map';
 import { FormLogin } from '../../Models/FormLogin.model';
 import { ResetPwd } from '../../Models/ResetPwd.model';
+import { UserVerification } from '../../Models/UserVerification.model';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ import { ResetPwd } from '../../Models/ResetPwd.model';
 export class AuthService {
 
   isAuth : boolean = false;
-  mainURL: string = 'https://localhost:5001/api/auth';
+  mainURL: string = 'https://localhost:5001/api/auth/';
   userSubject : BehaviorSubject<UserSimplified>= new BehaviorSubject(null);
 
   constructor(
@@ -43,11 +44,15 @@ export class AuthService {
   }
 
   ResetPwd(RP: ResetPwd){
-    this._client.put(this.mainURL,RP, this.HttpOptions(this.userSubject.value.token)).subscribe({
+    this._client.put(this.mainURL,RP).subscribe({
       next:() => {
         this._router.navigate(['user/'+RP.Id]);
       }
     })
+  }
+
+  VerifyUser(userVerification: UserVerification){
+    return this._client.post<number>(this.mainURL+'userVerification', userVerification);
   }
 
   private HttpOptions(token:string){

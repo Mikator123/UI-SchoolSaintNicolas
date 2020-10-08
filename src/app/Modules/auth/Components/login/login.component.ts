@@ -5,6 +5,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { AuthService } from '../../Services/Auth/auth.service';
 import { FormLogin } from '../../Models/FormLogin.model';
 import {MatProgressButtonOptions} from 'mat-progress-buttons';
+import { MatDialog } from '@angular/material/dialog';
+import { ForgotPasswordComponent } from '../forgot-password/forgot-password.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 @Component({
@@ -32,9 +35,10 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private _builder : FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router,
+    private _router: Router,
     private _authService: AuthService,
+    private _dialog: MatDialog,
+    private _snackBar: MatSnackBar,
   ) { }
 
    ngOnInit() {
@@ -57,7 +61,7 @@ export class LoginComponent implements OnInit {
   this._authService.Login(formLogin).subscribe(
 
     data => {
-        this.router.navigate(['home'])},
+        this._router.navigate(['home'])},
 
     error => {this.getError(error)}
 
@@ -73,5 +77,21 @@ export class LoginComponent implements OnInit {
     else 
       this.errorMsg = "Serveur déconnecté";
       this.spinnerButtonOptions.active = false;
+  }
+
+  openForgotPasswordDialog(){
+    let loginFromForm = "";
+    if (this.form.value['login'] != null)
+      loginFromForm = this.form.value['login']
+    let ref = this._dialog.open(ForgotPasswordComponent,{
+      width: '400px',
+      disableClose:true,
+      data: loginFromForm
+      
+    });
+    ref.afterClosed().subscribe(result => {
+        if (result == true)
+          this._snackBar.open("Mot de passe modifié", null, {duration : 3000})
+    });
   }
 }

@@ -12,7 +12,7 @@
 
 <div *ngIf="categories != null">
     <div *ngFor="let cat of categories">
-        <mat-accordion *ngIf="checkCategories(cat.id) == true">
+        <mat-accordion *ngIf="checkCategories(cat.id) == true" class="example-headers-align">
             <mat-expansion-panel (opened)="catPanelState = true"
                                     (closed)="catPanelState = false"
                                     >
@@ -27,7 +27,7 @@
                                 
                     <mat-accordion *ngFor="let result of results">
                         <mat-expansion-panel (opened)="resultPanelState = true"
-                                            (closed)="catPanelresultPanelStateState = false" 
+                                            (closed)="resultPanelState = false" 
                                             *ngIf="result.categoryId == cat.id">
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
@@ -38,15 +38,13 @@
                                 </mat-panel-description>
                             </mat-expansion-panel-header>              
                                 <p> {{result.description}} </p>
-                                <button mat-icon-button (click)="openFile(result.id)" ><mat-icon>picture_as_pdf</mat-icon></button>
-                                <mat-divider></mat-divider>
+                                <button mat-icon-button (click)="openFile(result.id)" ><mat-icon>picture_as_pdf</mat-icon></button>                                
                                 <button 
                                 *ngIf="statusCode > 1"
                                 mat-button color="accent" (click)="openDeleteDialog(result.id)">Supprimer</button>
                                 <button 
                                 *ngIf="statusCode > 1"
                                 mat-button color="primary" (click)="openUpdateDialog(result)">Mettre à jour</button> 
- 
                         </mat-expansion-panel>
                     </mat-accordion>
                     <!-- <mat-card>

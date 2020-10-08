@@ -33,6 +33,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { MatProgressButtonsModule } from 'node_modules/mat-progress-buttons';
 import {ChartsModule} from 'ng2-charts';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import {MatStepperModule} from '@angular/material/stepper';
 
 
 
@@ -72,6 +73,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatProgressSpinnerModule,
     MatProgressButtonsModule,
     MatProgressBarModule,
+    MatStepperModule,
 
     
 
@@ -106,6 +108,7 @@ import {MatProgressBarModule} from '@angular/material/progress-bar';
     MatProgressSpinnerModule,
     MatProgressButtonsModule,
     ChartsModule,
-    MatProgressBarModule]
+    MatProgressBarModule,
+    MatStepperModule]
 })
 export class SharedModule { }

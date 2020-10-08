@@ -31,7 +31,9 @@ export class SendMailComponent implements OnInit {
   initForm() {
     this.form = this._builder.group({
       emailAdress:[this.data.email, Validators.required],
+      emailSubject:['', Validators.required],
       emailContent:['', Validators.required],
+
     })
   }
 

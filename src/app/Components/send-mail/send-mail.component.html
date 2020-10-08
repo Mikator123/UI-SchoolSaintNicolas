@@ -4,6 +4,9 @@
         <mat-error *ngIf="error">
             {{this.errorTxt}}
         </mat-error>
+
+        <!-- EMAILS -->
+
         <mat-form-field style="width: 50vw">
             <mat-label>Vers:</mat-label>
             <input 
@@ -13,6 +16,21 @@
               Au minimum une adresse email est obligatoire.
             </mat-error>
         </mat-form-field>
+
+        <!-- SUBJECT -->
+
+        <mat-form-field style="width: 50vw">
+            <mat-label>Sujet:</mat-label>
+            <input 
+                matInput 
+                formControlName="emailSubject"/>
+            <mat-error>
+                Un Sujet est nécessaire.
+            </mat-error>
+        </mat-form-field>
+
+        <!-- CONTENT -->
+
         <mat-form-field class="txtArea">
             <mat-label>Contenu:</mat-label>
             <textarea

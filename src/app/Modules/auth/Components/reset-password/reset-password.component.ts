@@ -14,7 +14,6 @@ import { AuthService } from '../../Services/Auth/auth.service';
 export class ResetPasswordComponent implements OnInit {
 
   form : FormGroup;
-  returnUrl:string;
   error = false;
   errorMsg:string;
 

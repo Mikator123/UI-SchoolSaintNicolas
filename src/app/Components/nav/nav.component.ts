@@ -85,6 +85,7 @@ export class NavComponent implements OnInit{
     let ref = this.dialog.open(SendMailComponent,{
       width:'80vw',
       height:'80vh',
+      disableClose:true,
       data: {email: emailForDialog}
     })
     ref.afterClosed().subscribe(success => {
