@@ -9,6 +9,7 @@ const routes: Routes = [
   {path:'regles', component: SchoolRulesComponent },
   {path:'repas', component: LunchComponent},
   {path:'evenements', component: SchoolEventsComponent},
+  
 ];
 
 @NgModule({

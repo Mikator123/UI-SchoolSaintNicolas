@@ -37,6 +37,8 @@ export class UpdateResultComponent implements OnInit {
   progressColor= "accent";
   progressUploaded = true;
   LoadButton = "file_upload";
+  FileDataName = "";
+
 
 
   constructor(
@@ -171,7 +173,9 @@ export class UpdateResultComponent implements OnInit {
               if (event.loaded == event.total)
                 this.progressColor = "primary";
                 this.progressUploaded = false;
-                this.LoadButton = "done_outline"
+                this.LoadButton = "done_outline";
+                this.FileDataName = file.data.name;
+
               break;
             case HttpEventType.Response:
               return event;

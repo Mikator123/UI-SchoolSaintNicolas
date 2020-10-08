@@ -132,6 +132,13 @@ export class TestResultComponent implements OnInit {
     this._resultService.getByStudentId(this.studentId);
     this.resultSubscription = this._resultService.testSubject.subscribe((list:TestResult[]) => {
     this.results = list;
+    this.results.sort(function compare(a,b){
+      if (a.date < b.date)
+        return -1;
+      if (a.date > b.date)
+        return 1;
+      return 0;
+    })
 
     if (this.results.length != 0 && this.categories.length != 0){
       let numbers : number[] = [];

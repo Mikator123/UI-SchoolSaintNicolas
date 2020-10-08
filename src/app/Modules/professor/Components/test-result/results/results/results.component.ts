@@ -130,6 +130,7 @@ export class ResultsComponent implements OnInit {
       results.forEach(R => {
         if (!this.LineChartLabels.includes(R.date))
           this.LineChartLabels.push(R.date)
+          this.LineChartLabels.sort();
       });
       if (this.results != null && this.categories.length != 0){
         let index = 0;
@@ -162,7 +163,7 @@ export class ResultsComponent implements OnInit {
                 numbers[index] = tests.numbers[x];
               }
             }
-            this.LineChartData[index] = ({data: numbers, label: this.categories[i].name, borderColor:this.borderColor[i], backgroundColor:"#FFFFFF00", spanGaps:true, pointHoverRadius: 10})
+            this.LineChartData[index] = ({data: numbers, label: this.categories[i].name, borderColor:this.borderColor[i], backgroundColor:this.borderColor[i],fill:false, spanGaps:true, pointHoverRadius: 10})
             index += 1;
           }
         }

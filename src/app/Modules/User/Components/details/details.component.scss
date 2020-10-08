@@ -31,3 +31,17 @@ mat-card{
     animation: slide-in-bck-center 0.7s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
     margin: 200px;
 }
+
+.neumorphisme-off{
+    border-radius: 117px;
+    background: linear-gradient(145deg, #ffffff, #e6e6e6);
+    box-shadow:  9px 9px 19px #adadad, 
+                 -9px -9px 19px #ffffff;
+}
+
+.neumorphisme-on{
+    border-radius: 117px;
+    background: linear-gradient(145deg, #e6e6e6, #ffffff);
+    box-shadow:  9px 9px 19px #adadad, 
+                 -9px -9px 19px #ffffff;
+}

@@ -88,7 +88,8 @@ matTooltip="logout"
         <span>Email</span>
       </button>
 
-      <button mat-menu-item>
+      <button mat-menu-item
+      [routerLink]="['regles']">
         <mat-icon>style</mat-icon>
         <span>Règles</span>
       </button>
@@ -241,7 +242,7 @@ matTooltip="logout"
 
  <mat-menu #StudentList="matMenu">
     <button mat-menu-item *ngFor="let user of contactList" (click)="this.openEmailDialog(null,user)"> 
-      <img matCardAvatar [src]="user.gender == 'M' ? 'http://www.haneffebasket.be/wp-content/uploads/2017/04/avatar-vide.jpeg':'http://www.tmf-operating.com/wp-content/uploads/2015/12/avatar-femme-300x176.jpg'">
+      <img matCardAvatar [src]="user.photo">
       <span>{{user.fullName}}</span>
     </button>
  </mat-menu>

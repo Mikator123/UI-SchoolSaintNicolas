@@ -1,7 +1,7 @@
 
         <mat-card>
             <mat-card-header>
-                <img mat-card-avatar [src]="userDetailed.photo">
+                <img mat-card-avatar [src]="userDetailed.photo" (click)="openPhotoDialog()">
                 <mat-card-title> {{userDetailed.lastName}}</mat-card-title>
                 <mat-card-subtitle> {{userDetailed.firstName}}</mat-card-subtitle>
             </mat-card-header>

@@ -29,7 +29,6 @@ export class ForgotPasswordComponent implements OnInit {
   error = false;
   errorMsg:string;
   firstFormValidation = false;
-  showSecondForm = false;
 
   spinnerButtonOptions: MatProgressButtonOptions = {
     active: false,
@@ -79,14 +78,9 @@ export class ForgotPasswordComponent implements OnInit {
     verification.userNationalNumber = this.firstForm.value['userNationalNumber'];
     verification.contactNationalNumber = this.firstForm.value['contactNationalNumber'];
     this._authService.VerifyUser(verification).subscribe(
-      data => {
-        this.userId = data, 
-        this.firstFormValidation = true, 
-        setTimeout(() => {
-          this.showSecondForm = true;
-        }, 700);
+      data => {this.userId = data, this.firstFormValidation = true},
   
-      error => {this.getError(error)}}
+      error => {this.getError(error)}
   
     );}
 

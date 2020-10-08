@@ -89,7 +89,9 @@ export class CreateResultComponent implements OnInit {
       let createdResult= new TestResult();
       createdResult.categoryId= this.form.value['category'];
       createdResult.classId = this.data.classId;
-      createdResult.date = this.form.value['date'];
+      let formDate = new Date(this.form.value['date']);
+      formDate.setDate(formDate.getDate()+1);
+      createdResult.date = formDate;
       createdResult.description = this.form.value['description'];
       createdResult.result = this.form.value['result'];
       createdResult.studentId = parseInt(this.data.studentId.toString());
@@ -194,6 +196,8 @@ export class CreateResultComponent implements OnInit {
     };
     fileUpload.click();
   }
+
+
 
 
 

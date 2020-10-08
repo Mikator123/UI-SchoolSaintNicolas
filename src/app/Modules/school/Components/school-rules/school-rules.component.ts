@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/Modules/auth/Services/Auth/auth.service';
+import { SchoolRule } from '../../Models/SchoolRule.model';
+import {SchoolService} from '../../Services/school.service'
 
 @Component({
   selector: 'app-school-rules',
@@ -7,9 +10,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SchoolRulesComponent implements OnInit {
 
-  constructor() { }
+  rules : SchoolRule[] = [];
+  rule : SchoolRule;
+
+  constructor(
+    private _schoolService: SchoolService,
+    private _authService: AuthService,
+  ) { }
 
   ngOnInit(): void {
+    this._schoolService.getRules().subscribe(r => this.rules = r);
   }
 
 }
