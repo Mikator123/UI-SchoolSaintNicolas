@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card *ngIf="student != null">
     <mat-card-header *ngIf="statusCode > 1">
         <mat-card-title>Notes de <b>{{student.lastName}} {{student.firstName}}</b></mat-card-title>
     </mat-card-header>
@@ -11,12 +11,12 @@
     </div>
 
     <div *ngIf="notes != null">
-        <div *ngFor="let note of notes">
+        <div *ngFor="let note of notes; let i = index">
             <mat-accordion>
-                <mat-expansion-panel (opened)="panelState = true" (closed)="panelState = false">
+                <mat-expansion-panel (opened)="panelState[i] = true" (closed)="panelState[i] = false">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                            <label>Classe {{note.className}} </label>
+                            <label [style]="panelState[i]?'color: #50b59c; font-weight:bold':''">Classe {{note.className}} </label>
                         </mat-panel-title>
                         <mat-panel-description>
                             <label>Trimestre {{note.trimester}}</label>

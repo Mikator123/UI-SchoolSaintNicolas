@@ -5,12 +5,12 @@
     </mat-card-title>
   </mat-card-header>
   <mat-card-content class="dashboard-card-content">
-    <div>
+    <!-- <div>
       <mat-label>Selectionnez une categorie</mat-label>
       <mat-select [value]="startingCategoryId">
         <mat-option [value]="cat.id" *ngFor="let cat of categories">{{cat.name}}</mat-option>
       </mat-select>
-    </div>
+    </div> -->
     <div class="Chart" *ngIf="results.length != 0 && categories.length != 0">
       <canvas baseChart [datasets]="LineChartData" [labels]="LineChartLabels" [options]="LineChart"
         [legend]="LineChartLegend" [chartType]="LineChartType" height="100%">

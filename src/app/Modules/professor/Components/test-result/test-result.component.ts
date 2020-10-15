@@ -40,8 +40,8 @@ export interface CreateDialogData {
 export class TestResultComponent implements OnInit, OnDestroy {
 
   statusCode: number;
-  catPanelState = false;
-  resultPanelState = false;
+  catPanelState : Boolean[] = [];
+  resultPanelState : Boolean[]= [];
   studentId: number;
   results: TestResult[] = [];
   resultSubscription: Subscription;
@@ -116,6 +116,9 @@ export class TestResultComponent implements OnInit, OnDestroy {
     this.studentId = parseInt(this._routing.snapshot.params['studentId']);
     this._resultService.getCategories().subscribe(data => {
       this.categories = data
+      if (this.categories == null || this.categories.length == 0) return;
+      this.catPanelState.length =  this.categories.length;
+      this.catPanelState.map(x => x = false);
       this.categories.forEach(cat => {
         this.BarChartLabels.push(cat.name);
         });
@@ -124,6 +127,9 @@ export class TestResultComponent implements OnInit, OnDestroy {
     this._resultService.getByStudentId(this.studentId);
     this.resultSubscription = this._resultService.testSubject.subscribe((list:TestResult[]) => {
     this.results = list;
+    if (this.results == null || this.results.length == 0) return;
+    this.resultPanelState.length = this.results.length;
+    this.resultPanelState.map(x => x = false);
     this.results.sort(function compare(a,b){
       if (a.date < b.date)
         return -1;

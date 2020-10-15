@@ -10,12 +10,12 @@
     </div>
 
     <div *ngIf="categories != null">
-        <div *ngFor="let cat of categories">
+        <div *ngFor="let cat of categories; let i = index">
             <mat-accordion *ngIf="checkCategories(cat.id) == true" class="example-headers-align">
-                <mat-expansion-panel (opened)="catPanelState = true" (closed)="catPanelState = false">
+                <mat-expansion-panel (opened)="catPanelState[i] = true" (closed)="catPanelState[i] = false">
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                            <label> {{cat.name}} </label>
+                            <label [style]="catPanelState[i]? 'color: #ada99e; font-weight:bold':''"> {{cat.name}} </label>
                         </mat-panel-title>
                         <mat-panel-description>
                             <label> Moyenne de <label
@@ -24,12 +24,12 @@
                         </mat-panel-description>
                     </mat-expansion-panel-header>
 
-                    <mat-accordion *ngFor="let result of results">
-                        <mat-expansion-panel (opened)="resultPanelState = true" (closed)="resultPanelState = false"
+                    <mat-accordion *ngFor="let result of results; let i = index">
+                        <mat-expansion-panel (opened)="resultPanelState[i] = true" (closed)="resultPanelState[i] = false"
                             *ngIf="result.categoryId == cat.id">
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                    <label> {{result.date | date: 'dd/MM/yyyy'}} </label>
+                                    <label [style]="resultPanelState[i]? 'color: #50b59c ; font-weight:bold': ''"> {{result.date | date: 'dd/MM/yyyy'}} </label>
                                 </mat-panel-title>
                                 <mat-panel-description>
                                     <label

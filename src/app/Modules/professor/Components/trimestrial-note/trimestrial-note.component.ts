@@ -37,7 +37,7 @@ export interface CreateDialogData {
 
 export class TrimestrialNoteComponent implements OnInit {
 
-  panelState: false;
+  panelState: Boolean[] = [];
   classId: number;
   studentId: number;
   notes : Note[];
@@ -64,7 +64,12 @@ export class TrimestrialNoteComponent implements OnInit {
       this.classId = data.classId;
       this.statusCode = data.statusCode})
     this._noteService.getNotes(this.studentId);
-    this.myNoteSubscritption = this._noteService.noteSubject.subscribe((list : Note[]) => {this.notes = list});
+    this.myNoteSubscritption = this._noteService.noteSubject.subscribe((list : Note[]) => {
+      this.notes = list;
+      this.panelState.length = list.length;
+      this.panelState.map(x => x = false)  
+    });
+
     this._profService.getClassById(this.classId);
     this._profService.classSubject.subscribe((data: Class) => { this.class = data});
     this.student = this._profService.Student$.find(s => s.id == this.studentId)

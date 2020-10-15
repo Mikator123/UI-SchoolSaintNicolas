@@ -1,9 +1,111 @@
 <H1>Travaux</H1>
 <div>
-      <mat-label>Selectionnez une categorie</mat-label>
-      <mat-select [value]="startingCategoryId">
-        <mat-option [value]="cat.id" *ngFor="let cat of categories">{{cat.name}}</mat-option>
-      </mat-select>
-    </div>
+  <button mat-button color="war" [routerLink]="['../home']">Retour</button>
+  <button mat-button color="primary" (click)="openCreateDialog()">Créer</button>
+</div>
+<mat-card style="width: 200px;">
+  <mat-label>Selectionnez une categorie</mat-label>
+  <mat-select [value]="">
+    <mat-option [value]="cat.id" *ngFor="let cat of categories">{{cat.name}}</mat-option>
+  </mat-select>
+</mat-card>
 
-    
+
+  <mat-card style="width: 200px;">
+    <mat-label>Selectionnez une année</mat-label>
+    <mat-select (value)="yearValue">
+      <mat-option [value]="year" *ngFor="let year of schoolYears">{{year}}</mat-option>
+    </mat-select>
+  </mat-card>
+
+<div>
+  <mat-card style="width: 200px;">
+    <mat-label>Selectionnez une trimestre</mat-label>
+    <mat-select [value]="">
+      <mat-option [value]="trim" *ngFor="let trim of trimesters">{{trim}}</mat-option>
+    </mat-select>
+  </mat-card>
+
+</div>
+
+<div *ngIf="categories != null || categories.length != 0">
+  <div *ngFor="let cat of categories; let i = index">
+    <mat-accordion *ngIf="checkCategories(cat.id) == true">
+      <mat-expansion-panel (opened)="catPanelState[i] = true" (closed)="catPanelState[i] = false">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <label [style]="catPanelState[i] ? 'color: #ada99e ; font-weight:bold' :''"> {{cat.name}} </label>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div *ngFor="let schoolYear of schoolYears; let i = index">
+          <mat-accordion *ngIf="checkSchoolYear(schoolYear, cat.id) == true">
+            <mat-expansion-panel (opened)="schoolYearPanelState[i] = true" (closed)="schoolYearPanelState[i] = false">
+              <mat-expansion-panel-header>
+                <mat-panel-title *ngIf="schoolYear == 1" >
+                  <label [style]="schoolYearPanelState[i]? 'color: #ada99e ; font-weight:bold' : ''"> {{schoolYear}}ère année</label>
+                </mat-panel-title>
+                <mat-panel-title *ngIf="schoolYear > 1">
+                  <label [style]="schoolYearPanelState[i]? 'color: #ada99e ; font-weight:bold' : ''"> {{schoolYear}}ème année</label>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <div *ngFor="let trimester of trimesters; let i = index">
+                <mat-accordion *ngIf="checkTrimester(trimester, schoolYear, cat.id) == true">
+                  <mat-expansion-panel (opened)="trimesterPanelState[i] = true" (closed)="trimesterPanelState[i] = false">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title *ngIf="trimester == 1">
+                        <label [style]="trimesterPanelState[i]? 'color: #ada99e ; font-weight:bold' : ''">
+                          {{trimester}}er trimestre
+
+                        </label>
+                      </mat-panel-title>
+                      <mat-panel-title *ngIf="trimester > 1">
+                        <label [style]="trimesterPanelState[i]? 'color: #ada99e; font-weight:bold' : ''">
+                          {{trimester}}ème trimestre
+
+                        </label>
+                      </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div *ngFor="let work of works; let i = index">
+                      <mat-accordion
+                        *ngIf="work.categoryId == cat.id && work.trimester == trimester && work.schoolYear == schoolYear">
+                        <mat-expansion-panel (opened)="workPanelState[i] = true" (closed)="workPanelState[i] = false">
+                          <mat-expansion-panel-header>
+                            <mat-panel-title>
+                              <label [style]="workPanelState[i] ? 'color:#50b59c; font-weight:bold':''">{{work.subject}}</label>
+                            </mat-panel-title>
+                            <mat-panel-description>
+                              <label>{{work.lastUpdate | date: 'dd/MM/yyyy'}}</label>
+                            </mat-panel-description>
+                          </mat-expansion-panel-header>
+                            <p>Question: {{work.question}}</p>
+                            <mat-divider></mat-divider>
+                            <p>Première aide: {{work.firstHint}}</p>
+                            <mat-divider></mat-divider>
+                            <p>Seconde aide: {{work.secondHint}}</p>
+                            <mat-divider></mat-divider>
+                            <p>Réponse: {{work.correction}}</p>
+                            <mat-divider></mat-divider>
+                            <p>Explication: {{work.explanation}}</p>
+                                                
+                          <button  mat-button color="accent" 
+                            (click)="openDeleteDialog(work.id)">Supprimer</button>
+                          <button mat-button color="primary" 
+                            (click)="openUpdateDialog(work)">Mettre à jour</button>
+                          <button mat-icon-button matTooltip="Visualiser">
+                            <mat-icon>
+                              visibility
+                            </mat-icon>
+                          </button>
+                        </mat-expansion-panel>
+                      </mat-accordion>
+                    </div>
+                  </mat-expansion-panel>
+                </mat-accordion>
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</div>
