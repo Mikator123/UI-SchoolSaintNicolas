@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Title } from '@angular/platform-browser';
@@ -27,16 +27,6 @@ export interface UpdateDialogData {
   
 }
 
-// export interface data{
-//   Id:number;
-//   data: ChartDataSets[];
-// }
-
-// export interface label{
-//   Id:number;
-//   label: Date[];
-// }
-
 export interface CreateDialogData {
   classId: number;
   studentId: number;
@@ -47,7 +37,7 @@ export interface CreateDialogData {
   templateUrl: './test-result.component.html',
   styleUrls: ['./test-result.component.scss']
 })
-export class TestResultComponent implements OnInit {
+export class TestResultComponent implements OnInit, OnDestroy {
 
   statusCode: number;
   catPanelState = false;
@@ -84,6 +74,7 @@ export class TestResultComponent implements OnInit {
   public LineChartType = 'line';
   public LineChartLegend = false;
   public LineChartData : [];
+
   //BarChart
   public BarChart = {
     responsive: true,
@@ -116,6 +107,7 @@ export class TestResultComponent implements OnInit {
     private _profService: ProfessorService,
     private _snackBar: MatSnackBar
   ) { }
+ 
 
   ngOnInit(): void {
     this._authService.user$.subscribe(data => {
@@ -154,94 +146,65 @@ export class TestResultComponent implements OnInit {
         numbers.push(average/passage);
       }
       if (numbers.length != 0){
-        this.BarChartData[0] = ({data: numbers, label:'Categories', backgroundColor: ['#48C9B06A','#EF9A9A6A','#CE93D86A','#9FA8DA6A','#90CAF96A','#FFAB916A', '#80CBC46A',  '#E6EE9C6A', '#FFE0826A', '#FFE0826A', '#F48FB16A','#FFAB916A','#BCAAA46A', 'B0BEC56A', '#FFCC806A', '#FFF59D6A', '#A5D6A76A']})
+        this.BarChartData[0] = ({data: numbers, label:'Moyenne', 
+          borderColor: ['#48C9B0','#EF9A9A','#CE93D8','#9FA8DA','#90CAF9','#FFAB91', '#80CBC4',  '#E6EE9C', '#FFE082', '#FFE082', '#F48FB1','#FFAB91','#BCAAA4', 'B0BEC5', '#FFCC80', '#FFF59D', '#A5D6A7']
+          ,backgroundColor: ['#48C9B06A','#EF9A9A6A','#CE93D86A','#9FA8DA6A','#90CAF96A','#FFAB916A', '#80CBC46A',  '#E6EE9C6A', '#FFE0826A', '#FFE0826A', '#F48FB16A','#FFAB916A','#BCAAA46A', 'B0BEC56A', '#FFCC806A', '#FFF59D6A', '#A5D6A76A']
+          , hoverBackgroundColor: ['#48C9B0','#EF9A9A','#CE93D8','#9FA8DA','#90CAF9','#FFAB91', '#80CBC4',  '#E6EE9C', '#FFE082', '#FFE082', '#F48FB1','#FFAB91','#BCAAA4', 'B0BEC5', '#FFCC80', '#FFF59D', '#A5D6A7']
+          , hoverBorderColor: ['#48C9B0','#EF9A9A','#CE93D8','#9FA8DA','#90CAF9','#FFAB91', '#80CBC4',  '#E6EE9C', '#FFE082', '#FFE082', '#F48FB1','#FFAB91','#BCAAA4', 'B0BEC5', '#FFCC80', '#FFF59D', '#A5D6A7'],
+        borderWidth:1})
       }
     }
   });
-
-    // list.forEach(R => {
-    //   if (!this.LineChartLabels.includes(R.date))
-    //     this.LineChartLabels.push(R.date)
-    // });
-
-
-    // full lineChart
-    // if (this.results.length != 0 && this.categories.length != 0){
-    //   let index = 0;
-    //   for (let i = 0; i < this.categories.length; i++)
-    //   {
-    //     let tests = {numbers:[], dates:[]};
-    //     // let numbers : number[] = [];
-    //     for (let k = 0; k < this.LineChartLabels.length; k++){
-    //       this.results.forEach(R => {
-    //         if (R.date == this.LineChartLabels[k] && R.categoryId == this.categories[i].id){
-    //           tests.numbers.push(R.result)
-    //           tests.dates.push(R.date)
-    //         }
-    //       })
-    //     }
-    //     if (tests.numbers.length != 0 && tests.dates.length != 0){
-    //       let numbers : number[] = [];
-    //       numbers.length = this.LineChartLabels.length;
-    //       for (let x = 0; x < numbers.length; x++){
-    //         if (this.LineChartLabels.includes(tests.dates[x])){
-    //           let index = this.LineChartLabels.findIndex(date => date == tests.dates[x]);
-    //           numbers[index] = tests.numbers[x];
-    //         }
-    //       }
-    //       this.LineChartData[index] = ({data: numbers, label: this.categories[i].name, borderColor:this.borderColor[i], backgroundColor:"#FFFFFF00", spanGaps:true})
-    //       index += 1;
-
-    //     }
-    //   }
-    // }
-  // });
   }
 
-  getLabelsByCategory(categoryId: number): Date[] {
-    if (this.results.length == 0) return [];
-    let label = [];
-    if (this.results != null && this.results.length != 0){
-      this.results.forEach(result => {
-        if (categoryId == result.categoryId)
-        label.push(result.date);
-      });
-    }
-    return label;
+  ngOnDestroy(): void {
+    this.resultSubscription.unsubscribe();
+    console.log(this.resultSubscription)
   }
 
-  getDataByCategory(categoryId: number): ChartDataSets[] {
-    if(this.results == null) return [];
-    let labelSets : Date[] = [];
-    let chartData: ChartDataSets[] = [];
-    labelSets = this.getLabelsByCategory(categoryId);
-    let currentCategory = this.categories.find( x => x.id == categoryId);
-    if (this.results.length != 0 && this.categories.length != 0 && labelSets.length != 0){
-      let tests = {numbers:[], dates:[]};
-      for (let i = 0; i < labelSets.length; i++){
-        this.results.forEach(result => {
-          if (categoryId == result.categoryId && result.date == labelSets[i]){
-            tests.numbers.push(result.result);
-            tests.dates.push(result.date);
-            }
-        })
-      }
-      if (tests.numbers.length != 0 && tests.dates.length != 0){
-        let resultToGO : number[] = [];
-        resultToGO.length = labelSets.length;
-        for(let k = 0; k < resultToGO.length; k++)
-        {
-          if(labelSets.includes(tests.dates[k])){
-            let index = labelSets.findIndex(date => date == tests.dates[k]);
-            resultToGO[index] = tests.numbers[k];
-          }
-        }
-        chartData = [{data: resultToGO, label: currentCategory.name, borderColor: this.borderColor[categoryId], backgroundColor: "#FFFFFF0B"}]
-      }
-    }
-    console.log(chartData, false)
-    return chartData;
-  }
+  // getLabelsByCategory(categoryId: number): Date[] {
+  //   if (this.results.length == 0) return [];
+  //   let label = [];
+  //   if (this.results != null && this.results.length != 0){
+  //     this.results.forEach(result => {
+  //       if (categoryId == result.categoryId)
+  //       label.push(result.date);
+  //     });
+  //   }
+  //   return label;
+  // }
+
+  // getDataByCategory(categoryId: number): ChartDataSets[] {
+  //   if(this.results == null) return [];
+  //   let labelSets : Date[] = [];
+  //   let chartData: ChartDataSets[] = [];
+  //   labelSets = this.getLabelsByCategory(categoryId);
+  //   let currentCategory = this.categories.find( x => x.id == categoryId);
+  //   if (this.results.length != 0 && this.categories.length != 0 && labelSets.length != 0){
+  //     let tests = {numbers:[], dates:[]};
+  //     for (let i = 0; i < labelSets.length; i++){
+  //       this.results.forEach(result => {
+  //         if (categoryId == result.categoryId && result.date == labelSets[i]){
+  //           tests.numbers.push(result.result);
+  //           tests.dates.push(result.date);
+  //           }
+  //       })
+  //     }
+  //     if (tests.numbers.length != 0 && tests.dates.length != 0){
+  //       let resultToGO : number[] = [];
+  //       resultToGO.length = labelSets.length;
+  //       for(let k = 0; k < resultToGO.length; k++)
+  //       {
+  //         if(labelSets.includes(tests.dates[k])){
+  //           let index = labelSets.findIndex(date => date == tests.dates[k]);
+  //           resultToGO[index] = tests.numbers[k];
+  //         }
+  //       }
+  //       chartData = [{data: resultToGO, label: currentCategory.name, borderColor: this.borderColor[categoryId], backgroundColor: "#FFFFFF0B"}]
+  //     }
+  //   }
+  //   return chartData;
+  // }
 
 
   openDeleteDialog(id:number){

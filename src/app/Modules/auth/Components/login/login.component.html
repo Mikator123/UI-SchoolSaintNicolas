@@ -14,12 +14,8 @@
       </mat-form-field>
       <!-- password -->
       <mat-form-field>
-        <input 
-        matInput placeholder="Mot de passe" 
-        formControlName="password" 
-        required
-        [type]="passwordHide ? 'password' : 'text'"
-        >
+        <input matInput placeholder="Mot de passe" formControlName="password" required
+          [type]="passwordHide ? 'password' : 'text'">
         <mat-icon matSuffix class="hideButton" (click)="passwordHide = !passwordHide">
           {{passwordHide ? 'visibility_off' : 'visibility'}}
         </mat-icon>
@@ -27,11 +23,13 @@
           Le mot de passe est obligatoire.
         </mat-error>
       </mat-form-field>
-      
-      <mat-spinner-button [options]="spinnerButtonOptions" [disabled]="form.invalid" >
-      </mat-spinner-button>
 
-      <a (click)="openForgotPasswordDialog()"  class="forgotPwdLabel">Mot de passe oublié ?</a>
+      <mat-spinner-button [options]="spinnerButtonOptions" [disabled]="form.invalid">
+      </mat-spinner-button>
+      <div style="text-align: right;">
+        <a (click)="openForgotPasswordDialog()" class="forgotPwdLabel">Mot de passe oublié ?</a>
+
+      </div>
     </form>
   </mat-card-content>
 

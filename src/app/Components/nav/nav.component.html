@@ -1,84 +1,66 @@
-
 <mat-toolbar color="primary">
-<mat-toolbar color="primary" *ngIf="user" class="bounce-in-top">
+  <mat-toolbar color="primary" *ngIf="user" class="bounce-in-top">
 
-  <button 
-  [matMenuTriggerFor]="StudentMenu" 
-  matTooltip="Menu" 
-  *ngIf="user.statusCode != 2"
-  mat-icon-button>
-    <mat-icon>apps</mat-icon>
-  </button>
+    <button [matMenuTriggerFor]="StudentMenu" matTooltip="Menu" *ngIf="user.statusCode != 2" mat-icon-button>
+      <mat-icon>apps</mat-icon>
+    </button>
 
-  <button [matMenuTriggerFor]="ProfessorMenu"
-    matTooltip="Menu"
-    *ngIf="user.statusCode != 1"
-     mat-icon-button>
-    <mat-icon>apps</mat-icon>
-  </button>
+    <button [matMenuTriggerFor]="ProfessorMenu" matTooltip="Menu" *ngIf="user.statusCode != 1" mat-icon-button>
+      <mat-icon>apps</mat-icon>
+    </button>
 
 
-  <button  mat-icon-button [routerLink]="['home']"
-            matTooltip="Home">
-    <mat-icon>home</mat-icon>
-  </button>
+    <button mat-icon-button [routerLink]="['home']" matTooltip="Home">
+      <mat-icon>home</mat-icon>
+    </button>
 
-  <button  mat-icon-button [routerLink]="['login']"
-  matTooltip="login"
-  *ngIf="user == null">
-<mat-icon>login</mat-icon>
-</button>
+    <button mat-icon-button [routerLink]="['login']" matTooltip="login" *ngIf="user == null">
+      <mat-icon>login</mat-icon>
+    </button>
 
 
-<button mat-icon-button 
-[routerLink]="['login']"
-matTooltip="logout" 
-(click)="logout()">
-<mat-icon>logout</mat-icon>
-</button>
+    <button mat-icon-button [routerLink]="['login']" matTooltip="logout" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+    </button>
 
 
-  <span class="spacer">
-    <div [class]="greetingClass">{{WelcomeMsg}}</div>
-  </span>
+    <span class="spacer">
+      <div [class]="greetingClass">{{WelcomeMsg}}</div>
+    </span>
 
-  <button mat-icon-button  
-  matTooltip="ToDo" 
-  matBadge="5" 
-  matBadgeColor="accent"
- >
-    <mat-icon>content_paste</mat-icon>
-  </button>
+    <button mat-icon-button matTooltip="ToDo" matBadge="5" matBadgeColor="accent">
+      <mat-icon>content_paste</mat-icon>
+    </button>
 
-  <button mat-icon-button (click)="onDarkModeSwitched()" matTooltip="Adapte le thème de la page" *ngIf="!ThemeLight" type="button" >
-    <mat-icon>nights_stay</mat-icon> 
-  </button>
+    <button mat-icon-button (click)="onDarkModeSwitched()" matTooltip="Adapte le thème de la page" *ngIf="!ThemeLight"
+      type="button">
+      <mat-icon>nights_stay</mat-icon>
+    </button>
 
-  <button  mat-icon-button (click)="onDarkModeSwitched()" matTooltip="Adapte le thème de la page" *ngIf="ThemeLight"  type="button" >
-    <mat-icon>wb_sunny</mat-icon> 
-  </button>
- <!-- END -->
+    <button mat-icon-button (click)="onDarkModeSwitched()" matTooltip="Adapte le thème de la page" *ngIf="ThemeLight"
+      type="button">
+      <mat-icon>wb_sunny</mat-icon>
+    </button>
+    <!-- END -->
 
 
-  <!-- NAV MENU ETUDIANT -->
-  <mat-menu #StudentMenu="matMenu"> <!-- condition d'affichage -->
+    <!-- NAV MENU ETUDIANT -->
+    <mat-menu #StudentMenu="matMenu">
+      <!-- condition d'affichage -->
 
 
 
-      <button mat-menu-item 
-      [matMenuTriggerFor]="profil"
-      >
+      <button mat-menu-item [matMenuTriggerFor]="profil">
         <mat-icon>fingerprint</mat-icon>
         <span>Profil</span>
       </button>
 
-      <button mat-menu-item> 
+      <button mat-menu-item>
         <mat-icon>fastfood</mat-icon>
         <span>Repas</span>
       </button>
 
-      <button mat-menu-item
-      [routerLink]="['evenements']">
+      <button mat-menu-item [routerLink]="['evenements']">
         <mat-icon>campaign</mat-icon>
         <span>Evènements</span>
       </button>
@@ -88,168 +70,154 @@ matTooltip="logout"
         <span>Email</span>
       </button>
 
-      <button mat-menu-item
-      [routerLink]="['regles']">
+      <button mat-menu-item [routerLink]="['regles']">
         <mat-icon>style</mat-icon>
         <span>Règles</span>
       </button>
 
 
-  </mat-menu>
- <!-- END -->
+    </mat-menu>
+    <!-- END -->
 
 
-  <!-- 2ND MENU PROFILE -->
+    <!-- 2ND MENU PROFILE -->
 
-  <mat-menu #profil="matMenu">
+    <mat-menu #profil="matMenu">
 
-    <button mat-menu-item
-    [routerLink]="['user/'+user.id]">
-      <mat-icon>face</mat-icon>
-      <span>Personnel</span>
-    </button>
+      <button mat-menu-item [routerLink]="['user/'+user.id]">
+        <mat-icon>face</mat-icon>
+        <span>Personnel</span>
+      </button>
 
-    <button mat-menu-item
-    [routerLink]="['notesTrimestrielle/'+user.id]"> 
-      <mat-icon>school</mat-icon>
-      <span>infos</span>
-    </button>
+      <button mat-menu-item [routerLink]="['notesTrimestrielle/'+user.id]">
+        <mat-icon>school</mat-icon>
+        <span>infos</span>
+      </button>
 
-    <button mat-menu-item
-    [routerLink]="['Resultats/'+user.id]"> 
-      <mat-icon>leaderboard</mat-icon>
-      <span>Résultats</span>
-    </button>
+      <button mat-menu-item [routerLink]="['Resultats/'+user.id]">
+        <mat-icon>leaderboard</mat-icon>
+        <span>Résultats</span>
+      </button>
 
-    <button mat-menu-item> 
-      <mat-icon>engineering</mat-icon>
-      <span>Travail</span>
-    </button>
+      <button mat-menu-item>
+        <mat-icon>engineering</mat-icon>
+        <span>Travail</span>
+      </button>
 
-  </mat-menu>
- <!-- END -->
+    </mat-menu>
+    <!-- END -->
 
 
- <!-- 3rd MENU EMAIL -->
+    <!-- 3rd MENU EMAIL -->
 
- <mat-menu #email="matMenu">
+    <mat-menu #email="matMenu">
 
-  <button mat-menu-item
-  (click)="this.openEmailDialog(professor.email)">
-    <mat-icon>face</mat-icon>
-    <span>Au professeur</span>
-  </button>
+      <button mat-menu-item (click)="this.openEmailDialog(professor.email)">
+        <mat-icon>face</mat-icon>
+        <span>Au professeur</span>
+      </button>
 
-  <button mat-menu-item
-  (click)="this.openEmailDialog('SchoolEmail@school.com')">
-    <mat-icon>location_city</mat-icon>
-    <span>A l'école</span>
-  </button>
+      <button mat-menu-item (click)="this.openEmailDialog('SchoolEmail@school.com')">
+        <mat-icon>location_city</mat-icon>
+        <span>A l'école</span>
+      </button>
 
-</mat-menu>
- <!-- END -->
+    </mat-menu>
+    <!-- END -->
 
 
-<!-- NAV MENU PROF -->
+    <!-- NAV MENU PROF -->
 
-<mat-menu #ProfessorMenu="matMenu">
+    <mat-menu #ProfessorMenu="matMenu">
 
-  <button mat-menu-item [matMenuTriggerFor]="class">
-    <mat-icon>groups</mat-icon>
-    <span>Classe</span>
-  </button>
+      <button mat-menu-item [matMenuTriggerFor]="class">
+        <mat-icon>groups</mat-icon>
+        <span>Classe</span>
+      </button>
 
-  <button mat-menu-item
-  [routerLink]="['evenements']">
-    <mat-icon>campaign</mat-icon>
-    <span>Evènements</span>
-  </button>
+      <button mat-menu-item [routerLink]="['evenements']">
+        <mat-icon>campaign</mat-icon>
+        <span>Evènements</span>
+      </button>
 
-    <button mat-menu-item
-    [routerLink]="['user/'+user.id]">
-      <mat-icon>fingerprint</mat-icon>
-      <span>Profil</span>
-    </button>
+      <button mat-menu-item [routerLink]="['user/'+user.id]">
+        <mat-icon>fingerprint</mat-icon>
+        <span>Profil</span>
+      </button>
 
-    <button mat-menu-item
-    [routerLink]="['repas']"> 
-      <mat-icon>fastfood</mat-icon>
-      <span>Repas</span>
-    </button>
+      <button mat-menu-item [routerLink]="['repas']">
+        <mat-icon>fastfood</mat-icon>
+        <span>Repas</span>
+      </button>
 
-    <button mat-menu-item [matMenuTriggerFor]="emailProf">
-      <mat-icon>contact_mail</mat-icon>
-      <span>Email</span>
-    </button>
+      <button mat-menu-item [matMenuTriggerFor]="emailProf">
+        <mat-icon>contact_mail</mat-icon>
+        <span>Email</span>
+      </button>
 
-    <button 
-    mat-menu-item
-    [routerLink]="['regles']"
-    >
-      <mat-icon>style</mat-icon>
-      <span>Règles</span>
-    </button>
+      <button mat-menu-item [routerLink]="['regles']">
+        <mat-icon>style</mat-icon>
+        <span>Règles</span>
+      </button>
 
 
- <!-- END -->
+      <!-- END -->
 
 
       <!-- 2ND MENU CLASS -->
 
-  <mat-menu #class="matMenu">
+      <mat-menu #class="matMenu">
 
-    <button mat-menu-item
-    [routerLink]="['Resultats']">
-      <mat-icon>show_chart</mat-icon>
-      <span>Résultats</span>
-    </button>
+        <button mat-menu-item [routerLink]="['Resultats']">
+          <mat-icon>show_chart</mat-icon>
+          <span>Résultats</span>
+        </button>
 
-    <button mat-menu-item
-    [routerLink]="['Etudiants']"> 
-      <mat-icon>child_care</mat-icon>
-      <span>Etudiants</span>
-    </button>
+        <button mat-menu-item [routerLink]="['Etudiants']">
+          <mat-icon>child_care</mat-icon>
+          <span>Etudiants</span>
+        </button>
 
-    <button mat-menu-item> 
-      <mat-icon>engineering</mat-icon>
-      <span>Travaux</span>
-    </button>
+        <button mat-menu-item [routerLink]="['Travaux']">
+          <mat-icon>engineering</mat-icon>
+          <span>Travaux</span>
+        </button>
 
-  </mat-menu>
- <!-- END -->
+      </mat-menu>
+      <!-- END -->
 
-  <!-- 3rd MENU email -->
+      <!-- 3rd MENU email -->
 
-  <mat-menu #emailProf="matMenu">
-
-    
-    <button mat-menu-item [matMenuTriggerFor]="StudentList" *ngIf="contactList.length > 0"> 
-      <mat-icon>face</mat-icon>
-      <span>Au contact</span>
-    </button>
-
-    <button mat-menu-item (click)="this.openEmailDialog('SchoolEmail@school.com')">
-      <mat-icon>location_city</mat-icon>
-      <span>A l'école</span>
-    </button>
+      <mat-menu #emailProf="matMenu">
 
 
-  </mat-menu>
- <!-- END -->
+        <button mat-menu-item [matMenuTriggerFor]="StudentList" *ngIf="contactList.length > 0">
+          <mat-icon>face</mat-icon>
+          <span>Au contact</span>
+        </button>
+
+        <button mat-menu-item (click)="this.openEmailDialog('SchoolEmail@school.com')">
+          <mat-icon>location_city</mat-icon>
+          <span>A l'école</span>
+        </button>
 
 
- <!--  MENU StudentList -->
-
- <mat-menu #StudentList="matMenu">
-    <button mat-menu-item *ngFor="let user of contactList" (click)="this.openEmailDialog(null,user)"> 
-      <img matCardAvatar [src]="user.photo">
-      <span>{{user.fullName}}</span>
-    </button>
- </mat-menu>
- <!-- END -->
+      </mat-menu>
+      <!-- END -->
 
 
-</mat-menu>
+      <!--  MENU StudentList -->
 
-</mat-toolbar>
+      <mat-menu #StudentList="matMenu">
+        <button mat-menu-item *ngFor="let user of contactList" (click)="this.openEmailDialog(null,user)">
+          <img matCardAvatar [src]="user.photo">
+          <span>{{user.fullName}}</span>
+        </button>
+      </mat-menu>
+      <!-- END -->
+
+
+    </mat-menu>
+
+  </mat-toolbar>
 </mat-toolbar>

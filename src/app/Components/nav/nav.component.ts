@@ -1,4 +1,4 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Observable, Subscription } from 'rxjs';
@@ -19,7 +19,7 @@ export interface sendEmailToDialog{
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.scss']
 })
-export class NavComponent implements OnInit{
+export class NavComponent implements OnInit, OnDestroy{
 
   userId: number = null;
   user : UserSimplified = null;
@@ -41,6 +41,7 @@ export class NavComponent implements OnInit{
     private dialog : MatDialog,
     private snackBar: MatSnackBar,
   ) {}
+
   
   onDarkModeSwitched(){
     this.clickTheme();
@@ -62,6 +63,12 @@ export class NavComponent implements OnInit{
     })
     this.greetingClass = 'bounce-in-top';
     setTimeout(() => {this.greetingClass = 'bounce-out-top';}, 6000)
+  }
+
+  ngOnDestroy(): void {
+    console.log(this.myMailsSubscription)
+    this.myMailsSubscription.unsubscribe();
+    console.log(this.myMailsSubscription)
   }
 
   clickTheme(){

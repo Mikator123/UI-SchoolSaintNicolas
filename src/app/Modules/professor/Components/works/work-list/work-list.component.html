@@ -1,0 +1,9 @@
+<H1>Travaux</H1>
+<div>
+      <mat-label>Selectionnez une categorie</mat-label>
+      <mat-select [value]="startingCategoryId">
+        <mat-option [value]="cat.id" *ngFor="let cat of categories">{{cat.name}}</mat-option>
+      </mat-select>
+    </div>
+
+    

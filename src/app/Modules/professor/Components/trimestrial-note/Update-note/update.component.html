@@ -4,19 +4,19 @@
     <mat-error *ngIf="error == true">
       {{this.errorTxt}}
     </mat-error>
-   
+
     <mat-form-field>
       <mat-label>Classe:</mat-label>
       <input matInput disabled [value]="data.className">
-      </mat-form-field>
+    </mat-form-field>
 
-    <mat-divider></mat-divider> 
+    <mat-divider></mat-divider>
 
     <mat-form-field>
       <mat-label>Etudiant:</mat-label>
       <input matInput disabled [value]="data.userId">
-      </mat-form-field>
-    <mat-divider></mat-divider> 
+    </mat-form-field>
+    <mat-divider></mat-divider>
 
     <mat-form-field>
       <mat-label>Selectionnez un trimestre</mat-label>
@@ -26,41 +26,31 @@
       <mat-error>
         La sélection du trimestre est obligatoire.
       </mat-error>
-  </mat-form-field>
-  <br/>
-  <mat-divider></mat-divider> 
+    </mat-form-field>
+    <br />
+    <mat-divider></mat-divider>
 
 
 
-      <mat-form-field class="txtArea">
+    <mat-form-field class="txtArea">
       <mat-label>Description:</mat-label>
 
 
-        <textarea 
-            style="height: 40vh"
-            matInput
-            formControlName="description" 
-            required
-            >
+      <textarea style="height: 35vh" matInput formControlName="description" required>
         </textarea>
-        <mat-error>
-              Une description est obligatoire.
-        </mat-error>
-      </mat-form-field>
-      <br/>
+      <mat-error>
+        Une description est obligatoire.
+      </mat-error>
+    </mat-form-field>
+    <br />
+    <div style="text-align: center;">
+      <button mat-dialog-close mat-raised-button style="margin: 12px" color="accent">Annuler</button>
 
-    <button
-    mat-dialog-close
-    mat-raised-button
-    color="accent"
-    >Annuler</button>
+      <button mat-raised-button type="submit" color="primary" style="margin: 12px"
+        [disabled]="form.invalid">Valider</button>
 
-    <button 
-    mat-raised-button 
-    type="submit" 
-    color="primary"
-    [disabled]="form.invalid">Valider</button>
-    
+    </div>
+
 
   </form>
 </mat-dialog-content>

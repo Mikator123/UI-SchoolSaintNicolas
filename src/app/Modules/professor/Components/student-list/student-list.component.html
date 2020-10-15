@@ -5,30 +5,33 @@
     </mat-card-header>
 
     <mat-card-content>
-        <mat-list *ngFor="let student of studentList">
-            <mat-list-item *ngIf="student.statusCode == 1"> 
-                <a (click)="openDetailDialog(student.id)"><img matTooltip="Details" mat-card-avatar [src]="student.photo"> </a>
+        <mat-list *ngFor="let student of studentList" style="margin:10px">
+            <mat-list-item *ngIf="student.statusCode == 1" style="margin:5px">
+                <a (click)="openDetailDialog(student.id)"><img matTooltip="Details" mat-card-avatar
+                        [src]="student.photo" style="width: 50px; height: 50px;"> </a>
 
-                <label (click)="openDetailDialog(student.id)" matTooltip="Details" style="margin-left: 5px;">{{student.firstName}} {{student.lastName}} </label>
-                
-                <button  mat-icon-button [routerLink]="['../notesTrimestrielle/'+student.id]"
-                matTooltip="consulter les notes trimestrielles">
-                <mat-icon>notes</mat-icon>
+                <label (click)="openDetailDialog(student.id)" matTooltip="Details"
+                    style="margin-left: 10px; margin-top: auto; margin-bottom: auto;">{{student.firstName}}
+                    {{student.lastName}} </label>
+
+                <button mat-icon-button [routerLink]="['../notesTrimestrielle/'+student.id]"
+                    matTooltip="consulter les notes trimestrielles">
+                    <mat-icon>notes</mat-icon>
                 </button>
-                <button  mat-icon-button [routerLink]="['../Resultats/'+student.id]"
-                matTooltip="Resultats">
-                <mat-icon>show_chart</mat-icon>
+                <button mat-icon-button [routerLink]="['../Resultats/'+student.id]" matTooltip="Resultats">
+                    <mat-icon>show_chart</mat-icon>
                 </button>
-                <mat-divider></mat-divider>    
             </mat-list-item>
-            
+            <mat-divider></mat-divider>
         </mat-list>
+        <div>
+            <app-results></app-results>
+        </div>
     </mat-card-content>
 </mat-card>
-<mat-card>
-    <app-results></app-results>
-</mat-card>
 
-<mat-dialog-content>
+
+
+<!-- <mat-dialog-content>
 <router-outlet></router-outlet>
-</mat-dialog-content>
+</mat-dialog-content> -->

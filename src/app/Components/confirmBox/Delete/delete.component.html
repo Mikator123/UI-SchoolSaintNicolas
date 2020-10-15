@@ -1,18 +1,10 @@
-<H2 mat-dialog-title>Etes vous sûr de vouloir valider cette action ?</H2>
-  <mat-dialog-content>
+<H2 mat-dialog-title style="text-align: center;">Etes vous sûr de vouloir valider cette action ?</H2>
+<mat-dialog-content class="alignContent">
 
-        <button 
-        mat-raised-button 
-        (click)="validation == false"
-        mat-dialog-close
-        color="war"
-        >Retour</button>
-  
-      <button 
-      (click)="validation == true"
-      [mat-dialog-close]="validation"
-      mat-raised-button
-      color="accent"
-      >Valider</button>
+  <button mat-raised-button (click)="validation == false" mat-dialog-close color="accent"
+    class="buttonMargin">Retour</button>
 
-  </mat-dialog-content>
+  <button (click)="validation == true" [mat-dialog-close]="validation" mat-raised-button color="primary"
+    class="buttonMargin">Valider</button>
+
+</mat-dialog-content>

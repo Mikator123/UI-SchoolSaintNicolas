@@ -13,7 +13,7 @@ import {DatePipe, formatDate} from '@angular/common';
 
 
 
-// type Theme = 'light-theme' | 'dark-theme';
+
 
 @Component({
   selector: 'app-results',
@@ -24,39 +24,7 @@ import {DatePipe, formatDate} from '@angular/common';
 export class ResultsComponent implements OnInit {
 
 
-  //ChartTheming:
-  
-
-  // private _selectedTheme: Theme = 'light-theme';
-  // public get selectedTheme() {
-  // return this._selectedTheme;
-  // }
-  // public set selectedTheme(value) {
-  //   this._selectedTheme = value;
-  //   let overrides: ChartOptions;
-  //   if (this.selectedTheme === 'dark-theme') {
-  //   overrides = {
-  //     legend: {
-  //       labels: { fontColor: 'white' }
-  //     },
-  //     scales: {
-  //       xAxes: [{
-  //         ticks: { fontColor: 'white' },
-  //         gridLines: { color: 'rgba(255,255,255,0.1)' }
-  //       }],
-  //       yAxes: [{
-  //         ticks: { fontColor: 'white' },
-  //         gridLines: { color: 'rgba(255,255,255,0.1)' }
-  //       }]
-  //     }
-  //   };
-  // } else {
-  //   overrides = {};
-  //   }
-  // this.themeService.setColorschemesOptions(overrides);
-  // }
-
-  //Chart
+  //LineChart
   public LineChart = {
     scaleShowVerticalLines: false,
     responsive: true,
@@ -72,9 +40,7 @@ export class ResultsComponent implements OnInit {
           }
       }],
       xAxes:[{
-        // type:'time',
-        // time:{displayFormats:{week:'ll'}}
-        // valueFormatString:"MMM"
+
       }]
     },
     animationEnable:true,
@@ -84,13 +50,34 @@ export class ResultsComponent implements OnInit {
   public LineChartType = 'line';
   public LineChartLegend = true;
   public LineChartData : ChartDataSets[] = [];
-  borderColor: string[] = ['#EF9A9A','#CE93D8','#9FA8DA','#90CAF9','#80DEEA', '#80CBC4',  '#E6EE9C', '#FFE082', '#FFE082', '#F48FB1','#FFAB91','#BCAAA4', 'B0BEC5', '#FFCC80', '#FFF59D', '#A5D6A7']
+  public borderColor: string[] = ['#48C9B0','#EF9A9A','#CE93D8','#9FA8DA','#90CAF9','#FFAB91', '#80CBC4',  '#E6EE9C', '#FFE082', '#FFE082', '#F48FB1','#FFAB91','#BCAAA4', 'B0BEC5', '#FFCC80', '#FFF59D', '#A5D6A7']
+
+  //BarChart
+  public BarChart = {
+    responsive: true,
+    title:{
+      display:true,
+      text:'Moyenne des résultats en temps réel'
+    },
+    scales: {
+      yAxes: [{
+          ticks: {
+              beginAtZero: true,
+              max: 20
+          }
+      }]
+  },
+  };
+  public BarChartLabels: string[] = [];
+  public BarChartType= 'bar';
+  public BarChartLegend = false;
+  public BarChartData : ChartDataSets[] = [];
+
+
 
     //Props
     categories: Category[] = [];
     startingCategoryId = 0;
-    // students: Student[] = [];
-    // startingStudentId = 0;
     ActualClassId: number;
     results: TestResult[] = [];
     
@@ -99,13 +86,9 @@ export class ResultsComponent implements OnInit {
     private _resultService : ResultService,
     private _profService: ProfessorService,
     private _authService: AuthService,
-    // private themeService: ThemeService
   ) { }
 
-  // setCurrentTheme(theme: Theme) {
-  //   this.selectedTheme = theme;
-  // }
-
+ 
   ngOnInit(): void {
     this._authService.user$.subscribe(user => {
       if (user == null) return;
@@ -116,13 +99,15 @@ export class ResultsComponent implements OnInit {
       if (data == null) return;
       this.categories = data;
       this.categories.push({id:0 , name : 'Toutes'})
+      // fill bar chart xAxis
+      this.categories.forEach(cat => {
+        if (cat.name == 'Toutes') return;
+        this.BarChartLabels.push(cat.name);
+      });
+      //--
     });
     this._profService.getStudents(this.ActualClassId);
-    // this._profService.studentSubject.subscribe(student => {
-    //   if (student == null) return;
-    //   this.students = student.filter(x => x.statusCode != 2);
-    //   this.students.push({id:0, firstName: 'Tous', lastName:'', birthdate:new Date(), gender:'', photo:'', statusCode:1});
-    // });
+
     this._resultService.getResultByClassId(this.ActualClassId)
     this._resultService.allResultSubject.subscribe(results => {
       if (results == null) return;
@@ -133,10 +118,10 @@ export class ResultsComponent implements OnInit {
           this.LineChartLabels.sort();
       });
       if (this.results != null && this.categories.length != 0){
-        let index = 0;
+        let index = 0; // line chart
         for (let i = 0; i < this.categories.length; i++)
         {
-          let tests = {numbers:[], dates:[]};
+          let tests = {numbers:[], dates:[]}; //line chart
           for (let k = 0; k < this.LineChartLabels.length; k++){
             let average = 0;
             let passage = 0;
@@ -152,6 +137,7 @@ export class ResultsComponent implements OnInit {
             if (average > 0 && passage > 0){
               tests.numbers.push(average/passage)
               tests.dates.push(date)
+
             }
           }
           if (tests.numbers.length != 0 && tests.dates.length != 0){
@@ -163,9 +149,30 @@ export class ResultsComponent implements OnInit {
                 numbers[index] = tests.numbers[x];
               }
             }
-            this.LineChartData[index] = ({data: numbers, label: this.categories[i].name, borderColor:this.borderColor[i], backgroundColor:this.borderColor[i],fill:false, spanGaps:true, pointHoverRadius: 10})
+            this.LineChartData[index] = ({data: numbers, label: this.categories[i].name, borderColor:this.borderColor[i], backgroundColor:this.borderColor[i],fill:false, spanGaps:true, 
+                                          pointHoverRadius: 10, pointRadius:4, pointBackgroundColor:this.borderColor[i], pointHoverBackgroundColor: this.borderColor[i]})
             index += 1;
           }
+        }
+        let numbers : number[] = [];
+        for (let i = 0; i < this.categories.length; i ++){
+          let average = 0;
+          let passage = 0;
+          this.results.forEach(R => {
+            if (R.categoryId == this.categories[i].id){
+              average += R.result;
+              passage += 1;
+            }
+          });
+          numbers.push(average/passage);
+        }
+        if (numbers.length != 0){
+          this.BarChartData[0] = ({data: numbers, label:'Moyenne', 
+            borderColor: this.borderColor
+            , backgroundColor: ['#48C9B06A','#EF9A9A6A','#CE93D86A','#9FA8DA6A','#90CAF96A','#FFAB916A', '#80CBC46A',  '#E6EE9C6A', '#FFE0826A', '#FFE0826A', '#F48FB16A','#FFAB916A','#BCAAA46A', 'B0BEC56A', '#FFCC806A', '#FFF59D6A', '#A5D6A76A']
+            , hoverBackgroundColor: this.borderColor
+            , hoverBorderColor: this.borderColor,
+          borderWidth:1})
         }
       }
     })

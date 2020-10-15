@@ -13,7 +13,9 @@ import {CreateResultComponent} from './Components/test-result/create-result/crea
 import { StudentDetailedComponent } from './Components/student-list/student-detailed/student-detailed.component';
 import { ResultsComponent } from './Components/test-result/results/results/results.component';
 import { ViewFileComponent } from './Components/test-result/view-file/view-file.component';
-
+import { WorkListComponent } from './Components/works/work-list/work-list.component';
+import { CreateWorkComponent } from './Components/works/create-work/create-work.component';
+import {UpdateWorkComponent} from './Components/works/update-work/update-work.component';
 
 
 
@@ -33,6 +35,9 @@ import { ViewFileComponent } from './Components/test-result/view-file/view-file.
     StudentDetailedComponent,
     ResultsComponent,
     ViewFileComponent,
+    WorkListComponent,
+    CreateWorkComponent,
+    UpdateWorkComponent,
   ],
 
   imports: [
@@ -54,6 +59,9 @@ import { ViewFileComponent } from './Components/test-result/view-file/view-file.
     StudentDetailedComponent,
     ResultsComponent,
     ViewFileComponent,
+    WorkListComponent,
+    CreateWorkComponent,
+    UpdateWorkComponent
   ]
 })
 export class ProfessorModule { }

@@ -1,26 +1,34 @@
+<mat-card style="height: auto;">
+  <mat-card-header>
+    <mat-card-title>
+      <h1 class="mat-h1">Résultats de la classe: </h1>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="dashboard-card-content">
+    <div>
+      <mat-label>Selectionnez une categorie</mat-label>
+      <mat-select [value]="startingCategoryId">
+        <mat-option [value]="cat.id" *ngFor="let cat of categories">{{cat.name}}</mat-option>
+      </mat-select>
+    </div>
+    <div class="Chart" *ngIf="results.length != 0 && categories.length != 0">
+      <canvas baseChart [datasets]="LineChartData" [labels]="LineChartLabels" [options]="LineChart"
+        [legend]="LineChartLegend" [chartType]="LineChartType" height="100%">
+      </canvas>
+    </div>
 
-        <mat-card class="dashboard-card">
-          <mat-card-header>
-            <mat-card-title>
-              <h1 class="mat-h1">Résultats de la classe: </h1>
-            </mat-card-title>
-          </mat-card-header>
-          <mat-card-content class="dashboard-card-content">
-            <div>
-              <mat-label>Selectionnez une categorie</mat-label>
-                <mat-select [value]="startingCategoryId" >
-                  <mat-option  [value]="cat.id" *ngFor="let cat of categories">{{cat.name}}</mat-option>
-              </mat-select>
-            </div>
-            <div>
-                <canvas baseChart 
-                    [datasets]="LineChartData"
-                    [labels]="LineChartLabels"
-                    [options]="LineChart"
-                    [legend]="LineChartLegend"
-                    [chartType]="LineChartType"
-                    >
-                </canvas>
-            </div>
-          </mat-card-content>
-        </mat-card>
+
+  </mat-card-content>
+</mat-card>
+<mat-card *ngIf="results.length != 0  && categories.length != 0" style="height: auto;">
+  <mat-card-header>
+    <mat-card-title>
+      <h1 class="mat-h1">Moyenne de la classe: </h1>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="dashboard-card-content">
+    <canvas baseChart [datasets]="BarChartData" [labels]="BarChartLabels" [options]="BarChart" [legend]="BarChartLegend"
+      [chartType]="BarChartType" height="100%">
+    </canvas>
+  </mat-card-content>
+</mat-card>

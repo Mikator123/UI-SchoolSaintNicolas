@@ -10,6 +10,7 @@ import { StudentListComponent } from './Components/student-list/student-list.com
 import { ResultsComponent } from './Components/test-result/results/results/results.component';
 import { TestResultComponent } from './Components/test-result/test-result.component';
 import { TrimestrialNoteComponent } from './Components/trimestrial-note/trimestrial-note.component';
+import { WorkListComponent } from './Components/works/work-list/work-list.component';
 import { ResultService } from './Services/result.service';
 
 
@@ -22,6 +23,7 @@ const routes: Routes = [
   {path: 'notesTrimestrielle/:studentId', canActivate : [AuthGuardService], component: TrimestrialNoteComponent},
   {path: 'Resultats', canActivate : [AuthGuardService], component: ResultsComponent},
   {path: 'Resultats/:studentId', canActivate : [AuthGuardService], component: TestResultComponent},
+  {path: 'Travaux', canActivate : [AuthGuardService], component: WorkListComponent}
 ];
 
 @NgModule({

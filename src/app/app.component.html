@@ -1,10 +1,9 @@
-
-    <body [class]="isDark ? 'backGroundDarkEvent': 'backGroundLightEvent'">
-        <app-nav (darkModeSwitched)="switchMode($event)" ></app-nav>
-            <router-outlet>
-            </router-outlet>
-        </body>
-    <!-- <footer>
+<body [class]="isDark ? 'backGroundDarkEvent': 'backGroundLightEvent'">
+    <app-nav (darkModeSwitched)="switchMode($event)"></app-nav>
+    <router-outlet>
+    </router-outlet>
+</body>
+<!-- <footer>
         <mat-toolbar color="primary" class="footer">
             <p>test</p>
         </mat-toolbar>

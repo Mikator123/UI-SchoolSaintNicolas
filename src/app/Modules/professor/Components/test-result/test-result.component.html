@@ -1,50 +1,50 @@
 <mat-card>
-    <mat-card-header  *ngIf="statusCode > 1">
-        <mat-card-title *ngIf="student != null">Résultats de <b>{{student.lastName}} {{student.firstName}}</b></mat-card-title>
+    <mat-card-header *ngIf="statusCode > 1">
+        <mat-card-title *ngIf="student != null">Résultats de <b>{{student.lastName}} {{student.firstName}}</b>
+        </mat-card-title>
     </mat-card-header>
 
-<div *ngIf="statusCode > 1">
-    <button mat-button 
-    color="war" [routerLink]="['../../Etudiants']">Retour</button>
-    <button mat-button 
-    color="primary" (click)="openCreateDialog(this.studentId)">Créer</button>
-</div>
+    <div *ngIf="statusCode > 1">
+        <button mat-button color="war" [routerLink]="['../../Etudiants']">Retour</button>
+        <button mat-button color="primary" (click)="openCreateDialog(this.studentId)">Créer</button>
+    </div>
 
-<div *ngIf="categories != null">
-    <div *ngFor="let cat of categories">
-        <mat-accordion *ngIf="checkCategories(cat.id) == true" class="example-headers-align">
-            <mat-expansion-panel (opened)="catPanelState = true"
-                                    (closed)="catPanelState = false"
-                                    >
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <label> {{cat.name}} </label>
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        <label> Moyenne de <label [style]="setAvg(cat.id) > 13 ? 'color:#42f5a7':setAvg(cat.id) < 10? 'color:#db4527':'color:#db9c27'">{{setAvg(cat.id) | number: '1.1-1'}}</label> sur 20</label>
-                    </mat-panel-description>
-                </mat-expansion-panel-header>  
-                                
+    <div *ngIf="categories != null">
+        <div *ngFor="let cat of categories">
+            <mat-accordion *ngIf="checkCategories(cat.id) == true" class="example-headers-align">
+                <mat-expansion-panel (opened)="catPanelState = true" (closed)="catPanelState = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <label> {{cat.name}} </label>
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            <label> Moyenne de <label
+                                    [style]="setAvg(cat.id) > 13 ? 'color:#42f5a7':setAvg(cat.id) < 10? 'color:#db4527':'color:#db9c27'">{{setAvg(cat.id) | number: '1.1-1'}}</label>
+                                sur 20</label>
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+
                     <mat-accordion *ngFor="let result of results">
-                        <mat-expansion-panel (opened)="resultPanelState = true"
-                                            (closed)="resultPanelState = false" 
-                                            *ngIf="result.categoryId == cat.id">
+                        <mat-expansion-panel (opened)="resultPanelState = true" (closed)="resultPanelState = false"
+                            *ngIf="result.categoryId == cat.id">
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
                                     <label> {{result.date | date: 'dd/MM/yyyy'}} </label>
                                 </mat-panel-title>
                                 <mat-panel-description>
-                                    <label [style]="result.result > 13 ? 'color:#48C9B0':result.result < 10? 'color:#db4527':'color:#db9c27'"> {{result.result | number: '1.1-1'}}</label>
+                                    <label
+                                        [style]="result.result > 13 ? 'color:#48C9B0':result.result < 10? 'color:#db4527':'color:#db9c27'">
+                                        {{result.result | number: '1.1-1'}}</label>
                                 </mat-panel-description>
-                            </mat-expansion-panel-header>              
-                                <p> {{result.description}} </p>
-                                <button mat-icon-button (click)="openFile(result.id)" ><mat-icon>picture_as_pdf</mat-icon></button>                                
-                                <button 
-                                *ngIf="statusCode > 1"
-                                mat-button color="accent" (click)="openDeleteDialog(result.id)">Supprimer</button>
-                                <button 
-                                *ngIf="statusCode > 1"
-                                mat-button color="primary" (click)="openUpdateDialog(result)">Mettre à jour</button> 
+                            </mat-expansion-panel-header>
+                            <p> {{result.description}} </p>
+                            <button mat-icon-button (click)="openFile(result.id)">
+                                <mat-icon>picture_as_pdf</mat-icon>
+                            </button>
+                            <button *ngIf="statusCode > 1" mat-button color="accent"
+                                (click)="openDeleteDialog(result.id)">Supprimer</button>
+                            <button *ngIf="statusCode > 1" mat-button color="primary"
+                                (click)="openUpdateDialog(result)">Mettre à jour</button>
                         </mat-expansion-panel>
                     </mat-accordion>
                     <!-- <mat-card>
@@ -59,24 +59,16 @@
                         </canvas>
                     </div>   
                 </mat-card>  -->
-            </mat-expansion-panel>
-        </mat-accordion>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
     </div>
-</div>
-
 </mat-card>
 
-<mat-card *ngIf="results.length != 0">
+<mat-card *ngIf="results.length != 0" class="Chart">
     <mat-card-content class="dashboard-card-content">
-        <div>
-            <canvas baseChart 
-                [datasets]="BarChartData"
-                [labels]="BarChartLabels"
-                [options]="BarChart"
-                [legend]="BarChartLegend"
-                [chartType]="BarChartType"
-                >
-            </canvas>
-        </div>
+        <canvas baseChart [datasets]="BarChartData" [labels]="BarChartLabels" [options]="BarChart"
+            [legend]="BarChartLegend" [chartType]="BarChartType">
+        </canvas>
     </mat-card-content>
-<mat-card>
+</mat-card>

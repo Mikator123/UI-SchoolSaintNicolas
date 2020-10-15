@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/Modules/auth/Services/Auth/auth.service';
@@ -27,13 +27,16 @@ export class StudentListComponent implements OnInit {
     private _dialog: MatDialog,
   ) { }
 
+
   ngOnInit(): void {
     this._auth.user$.subscribe(data => this.actualClassId = data && data.classId || 0) //if data & data.classid exist -> give data.classId; else 0
     this._profService.getStudents(this.actualClassId);
     this._profService.getClasses();
     this.mySubscription = this._profService.studentSubject.subscribe((list: Student[]) => {this.studentList = list});
-    
+
   }
+
+ 
 
   openDetailDialog(id: number){
     let ref = this._dialog.open(StudentDetailedComponent, {

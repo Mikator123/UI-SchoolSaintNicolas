@@ -4,18 +4,18 @@
     <mat-error *ngIf="error == true">
       {{this.errorTxt}}
     </mat-error>
-   
+
     <mat-form-field>
       <mat-label>Classe:</mat-label>
       <input matInput disabled [value]="getClassName(data.classId)">
-      </mat-form-field>
-      <mat-divider></mat-divider> 
+    </mat-form-field>
+    <mat-divider></mat-divider>
 
-      <mat-form-field>
+    <mat-form-field>
       <mat-label>Etudiant:</mat-label>
       <input matInput disabled [value]="getStudentName(data.studentId)">
-      </mat-form-field>
-      <mat-divider></mat-divider> 
+    </mat-form-field>
+    <mat-divider></mat-divider>
 
     <mat-form-field>
       <mat-label>Selectionnez une categorie</mat-label>
@@ -25,97 +25,75 @@
       <mat-error>
         La sélection de la catégorie est obligatoire.
       </mat-error>
-  </mat-form-field>
-  <br/>
-  <mat-divider></mat-divider> 
+    </mat-form-field>
+    <br />
+    <mat-divider></mat-divider>
 
-    
-  <mat-form-field>
-    <mat-label>date:</mat-label>
-    <input 
-      matInput 
-      [matDatepicker]="dp"
-      formControlName="date" 
-      [matDatepickerFilter]="myFilter"
-      required
-      >
+
+    <mat-form-field>
+      <mat-label>date:</mat-label>
+      <input matInput [matDatepicker]="dp" formControlName="date" [matDatepickerFilter]="myFilter" required>
       <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
       <mat-datepicker #dp></mat-datepicker>
-    <mat-error>
-      La date est obligatoire.
-    </mat-error>
-  </mat-form-field>
-  <mat-divider></mat-divider> 
+      <mat-error>
+        La date est obligatoire.
+      </mat-error>
+    </mat-form-field>
+    <mat-divider></mat-divider>
 
 
-  
-  <mat-form-field>
-    <mat-label>résultat:</mat-label>
-    <input 
-      matInput
-      formControlName="result" 
-      required
-      type="number"
-      min="0"
-      max="20">
-    <mat-error>
-      {{getResultValidatorError()}}
-    </mat-error>
-  </mat-form-field>
-  <mat-divider></mat-divider> 
+
+    <mat-form-field>
+      <mat-label>résultat:</mat-label>
+      <input matInput formControlName="result" required type="number" min="0" max="20">
+      <mat-error>
+        {{getResultValidatorError()}}
+      </mat-error>
+    </mat-form-field>
+    <mat-divider></mat-divider>
 
 
-  <mat-form-field class="txtArea">
-    <mat-label>Description:</mat-label>
+    <mat-form-field class="txtArea">
+      <mat-label>Description:</mat-label>
 
-    <textarea 
-      style="height: 15vh"
-      matInput
-      formControlName="description" 
-      required
-    >
+      <textarea style="height: 15vh" matInput formControlName="description" required>
     </textarea>
-    <mat-error>
-      Une description est obligatoire.
-    </mat-error>
-  </mat-form-field>
-    <br/>
+      <mat-error>
+        Une description est obligatoire.
+      </mat-error>
+    </mat-form-field>
+    <br />
 
     <div style="text-align:center">
-      <mat-card style="margin-top: 10px; width: 90%;">
-          <mat-card-content *ngFor="let file of files">
-              
-                  
-                      <mat-progress-bar [value]="file.progress" [color]="progressColor" ></mat-progress-bar>
-                      <!-- <span id="file-label">
+      <mat-card style="margin: 10px;">
+        <mat-card-content *ngFor="let file of files">
+
+
+          <mat-progress-bar [value]="file.progress" [color]="progressColor"></mat-progress-bar>
+          <!-- <span id="file-label">
                       </span> -->
 
-          </mat-card-content>
-          <mat-card-actions>
+        </mat-card-content>
+        <mat-card-actions>
 
-              <button mat-button type="button" color="primary" (click)="onUploadClick()" [disabled]="!progressUploaded">
-                  <mat-icon>{{LoadButton}}</mat-icon>
-                  <span *ngIf="progressUploaded">Charger le document</span>
-                  <span *ngIf="!progressUploaded"> {{FileDataName}}</span>
-              </button>
-          </mat-card-actions>
+          <button mat-button type="button" color="primary" (click)="onUploadClick()" [disabled]="!progressUploaded">
+            <mat-icon>{{LoadButton}}</mat-icon>
+            <span *ngIf="progressUploaded">Charger le document</span>
+            <span *ngIf="!progressUploaded"> {{FileDataName}}</span>
+          </button>
+        </mat-card-actions>
       </mat-card>
       <input type="file" formControlName="document" #fileUpload id="fileUpload" name="fileUpload"
-           style="display:none;"/>
+        style="display:none;" />
     </div>
+    <div style="text-align: center;">
+      <button mat-dialog-close mat-raised-button color="accent" style="margin:12px">Annuler</button>
 
-    <button
-    mat-dialog-close
-    mat-raised-button
-    color="accent"
-    >Annuler</button>
+      <button mat-raised-button type="submit" color="primary" style="margin:12px"
+        [disabled]="form.invalid">Valider</button>
 
-    <button 
-    mat-raised-button 
-    type="submit" 
-    color="primary"
-    [disabled]="form.invalid">Valider</button>
-    
+
+    </div>
 
   </form>
 </mat-dialog-content>

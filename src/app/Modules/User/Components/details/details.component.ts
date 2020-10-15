@@ -51,7 +51,8 @@ export class DetailsComponent implements OnInit {
 
   openDialog(){
     let ref = this.dialog.open(ResetPasswordComponent, {
-      width: '400px',
+      width: 'auto',
+      height:'auto',
       disableClose:true,
     });
     ref.afterClosed().subscribe(result => {
@@ -83,6 +84,8 @@ export class DetailsComponent implements OnInit {
 
   openPhotoDialog(){
     let ref = this.dialog.open(PhotoComponent,{
+      width: "40vw",
+      height: "40vh",
       data: {
         photo: this.userDetailed.photo
       }
