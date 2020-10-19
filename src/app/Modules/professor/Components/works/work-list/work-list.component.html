@@ -19,7 +19,13 @@
 <mat-form-field appearance="fill" style="margin: 20px; width: 250px;">
 
     <mat-label>Selectionnez une année</mat-label>
-    <mat-select (value)="yearValue">
+    <mat-select [formControl]="selectedSchoolYears" multiple>
+      <mat-select-trigger>
+        {{!selectedSchoolYears.value ? '' : selectedSchoolYears.value[0]}}
+        <span *ngIf="selectedSchoolYears.value?.length > 1" class="additional-selection">
+          (+{{selectedSchoolYears.value.length -1}} {{selectedSchoolYears.value?.length === 2 ? 'autre' : 'autres'}})
+        </span>
+      </mat-select-trigger>
       <mat-option [value]="year" *ngFor="let year of selectSchoolYears">{{year}}</mat-option>
     </mat-select>
 </mat-form-field>
@@ -27,12 +33,19 @@
 
 <mat-form-field appearance="fill" style="margin: 20px; width: 250px;">
     <mat-label>Selectionnez une trimestre</mat-label>
-    <mat-select [value]="">
+    <mat-select [formControl]="selectedTrimesters" multiple>
+      <mat-select-trigger>
+        {{!selectedTrimesters.value ? '' : selectedTrimesters.value[0]}}
+        <span *ngIf="selectedTrimesters.value?.length > 1" class="additional-selection">
+          (+{{selectedTrimesters.value.length -1}} {{selectedTrimesters.value?.length === 2 ? 'autre' : 'autres'}})
+        </span>
+      </mat-select-trigger>
       <mat-option [value]="trim" *ngFor="let trim of selectTrimesters">{{trim}}</mat-option>
     </mat-select>
 </mat-form-field>
 
 <button mat-button color="" (click)="selectedChoices()">Chercher</button>
+<button mat-button color="" (click)="resetChoices()">Reset</button>
 
 <div *ngIf="categories != null || categories.length != 0" style="margin: 20px">
   <div *ngFor="let cat of categories; let i = index">

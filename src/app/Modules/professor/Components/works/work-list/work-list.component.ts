@@ -24,9 +24,9 @@ export class WorkListComponent implements OnInit {
   categories: Category[] = [];
   selectCategories: Category[] = [];
   trimesters: number[]= [ 1,2,3 ];
-  selectTrimesters: number[] = [];
+  selectTrimesters = this.trimesters;
   schoolYears: number[]= [ 1,2,3,4,5,6 ];
-  selectSchoolYears: number[] = []
+  selectSchoolYears = this.schoolYears;
   yearValue: null;
   catPanelState : Boolean[] = [];
   schoolYearPanelState : Boolean[] = [
@@ -141,7 +141,6 @@ export class WorkListComponent implements OnInit {
   }
 
   selectedChoices(){
-
     if (this.selectedCategories.value)
     {
       if (this.selectedCategories.value.length == 0)
@@ -155,6 +154,71 @@ export class WorkListComponent implements OnInit {
         this.catPanelState.map(x => x = false);
       }
     }
+    if (this.selectedSchoolYears.value)
+    {
+      if (this.selectedSchoolYears.value.length == 0){
+        this.schoolYears = this.selectSchoolYears;
+        console.log(true)
+        if (this.selectedCategories.value)
+        {
+          if (this.selectedCategories.value.length == 0)
+            this.categories = this.selectCategories;
+          else 
+            this.categories = this.selectedCategories.value;
+        }
+        else
+          this.categories = this.selectCategories;
+      }
+      else{
+        console.log(false)
+        if (this.selectedCategories.value)
+        {
+          if (this.selectedCategories.value.length == 0)
+            this.categories = this.selectCategories;
+          else 
+            this.categories = this.selectedCategories.value;
+        }
+        else
+          this.categories = this.selectCategories;
+        this.schoolYears = this.selectedSchoolYears.value;
+        let newCategories : Category[] = []
+        this.categories.forEach(cat => {
+          this.schoolYears.forEach(SY => {
+            if(this.works.find(x => x.schoolYear == SY && x.categoryId == cat.id)){
+              if(!newCategories.find(y => y.id == cat.id)){
+                newCategories.push(cat);
+              }
+            }
+          });
+        });
+        this.categories = newCategories;
+        if (this.schoolYears.length == 0 || this.schoolYears == null) return;
+        this.schoolYearPanelState.length = this.schoolYears.length;
+        this.schoolYearPanelState.map(x => x = false);
+      }
+    }
+    if (this.selectedTrimesters.value)
+    {
+      if (this.selectedTrimesters.value.length == 0){
+        this.trimesters = this.selectTrimesters;
+      }
+      else{
+        this.trimesters = this.selectedTrimesters.value;
+        if (this.trimesters.length == 0 || this.trimesters == null) return;
+        this.trimesterPanelState.length = this.trimesters.length;
+        this.schoolYearPanelState.map(x => x = false);
+      }
+    }
+
+  }
+
+  resetChoices(){
+    this.categories = this.selectCategories;
+    this.schoolYears = this.selectSchoolYears;
+    this.trimesters = this.selectTrimesters;
+    this.selectedCategories.setValue(null);
+    this.selectedSchoolYears.setValue(null);
+    this.selectedTrimesters.setValue(null);
   }
 
 
