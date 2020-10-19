@@ -28,6 +28,7 @@ export class NoteService {
 
   getNotes(studentId : number)
   {
+    
     this._client.get<Note[]>(this.noteURL+"GetbyuserId/"+studentId).subscribe({
       next: data => {
         this.notes = data;

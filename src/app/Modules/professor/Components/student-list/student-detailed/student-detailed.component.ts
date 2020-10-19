@@ -14,7 +14,7 @@ export class StudentDetailedComponent implements OnInit {
 
 
   showContact = true;
-  panelState = false;
+  panelState : Boolean[] = [];
   userDetailed : UserDetailed = new UserDetailed();
 
   constructor(
@@ -25,7 +25,10 @@ export class StudentDetailedComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this._userService.getById(this.data.studentId).subscribe(user => this.userDetailed = user);
+    this._userService.getById(this.data.studentId).subscribe(user => {
+      this.userDetailed = user;
+      this.panelState.length = user.contacts.length;
+    this.panelState.map(x => x = false)});
 
     };
   
@@ -33,6 +36,8 @@ export class StudentDetailedComponent implements OnInit {
 
   openContacts(){
     this.showContact = !this.showContact;
+    for(let i = 0; i < this.panelState.length; i++)
+      this.panelState[i] = false;
   }
 
   openPhotoDialog(){

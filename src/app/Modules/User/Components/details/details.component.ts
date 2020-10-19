@@ -84,8 +84,6 @@ export class DetailsComponent implements OnInit {
 
   openPhotoDialog(){
     let ref = this.dialog.open(PhotoComponent,{
-      width: "40vw",
-      height: "40vh",
       data: {
         photo: this.userDetailed.photo
       }

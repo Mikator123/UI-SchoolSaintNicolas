@@ -2,7 +2,15 @@
 
 mat-card{
     margin:20px;
+    min-width: 180px;
+    min-height: 200px;
 }
+
+mat-card-content{
+    display:flex;
+    flex-wrap: wrap;
+}
+
 
 .openedIcon{
     color: teal;
@@ -15,6 +23,15 @@ mat-card{
     background: teal;
     border-radius: 100%;
 }
+
+:host{
+    flex: 1 1 auto;
+}
+
+
+
+
+
 
 @keyframes slide-in-bck-center {
     0% {

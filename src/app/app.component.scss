@@ -8,13 +8,29 @@
 }
 
 
-.footer{
-    position: sticky;
-    height: 30px;
-}
-footer{
+.footerToolbar{
+    height: 40px;
+    color: #b8bab6;
+    font-size:8px;
     text-align: center;
 }
-body{
+
+footer{
+    text-align: center;
+    position: sticky;
+    flex:0 1 10px;
+}
+
+.backGroundSize{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+:host{
+    width: 100%;
     height: 100%;
 }
+
+

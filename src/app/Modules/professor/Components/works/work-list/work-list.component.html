@@ -1,34 +1,40 @@
-<H1>Travaux</H1>
-<div>
+<H1 style="margin: 20px">Travaux</H1>
+<div style="margin: 20px">
   <button mat-button color="war" [routerLink]="['../home']">Retour</button>
   <button mat-button color="primary" (click)="openCreateDialog()">Créer</button>
 </div>
-<mat-card style="width: 200px;">
-  <mat-label>Selectionnez une categorie</mat-label>
-  <mat-select [value]="">
-    <mat-option [value]="cat.id" *ngFor="let cat of categories">{{cat.name}}</mat-option>
+<mat-form-field appearance="fill" style="margin: 20px; width: 250px;">
+  <mat-label>Selectionnez les catégories</mat-label>
+  <mat-select [formControl]="selectedCategories" multiple>
+    <mat-select-trigger>
+      {{!selectedCategories.value ? '' : selectedCategories.value[0]?.name}}
+      <span *ngIf="selectedCategories.value?.length > 1" class="additional-selection">
+        (+{{selectedCategories.value.length -1}} {{selectedCategories.value?.length === 2 ? 'autre' : 'autres'}})
+      </span>
+    </mat-select-trigger>
+    <mat-option [value]="cat" *ngFor="let cat of selectCategories">{{cat.name}}</mat-option>
   </mat-select>
-</mat-card>
+</mat-form-field>
 
+<mat-form-field appearance="fill" style="margin: 20px; width: 250px;">
 
-  <mat-card style="width: 200px;">
     <mat-label>Selectionnez une année</mat-label>
     <mat-select (value)="yearValue">
-      <mat-option [value]="year" *ngFor="let year of schoolYears">{{year}}</mat-option>
+      <mat-option [value]="year" *ngFor="let year of selectSchoolYears">{{year}}</mat-option>
     </mat-select>
-  </mat-card>
+</mat-form-field>
 
-<div>
-  <mat-card style="width: 200px;">
+
+<mat-form-field appearance="fill" style="margin: 20px; width: 250px;">
     <mat-label>Selectionnez une trimestre</mat-label>
     <mat-select [value]="">
-      <mat-option [value]="trim" *ngFor="let trim of trimesters">{{trim}}</mat-option>
+      <mat-option [value]="trim" *ngFor="let trim of selectTrimesters">{{trim}}</mat-option>
     </mat-select>
-  </mat-card>
+</mat-form-field>
 
-</div>
+<button mat-button color="" (click)="selectedChoices()">Chercher</button>
 
-<div *ngIf="categories != null || categories.length != 0">
+<div *ngIf="categories != null || categories.length != 0" style="margin: 20px">
   <div *ngFor="let cat of categories; let i = index">
     <mat-accordion *ngIf="checkCategories(cat.id) == true">
       <mat-expansion-panel (opened)="catPanelState[i] = true" (closed)="catPanelState[i] = false">
@@ -81,7 +87,7 @@
                             <mat-divider></mat-divider>
                             <p>Première aide: {{work.firstHint}}</p>
                             <mat-divider></mat-divider>
-                            <p>Seconde aide: {{work.secondHint}}</p>
+                            <p *ngIf="work.secondHint != null || work.secondHint != undefined">Seconde aide: {{work.secondHint}}</p>
                             <mat-divider></mat-divider>
                             <p>Réponse: {{work.correction}}</p>
                             <mat-divider></mat-divider>

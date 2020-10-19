@@ -1,10 +1,17 @@
-<body [class]="isDark ? 'backGroundDarkEvent': 'backGroundLightEvent'">
+<div [class]="isDark ? 'backGroundDarkEvent': 'backGroundLightEvent'" class="backGroundSize">
     <app-nav (darkModeSwitched)="switchMode($event)"></app-nav>
-    <router-outlet>
-    </router-outlet>
-</body>
-<!-- <footer>
-        <mat-toolbar color="primary" class="footer">
-            <p>test</p>
+    <div style="flex: 1 1 auto">
+
+        <router-outlet></router-outlet>
+    </div>
+    <footer>
+        <mat-toolbar color="primary" class="footerToolbar">
+            <label onclick="self.location.href='https://www.linkedin.com/in/michael-tournay-86476799/'" matTooltip="Come to me !">Mika</label>
+            <button  mat-icon-button onclick="window.location.href='https://www.linkedin.com/in/michael-tournay-86476799/'" matTooltip="Come to me !">
+                <mat-icon style="font-size:20px">
+                    copyright
+                </mat-icon>
+            </button>
         </mat-toolbar>
-    </footer> -->
+    </footer>
+</div>

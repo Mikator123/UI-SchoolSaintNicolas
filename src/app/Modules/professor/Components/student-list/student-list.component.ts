@@ -41,8 +41,7 @@ export class StudentListComponent implements OnInit {
   openDetailDialog(id: number){
     let ref = this._dialog.open(StudentDetailedComponent, {
       
-      width: '60vw',
-      height: '60vh',
+
       data:{
         studentId: id,
         },

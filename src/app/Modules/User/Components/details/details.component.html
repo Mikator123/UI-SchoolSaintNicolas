@@ -7,19 +7,15 @@
 
     <mat-card-content>
         <!-- <p>Date de naissance: {{ userDetailed.birthdate | birthdate }}.</p> -->
-        <mat-list>
-            <mat-list-item>
+<p>
                 Adresse: {{userDetailed.adStreet}} n°{{userDetailed.adNumber}}
                 <label *ngIf="userDetailed.adBox != null"> boite {{userDetailed.adBox}}</label>
-                , {{userDetailed.adPostalCode}} {{userDetailed.adCity}}
-            </mat-list-item>
-            <mat-list-item>
-                GSM: {{userDetailed.mobilePhone}}
-            </mat-list-item>
-            <mat-list-item>
-                Email: {{userDetailed.email}}
-            </mat-list-item>
-        </mat-list>
+                , {{userDetailed.adPostalCode}} {{userDetailed.adCity}}<p>
+<p>
+                GSM: {{userDetailed.mobilePhone}}<p>
+
+                <p>Email: {{userDetailed.email}}</p>
+
         <button mat-icon-button (click)="openDialog()" matTooltip="Changer votre mot de passe">
             <mat-icon>vpn_key</mat-icon>
         </button>

@@ -14,7 +14,9 @@ $mat-theming-theme-dark: mat-dark-theme($mat-theming-primary-dark, $mat-theming-
 
 @include angular-material-theme($mat-theming-theme-light);
 
-html, body { height: 100%; }
+html{
+    height: 100%;
+}
 
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
@@ -25,3 +27,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .theme-light{
     @include angular-material-theme($mat-theming-theme-light);
 }
+
+body {
+    height: 100%;
+    width: 100%;min-width: 400px;
+}
+

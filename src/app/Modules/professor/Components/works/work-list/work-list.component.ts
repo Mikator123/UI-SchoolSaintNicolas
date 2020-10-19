@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DeleteComponent } from 'src/app/Components/confirmBox/Delete/delete.component';
@@ -21,18 +22,24 @@ export class WorkListComponent implements OnInit {
   works : Work[] = [];
   work: Work = new Work();
   categories: Category[] = [];
+  selectCategories: Category[] = [];
   trimesters: number[]= [ 1,2,3 ];
+  selectTrimesters: number[] = [];
   schoolYears: number[]= [ 1,2,3,4,5,6 ];
+  selectSchoolYears: number[] = []
   yearValue: null;
   catPanelState : Boolean[] = [];
   schoolYearPanelState : Boolean[] = [
-    false, false,false,false,false,false
+    false, false, false, false, false, false
   ]
   trimesterPanelState : Boolean[] = [
     false,false,false
   ];
   workPanelState : Boolean[] = [];
 
+  selectedCategories = new FormControl();
+  selectedSchoolYears = new FormControl();
+  selectedTrimesters = new FormControl();
 
   constructor(
     private _authService: AuthService,
@@ -54,7 +61,8 @@ export class WorkListComponent implements OnInit {
   
     })
     this._resultService.getCategories().subscribe(data => {
-      this.categories = data
+      this.categories = data;
+      this.selectCategories = data;
       if (this.categories.length == 0 || this.categories == null) return;
       this.catPanelState.length = this.categories.length;
       this.catPanelState.map(x => x = false);
@@ -130,6 +138,23 @@ export class WorkListComponent implements OnInit {
         exist = true;
     })
     return exist
+  }
+
+  selectedChoices(){
+
+    if (this.selectedCategories.value)
+    {
+      if (this.selectedCategories.value.length == 0)
+      {
+        this.categories = this.selectCategories;
+      }
+      else{
+        this.categories = this.selectedCategories.value;
+        if (this.categories.length == 0 || this.categories == null) return;
+        this.catPanelState.length = this.categories.length;
+        this.catPanelState.map(x => x = false);
+      }
+    }
   }
 
 

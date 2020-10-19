@@ -4,7 +4,6 @@
         <mat-card-title style="margin: 10px"> {{userDetailed.lastName}}</mat-card-title>
         <mat-card-subtitle style=" margin-bottom: 10px; margin-left: 10px;"> {{userDetailed.firstName}}</mat-card-subtitle>
     </mat-card-header>
-    <br>
 
     <mat-card-content>
         <!-- <p>Date de naissance: {{ userDetailed.birthdate | birthdate }}.</p> -->
@@ -19,12 +18,12 @@
             <mat-icon>people</mat-icon>
         </button>
         <div *ngIf="showContact">
-            <div *ngFor="let contact of userDetailed.contacts">
+            <div *ngFor="let contact of userDetailed.contacts; let i = index">
                 <mat-accordion>
-                    <mat-expansion-panel (opened)="panelState = true" (closed)="panelState = false">
+                    <mat-expansion-panel (opened)="panelState[i] = true" (closed)="panelState[i] = false">
                         <mat-expansion-panel-header>
                             <mat-panel-title>
-                                <label>{{contact.lastName + " " + contact.firstName}}</label>
+                                <label [style]="panelState[i]? 'color: #50b59c ; font-weight:bold': ''">{{contact.lastName + " " + contact.firstName}}</label>
                             </mat-panel-title>
                             <mat-panel-description>
                                 <label>{{contact.mobilePhone}}</label>

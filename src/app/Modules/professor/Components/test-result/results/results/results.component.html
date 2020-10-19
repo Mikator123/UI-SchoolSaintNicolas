@@ -11,7 +11,7 @@
         <mat-option [value]="cat.id" *ngFor="let cat of categories">{{cat.name}}</mat-option>
       </mat-select>
     </div> -->
-    <div class="Chart" *ngIf="results.length != 0 && categories.length != 0">
+    <div class="Chart" *ngIf="results != null && results != undefined">
       <canvas baseChart [datasets]="LineChartData" [labels]="LineChartLabels" [options]="LineChart"
         [legend]="LineChartLegend" [chartType]="LineChartType" height="100%">
       </canvas>
@@ -20,7 +20,7 @@
 
   </mat-card-content>
 </mat-card>
-<mat-card *ngIf="results.length != 0  && categories.length != 0" style="height: auto;">
+<mat-card *ngIf="results != null && results != undefined" style="height: auto;">
   <mat-card-header>
     <mat-card-title>
       <h1 class="mat-h1">Moyenne de la classe: </h1>

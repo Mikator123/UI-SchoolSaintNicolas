@@ -1,6 +1,7 @@
 import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { Form, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ThemePalette } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatProgressBar } from '@angular/material/progress-bar';
 import { MatProgressButtonOptions } from 'mat-progress-buttons';
@@ -30,6 +31,9 @@ export class CreateWorkComponent implements OnInit {
   categories: Category[] = [];
   trimesters: number[]= [ 1,2,3 ];
   schoolYears: number[]= [ 1,2,3,4,5,6 ];
+  slideColor: ThemePalette = 'primary';
+  slideCheck = false;
+  slideCheckDocument = false;
 
   progressColor= "accent";
   progressUploaded = true;
@@ -56,7 +60,6 @@ export class CreateWorkComponent implements OnInit {
     private _resultService: ResultService,
     public dialogRef: MatDialogRef<CreateWorkComponent>,
     private _uploadFile: UploadFileService,
-    @Inject(MAT_DIALOG_DATA) public data: Work,
 
   ) { }
 
@@ -71,7 +74,7 @@ export class CreateWorkComponent implements OnInit {
   initForm() {
     this.form = this._builder.group({
 
-      subject:['', Validators.required, Validators.maxLength(30)],
+      subject:['', [Validators.required, Validators.maxLength(30)]],
       question:['', Validators.required],
       correction:['', Validators.required],
       explanation:['', Validators.required],
@@ -97,7 +100,7 @@ export class CreateWorkComponent implements OnInit {
       work.correction = this.form.value['correction'];
       work.explanation = this.form.value['explanation'];
       work.firstHint = this.form.value['firstHint'];
-      work.secondHint = this.form.value['secondHint'];
+      work.secondHint = this.slideCheck == true ? this.form.value['secondHint'] : null;
       work.categoryId = this.form.value['categoryId'];
       work.schoolYear = this.form.value['schoolYear'];
       work.trimester = this.form.value['trimester'];

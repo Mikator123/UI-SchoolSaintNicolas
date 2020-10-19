@@ -23,6 +23,10 @@ export class ResultService {
     private _client : HttpClient,
   ) {}
 
+  get results$() {
+    return this.allResultSubject.asObservable();
+  }
+
   get categories$() {return this.categories};
 
   getCategories(): Observable<Category[]>{
