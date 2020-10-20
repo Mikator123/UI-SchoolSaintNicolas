@@ -198,16 +198,15 @@ export class WorkListComponent implements OnInit {
       if (this.selectedSchoolYears.value.length == 0){
         this.schoolYears = this.selectSchoolYears;
         this.sortByCategories();
-        this.emptyMsg = false;
         if (!this.selectedCategories.value)
           this.categories = this.selectCategories;
       }
       else{
         this.sortByCategories();
+        if(this.emptyMsg == true) return
         if (!this.selectedCategories.value)
           this.categories = this.selectCategories;
         this.schoolYears = this.selectedSchoolYears.value;
-        
         let newCategories : Category[] = []
         this.categories.forEach(cat => {
           this.schoolYears.forEach(SY => {
@@ -219,6 +218,8 @@ export class WorkListComponent implements OnInit {
           });
         });
         this.categories = newCategories;
+        if (this.categories.length == 0)
+          this.emptyMsg = true;
         if (this.schoolYears.length == 0 || this.schoolYears == null) return;
         this.schoolYearPanelState = [];
         this.schoolYearPanelState.length = this.schoolYears.length;
@@ -241,12 +242,12 @@ export class WorkListComponent implements OnInit {
       }
       else{
         this.sortBySchoolYears();
+        if (this.emptyMsg == true) return;
         if (!this.selectedCategories.value)
           this.categories = this.selectCategories;
         if (!this.selectedSchoolYears.value)
           this.schoolYears = this.selectSchoolYears;
         this.trimesters = this.selectedTrimesters.value;
-          //reset array category & schoolyear
         let newCategories : Category[] = [];
         let newSchoolYears: number[] = [];
         this.categories.forEach(cat => {
@@ -264,6 +265,8 @@ export class WorkListComponent implements OnInit {
           });
         });
         this.categories = newCategories;
+        if (this.categories.length == 0)
+          this.emptyMsg = true;
         this.schoolYears = newSchoolYears;
         if (this.trimesters.length == 0 || this.trimesters == null) return;
         this.trimesterPanelState = [];
@@ -282,12 +285,5 @@ export class WorkListComponent implements OnInit {
     this.selectedSchoolYears.setValue(null);
     this.selectedTrimesters.setValue(null);
   }
-
-
-
-
-
-
-
 
 }
