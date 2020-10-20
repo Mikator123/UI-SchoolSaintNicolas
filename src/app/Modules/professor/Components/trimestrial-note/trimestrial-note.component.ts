@@ -45,6 +45,7 @@ export class TrimestrialNoteComponent implements OnInit {
   class : Class;
   student: Student;
   statusCode: number;
+  emptyMsg = false;
 
 
   constructor(
@@ -66,6 +67,10 @@ export class TrimestrialNoteComponent implements OnInit {
     this._noteService.getNotes(this.studentId);
     this.myNoteSubscritption = this._noteService.noteSubject.subscribe((list : Note[]) => {
       this.notes = list;
+      if (this.notes.length == 0){
+        this.emptyMsg = true;
+        return;
+      }
       this.panelState.length = list.length;
       this.panelState.map(x => x = false)  
     });

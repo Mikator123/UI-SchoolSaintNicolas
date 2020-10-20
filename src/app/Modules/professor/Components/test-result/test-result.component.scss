@@ -11,3 +11,23 @@
   .Chart{
     justify-content: center;
   }
+
+  
+  .blink-1 {
+    -webkit-animation: blink-1 2s 2 both;
+            animation: blink-1 2s 2 both;
+            font-weight: bolder;
+
+  }
+  
+  @keyframes blink-1 {
+      0%,
+      50%,
+      100% {
+        opacity: 1;
+      }
+      25%,
+      75% {
+        opacity: 0;
+      }
+    }

@@ -1,14 +1,16 @@
-<mat-card>
-    <mat-card-header *ngIf="statusCode > 1">
+<mat-card *ngIf="student != null">
+    <mat-card-header *ngIf="statusCode > 1" >
         <mat-card-title *ngIf="student != null">Résultats de <b>{{student.lastName}} {{student.firstName}}</b>
         </mat-card-title>
     </mat-card-header>
 
     <div *ngIf="statusCode > 1">
         <button mat-button color="war" [routerLink]="['../../Etudiants']">Retour</button>
-        <button mat-button color="primary" (click)="openCreateDialog(this.studentId)">Créer</button>
+        <button mat-button [color]="emptyMsg == true ?'accent':'primary'" (click)="openCreateDialog(this.studentId)" [class]="emptyMsg == true ?'blink-1':''">Créer</button>
     </div>
-
+    <div *ngIf="emptyMsg == true">
+        <p style="text-align: center;">Il n'y a aucun contenu pour {{student.lastName}} {{student.firstName}}, voulez vous en créer un ?</p>
+    </div>
     <div *ngIf="categories != null">
         <div *ngFor="let cat of categories; let i = index">
             <mat-accordion *ngIf="checkCategories(cat.id) == true" class="example-headers-align">
@@ -63,6 +65,7 @@
             </mat-accordion>
         </div>
     </div>
+
 </mat-card>
 
 <mat-card *ngIf="results.length != 0" class="Chart">

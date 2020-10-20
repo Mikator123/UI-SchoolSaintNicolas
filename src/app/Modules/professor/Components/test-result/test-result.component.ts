@@ -50,6 +50,7 @@ export class TestResultComponent implements OnInit, OnDestroy {
   userId: number;
   passage = 0;
   student: Student;
+  emptyMsg = false;
 
 
   //chart
@@ -127,7 +128,10 @@ export class TestResultComponent implements OnInit, OnDestroy {
     this._resultService.getByStudentId(this.studentId);
     this.resultSubscription = this._resultService.testSubject.subscribe((list:TestResult[]) => {
     this.results = list;
-    if (this.results == null || this.results.length == 0) return;
+    if (this.results == null || this.results.length == 0){
+      this.emptyMsg = true;
+      return;
+    } 
     this.resultPanelState.length = this.results.length;
     this.resultPanelState.map(x => x = false);
     this.results.sort(function compare(a,b){

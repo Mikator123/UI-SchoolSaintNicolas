@@ -10,6 +10,7 @@ import { TestResult } from 'src/app/Modules/professor/Models/testResult.model';
 import { ProfessorService } from 'src/app/Modules/professor/Services/professor.service';
 import { ResultService } from 'src/app/Modules/professor/Services/result.service';
 import {DatePipe, formatDate} from '@angular/common';
+import { Observable } from 'rxjs';
 
 
 
@@ -80,6 +81,7 @@ export class ResultsComponent implements OnInit {
     startingCategoryId = 0;
     ActualClassId: number;
     results: TestResult[] = [];
+
     
 
   constructor(

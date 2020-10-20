@@ -5,11 +5,13 @@
 
     <div *ngIf="statusCode > 1">
         <button mat-button color="war" [routerLink]="['../../Etudiants']">Retour</button>
-        <button mat-button color="primary" (click)="openCreateDialog(this.studentId)">Créer</button>
+        <button mat-button [color]="emptyMsg == true ? 'accent' : 'primary'" (click)="openCreateDialog(this.studentId)" [class]="emptyMsg == true ? 'blink-1': ''">Créer</button>
 
 
     </div>
-
+    <div *ngIf="emptyMsg == true">
+            <p style="text-align: center;">Il n'y a aucun contenu pour {{student.lastName}} {{student.firstName}}, voulez vous en créer un ?</p>
+    </div>
     <div *ngIf="notes != null">
         <div *ngFor="let note of notes; let i = index">
             <mat-accordion>

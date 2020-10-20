@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/Modules/auth/Services/Auth/auth.service';
+import { PhotoComponent } from 'src/app/Modules/User/Components/photo/photo.component';
 import { Student } from '../../Models/Student.model';
 import {ProfessorService} from '../../Services/professor.service';
 import { StudentDetailedComponent } from './student-detailed/student-detailed.component';
@@ -23,6 +24,7 @@ export class StudentListComponent implements OnInit {
 
   constructor(
     private _auth: AuthService,
+    public dialog : MatDialog,
     private _profService : ProfessorService,
     private _dialog: MatDialog,
   ) { }
@@ -56,5 +58,13 @@ export class StudentListComponent implements OnInit {
         className = c.name;
     })
     return className;
+  }
+
+  openPhotoDialog(photoFromHTML: string){
+    let ref = this.dialog.open(PhotoComponent,{
+      data: {
+        photo: photoFromHTML
+      }
+    })
   }
 }

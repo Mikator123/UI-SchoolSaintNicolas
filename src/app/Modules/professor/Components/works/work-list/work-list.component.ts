@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatAccordion } from '@angular/material/expansion';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DeleteComponent } from 'src/app/Components/confirmBox/Delete/delete.component';
 import { AuthService } from 'src/app/Modules/auth/Services/Auth/auth.service';
@@ -19,27 +20,35 @@ import { UpdateWorkComponent } from '../update-work/update-work.component';
 })
 export class WorkListComponent implements OnInit {
 
+
+  //props
   works : Work[] = [];
   work: Work = new Work();
+  workPanelState : Boolean[] = [];
+  emptyMsg = false;
+  
+  //category
   categories: Category[] = [];
   selectCategories: Category[] = [];
+  selectedCategories = new FormControl();
+  catPanelState : Boolean[] = [];
+  //trimester
   trimesters: number[]= [ 1,2,3 ];
   selectTrimesters = this.trimesters;
-  schoolYears: number[]= [ 1,2,3,4,5,6 ];
-  selectSchoolYears = this.schoolYears;
-  yearValue: null;
-  catPanelState : Boolean[] = [];
-  schoolYearPanelState : Boolean[] = [
-    false, false, false, false, false, false
-  ]
+  selectedTrimesters = new FormControl();
   trimesterPanelState : Boolean[] = [
     false,false,false
   ];
-  workPanelState : Boolean[] = [];
-
-  selectedCategories = new FormControl();
+  //schoolyear
+  schoolYears: number[]= [ 1,2,3,4,5,6 ];
+  selectSchoolYears = this.schoolYears;
   selectedSchoolYears = new FormControl();
-  selectedTrimesters = new FormControl();
+  yearValue: null;
+  schoolYearPanelState : Boolean[] = [
+    false, false, false, false, false, false
+  ]
+  
+
 
   constructor(
     private _authService: AuthService,
@@ -47,7 +56,9 @@ export class WorkListComponent implements OnInit {
     private _resultService: ResultService,
     private _snackBar: MatSnackBar,
     public dialog: MatDialog,
-  ) { }
+  ) {
+    
+   }
 
   ngOnInit(): void {
     this._workService.GetWorks();
@@ -63,9 +74,15 @@ export class WorkListComponent implements OnInit {
     this._resultService.getCategories().subscribe(data => {
       this.categories = data;
       this.selectCategories = data;
-      if (this.categories.length == 0 || this.categories == null) return;
+      if (this.categories.length == 0 || this.categories == null){
+        this.emptyMsg = true;
+        return;
+      } 
       this.catPanelState.length = this.categories.length;
-      this.catPanelState.map(x => x = false);
+      for(let i = 0; i < this.catPanelState.length ; i++)
+      {
+        this.catPanelState[i] = false;
+      }
     })
     
   }
@@ -116,7 +133,7 @@ export class WorkListComponent implements OnInit {
     if (this.works == null) return;
     this.works.forEach(work => {
       if(work.categoryId == catId)
-        exist = true;      
+        exist = true;    
     });
     return exist
   }
@@ -141,46 +158,56 @@ export class WorkListComponent implements OnInit {
   }
 
   selectedChoices(){
+    if(this.emptyMsg == true)
+      this.emptyMsg = false;
+    this.sortByCategories(); 
+    this.sortBySchoolYears();
+    this.sortByTrimesters();
+  }
+
+  sortByCategories(){
     if (this.selectedCategories.value)
     {
       if (this.selectedCategories.value.length == 0)
       {
         this.categories = this.selectCategories;
+        this.emptyMsg = false;
       }
       else{
         this.categories = this.selectedCategories.value;
+        this.categories.forEach(element => {
+          if(this.works.find(x => x.categoryId == element.id)){
+            this.emptyMsg = false;
+            return;
+          }
+          else 
+            this.emptyMsg = true;
+        });
         if (this.categories.length == 0 || this.categories == null) return;
+        this.catPanelState = [];
         this.catPanelState.length = this.categories.length;
-        this.catPanelState.map(x => x = false);
+        for(let i = 0; i < this.catPanelState.length ; i++)
+          this.catPanelState[i] = false;
       }
     }
+  }
+
+  sortBySchoolYears(){
     if (this.selectedSchoolYears.value)
     {
       if (this.selectedSchoolYears.value.length == 0){
         this.schoolYears = this.selectSchoolYears;
-        console.log(true)
-        if (this.selectedCategories.value)
-        {
-          if (this.selectedCategories.value.length == 0)
-            this.categories = this.selectCategories;
-          else 
-            this.categories = this.selectedCategories.value;
-        }
-        else
+        this.sortByCategories();
+        this.emptyMsg = false;
+        if (!this.selectedCategories.value)
           this.categories = this.selectCategories;
       }
       else{
-        console.log(false)
-        if (this.selectedCategories.value)
-        {
-          if (this.selectedCategories.value.length == 0)
-            this.categories = this.selectCategories;
-          else 
-            this.categories = this.selectedCategories.value;
-        }
-        else
+        this.sortByCategories();
+        if (!this.selectedCategories.value)
           this.categories = this.selectCategories;
         this.schoolYears = this.selectedSchoolYears.value;
+        
         let newCategories : Category[] = []
         this.categories.forEach(cat => {
           this.schoolYears.forEach(SY => {
@@ -193,23 +220,58 @@ export class WorkListComponent implements OnInit {
         });
         this.categories = newCategories;
         if (this.schoolYears.length == 0 || this.schoolYears == null) return;
+        this.schoolYearPanelState = [];
         this.schoolYearPanelState.length = this.schoolYears.length;
-        this.schoolYearPanelState.map(x => x = false);
+        for(let i = 0; i < this.schoolYearPanelState.length ; i++)
+          this.schoolYearPanelState[i] = false;
       }
     }
+  }
+
+  sortByTrimesters(){
     if (this.selectedTrimesters.value)
     {
       if (this.selectedTrimesters.value.length == 0){
         this.trimesters = this.selectTrimesters;
+        this.sortBySchoolYears();
+        if (!this.selectedCategories.value)
+          this.categories = this.selectCategories;
+        if (!this.selectedSchoolYears.value)
+          this.schoolYears = this.selectSchoolYears;
       }
       else{
+        this.sortBySchoolYears();
+        if (!this.selectedCategories.value)
+          this.categories = this.selectCategories;
+        if (!this.selectedSchoolYears.value)
+          this.schoolYears = this.selectSchoolYears;
         this.trimesters = this.selectedTrimesters.value;
+          //reset array category & schoolyear
+        let newCategories : Category[] = [];
+        let newSchoolYears: number[] = [];
+        this.categories.forEach(cat => {
+          this.schoolYears.forEach(SY => {
+            this.trimesters.forEach(trimester => {
+              if(this.works.find(x => x.trimester == trimester && x.categoryId == cat.id && x.schoolYear == SY)){
+                if(!newCategories.find(y => y.id == cat.id))
+                  newCategories.push(cat);
+                if(!newSchoolYears.find(z => z == SY)){
+                  newSchoolYears.push(SY);
+                  newSchoolYears.sort();
+                }   
+              }
+            });
+          });
+        });
+        this.categories = newCategories;
+        this.schoolYears = newSchoolYears;
         if (this.trimesters.length == 0 || this.trimesters == null) return;
+        this.trimesterPanelState = [];
         this.trimesterPanelState.length = this.trimesters.length;
-        this.schoolYearPanelState.map(x => x = false);
+        for(let i = 0; i < this.trimesterPanelState.length ; i++)
+          this.trimesterPanelState[i] = false;
       }
     }
-
   }
 
   resetChoices(){
@@ -220,6 +282,8 @@ export class WorkListComponent implements OnInit {
     this.selectedSchoolYears.setValue(null);
     this.selectedTrimesters.setValue(null);
   }
+
+
 
 
 

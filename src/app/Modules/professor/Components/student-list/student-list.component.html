@@ -7,7 +7,7 @@
     <mat-card-content>
         <mat-list *ngFor="let student of studentList" style="margin:10px">
             <mat-list-item *ngIf="student.statusCode == 1" style="margin:5px">
-                <a (click)="openDetailDialog(student.id)"><img matTooltip="Details" mat-card-avatar
+                <a (click)="openPhotoDialog(student.photo)"><img mat-card-avatar
                         [src]="student.photo" style="width: 50px; height: 50px;"> </a>
 
                 <label (click)="openDetailDialog(student.id)" matTooltip="Details"

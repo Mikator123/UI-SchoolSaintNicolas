@@ -1,8 +1,13 @@
 <H1 style="margin: 20px">Travaux</H1>
 <div style="margin: 20px">
   <button mat-button color="war" [routerLink]="['../home']">Retour</button>
-  <button mat-button color="primary" (click)="openCreateDialog()">Créer</button>
+  <button mat-button 
+    [color]="emptyMsg == true ? 'accent' : 'primary'" 
+    (click)="openCreateDialog()"
+    [class]="emptyMsg == true ? 'blink-1': ''"
+    >Créer</button>
 </div>
+<!-- DEBUT SELECTION -->
 <mat-form-field appearance="fill" style="margin: 20px; width: 250px;">
   <mat-label>Selectionnez les catégories</mat-label>
   <mat-select [formControl]="selectedCategories" multiple>
@@ -46,6 +51,10 @@
 
 <button mat-button color="" (click)="selectedChoices()">Chercher</button>
 <button mat-button color="" (click)="resetChoices()">Reset</button>
+<!-- FIN SELECTIONS -->
+<div *ngIf="emptyMsg == true">
+  <p style="text-align: center;">Il n'y a actuellement aucun contenu pour votre recherche, voulez vous en créer un ?</p>
+</div>
 
 <div *ngIf="categories != null || categories.length != 0" style="margin: 20px">
   <div *ngFor="let cat of categories; let i = index">
@@ -98,7 +107,8 @@
                           </mat-expansion-panel-header>
                             <p>Question: {{work.question}}</p>
                             <mat-divider></mat-divider>
-                            <p>Première aide: {{work.firstHint}}</p>
+                            <p *ngIf="work.secondHint == null || work.secondHint == undefined">Aide: {{work.firstHint}}</p>
+                            <p *ngIf="work.secondHint != null || work.secondHint != undefined">Première aide: {{work.firstHint}}</p>
                             <mat-divider></mat-divider>
                             <p *ngIf="work.secondHint != null || work.secondHint != undefined">Seconde aide: {{work.secondHint}}</p>
                             <mat-divider></mat-divider>
