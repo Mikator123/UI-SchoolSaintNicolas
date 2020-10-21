@@ -145,6 +145,7 @@ export class UpdateResultComponent implements OnInit {
     let returnDate: Date;
     if (oldDate != newDate)
     {
+      console.log(true)
       newDate.setDate(newDate.getDate()+1);
       returnDate = newDate;
     }

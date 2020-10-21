@@ -22,7 +22,6 @@ export class AuthService {
     private _router: Router,
   ) {
     this.userSubject = new BehaviorSubject<UserSimplified>(JSON.parse(localStorage.getItem('user')));
-
   }
 
    get user$(): Observable<UserSimplified> {

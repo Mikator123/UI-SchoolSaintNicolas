@@ -63,8 +63,10 @@ export class UpdateWorkComponent implements OnInit {
     public dialogRef: MatDialogRef<UpdateWorkComponent>,
     private _uploadFile: UploadFileService,
     @Inject(MAT_DIALOG_DATA) public data: Work,
-
-  ) { }
+  ) {
+    if(this.data.secondHint != null)
+    this.slideCheck = true;
+  }
 
   ngOnInit(): void {
     this.initForm();
@@ -72,7 +74,6 @@ export class UpdateWorkComponent implements OnInit {
       this.categories = data
     })
     this.getCurrentCategory(this.data.categoryId);
-
 
   }
 

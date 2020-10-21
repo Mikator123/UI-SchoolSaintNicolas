@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {AuthService} from '../../auth/Services/Auth/auth.service'
+import { UserDetailed } from '../../User/Models/UserDetailed.model';
 import { SchoolRule } from '../Models/SchoolRule.model';
 
 @Injectable({
@@ -9,19 +10,35 @@ import { SchoolRule } from '../Models/SchoolRule.model';
 })
 export class SchoolService {
 
-  rulesURL : string = "https://localhost:5001/api/schoolRule/"
+  rulesURL : string = "https://localhost:5001/api/schoolRule/";
+  token: string;
+
 
   constructor(
 
     private _authService : AuthService,
     private _client: HttpClient,
-  ) { }
+  ) {
+    this._authService.user$.subscribe(user => {
+      if(user != null)
+        this.token = user.token
+    })  
+   }
 
   getRules(): Observable<SchoolRule[]>{
-    return this._client.get<SchoolRule[]>(this.rulesURL);
+    return this._client.get<SchoolRule[]>(this.rulesURL, this.HttpOptions(this.token));
   }
 
   getRulesByIt(id: number): Observable<SchoolRule>{
-    return this._client.get<SchoolRule>(this.rulesURL+id)
+    return this._client.get<SchoolRule>(this.rulesURL+id, this.HttpOptions(this.token))
+  }
+  
+  private HttpOptions(token:string){
+    let options = {
+      headers: new HttpHeaders({
+        Authorization: 'Bearer ' + token
+      })
+    };
+    return options;
   }
 }

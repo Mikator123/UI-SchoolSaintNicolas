@@ -172,50 +172,6 @@ export class TestResultComponent implements OnInit, OnDestroy {
     console.log(this.resultSubscription)
   }
 
-  // getLabelsByCategory(categoryId: number): Date[] {
-  //   if (this.results.length == 0) return [];
-  //   let label = [];
-  //   if (this.results != null && this.results.length != 0){
-  //     this.results.forEach(result => {
-  //       if (categoryId == result.categoryId)
-  //       label.push(result.date);
-  //     });
-  //   }
-  //   return label;
-  // }
-
-  // getDataByCategory(categoryId: number): ChartDataSets[] {
-  //   if(this.results == null) return [];
-  //   let labelSets : Date[] = [];
-  //   let chartData: ChartDataSets[] = [];
-  //   labelSets = this.getLabelsByCategory(categoryId);
-  //   let currentCategory = this.categories.find( x => x.id == categoryId);
-  //   if (this.results.length != 0 && this.categories.length != 0 && labelSets.length != 0){
-  //     let tests = {numbers:[], dates:[]};
-  //     for (let i = 0; i < labelSets.length; i++){
-  //       this.results.forEach(result => {
-  //         if (categoryId == result.categoryId && result.date == labelSets[i]){
-  //           tests.numbers.push(result.result);
-  //           tests.dates.push(result.date);
-  //           }
-  //       })
-  //     }
-  //     if (tests.numbers.length != 0 && tests.dates.length != 0){
-  //       let resultToGO : number[] = [];
-  //       resultToGO.length = labelSets.length;
-  //       for(let k = 0; k < resultToGO.length; k++)
-  //       {
-  //         if(labelSets.includes(tests.dates[k])){
-  //           let index = labelSets.findIndex(date => date == tests.dates[k]);
-  //           resultToGO[index] = tests.numbers[k];
-  //         }
-  //       }
-  //       chartData = [{data: resultToGO, label: currentCategory.name, borderColor: this.borderColor[categoryId], backgroundColor: "#FFFFFF0B"}]
-  //     }
-  //   }
-  //   return chartData;
-  // }
-
 
   openDeleteDialog(id:number){
     let actualeTestId = id;

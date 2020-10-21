@@ -122,8 +122,10 @@ export class WorkListComponent implements OnInit {
       disableClose: true,
     })
     ref.afterClosed().subscribe(success => {
-      if (success == true)
+      if (success == true){
         this._snackBar.open("Travail créé", null, {duration: 3000})
+        this.selectedChoices();
+      }
     });
   }
 
@@ -168,19 +170,21 @@ export class WorkListComponent implements OnInit {
   sortByCategories(){
     if (this.selectedCategories.value)
     {
+      this.emptyMsg = true;
       if (this.selectedCategories.value.length == 0)
       {
         this.categories = this.selectCategories;
         this.emptyMsg = false;
       }
       else{
+        
         this.categories = this.selectedCategories.value;
         this.categories.forEach(element => {
+          if(this.emptyMsg == false) return;
           if(this.works.find(x => x.categoryId == element.id)){
             this.emptyMsg = false;
-            return;
           }
-          else 
+          else
             this.emptyMsg = true;
         });
         if (this.categories.length == 0 || this.categories == null) return;
@@ -284,6 +288,7 @@ export class WorkListComponent implements OnInit {
     this.selectedCategories.setValue(null);
     this.selectedSchoolYears.setValue(null);
     this.selectedTrimesters.setValue(null);
+    this.emptyMsg = false;
   }
 
 }

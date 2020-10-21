@@ -12,6 +12,7 @@ export class SchoolRulesComponent implements OnInit {
 
   rules : SchoolRule[] = [];
   rule : SchoolRule;
+  showRules = false;
 
   constructor(
     private _schoolService: SchoolService,
@@ -20,6 +21,10 @@ export class SchoolRulesComponent implements OnInit {
 
   ngOnInit(): void {
     this._schoolService.getRules().subscribe(r => this.rules = r);
+  }
+
+  invertShowRules(){
+    this.showRules = !this.showRules
   }
 
 }

@@ -75,7 +75,7 @@ export class CreateResultComponent implements OnInit {
     this.form = this._builder.group({
       
       result:['', [Validators.required, Validators.min(0), Validators.max(20)]],
-      date:[this.today, Validators.required],
+      date:['', Validators.required],
       category:['', Validators.required],
       description:['', Validators.required],
       document:['', Validators.required],
@@ -116,6 +116,9 @@ export class CreateResultComponent implements OnInit {
     if (this.forms.result.hasError('required'))
       return "Le résultat est obligatoire."
   }
+
+
+ 
 
   getStudentName(Id:number):string{
     let studentName = "";

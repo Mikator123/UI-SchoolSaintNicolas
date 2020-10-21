@@ -68,7 +68,7 @@
         </mat-form-field>
         <mat-divider></mat-divider>
 
-        <mat-form-field>
+        <mat-form-field class="txtArea">
             <mat-label>Question:</mat-label>
             <textarea matInput formControlName="question"></textarea>
             <mat-error>
@@ -77,15 +77,15 @@
         </mat-form-field>
         <mat-divider></mat-divider>
 
-        <mat-form-field *ngIf="slideCheck == false">
+        <mat-form-field *ngIf="slideCheck == false" class="txtArea">
             <mat-label >Astuce:</mat-label>
             <textarea matInput formControlName="firstHint"></textarea>
             <mat-error>
                 Au minimum une astuce est obligatoire.
               </mat-error>
 
-        </mat-form-field>
-        <mat-form-field *ngIf="slideCheck == true">
+        </mat-form-field >
+        <mat-form-field *ngIf="slideCheck == true" class="txtArea">
             <mat-label >Première astuce:</mat-label>
             <textarea matInput formControlName="firstHint"></textarea>
             <mat-error>
@@ -98,7 +98,7 @@
 
         
 
-        <mat-form-field *ngIf="slideCheck == true">
+        <mat-form-field *ngIf="slideCheck == true" class="txtArea">
             <mat-label>Deuxième astuce:</mat-label>
             <textarea matInput formControlName="secondHint"></textarea>
             <mat-error>
@@ -107,15 +107,15 @@
         </mat-form-field>
         <mat-divider *ngIf="slideCheck == true"></mat-divider>
         
-        <mat-form-field>
+        <mat-form-field class="txtArea">
             <mat-label>Correction:</mat-label>
-            <input matInput formControlName="correction">
+            <textarea matInput formControlName="correction"></textarea>
         </mat-form-field>
         <mat-divider></mat-divider>
 
-        <mat-form-field>
+        <mat-form-field class="txtArea">
             <mat-label>Explication:</mat-label>
-            <input matInput formControlName="explanation">
+            <textarea matInput formControlName="explanation"></textarea>
         </mat-form-field>
         <mat-divider></mat-divider>
 
