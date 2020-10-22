@@ -3,11 +3,18 @@
 }
 
 .dashboard-card {
+        display: flex;
+        flex-direction: column;
   position: absolute;
   top: 15px;
   left: 15px;
   right: 15px;
   bottom: 15px;
+  padding: 20px;
+}
+
+.dashboard-card-content{
+height: 100%;
 }
 
 .more-button {
@@ -16,14 +23,8 @@
   right: 10px;
 }
 
-.dashboard-card-content {
-  text-align: center;
-  
-}
-.card-content{
-        width: fit-content;
-        height: 300px;
-}
+
+
 
 @keyframes bounce-in-top {
   0% {

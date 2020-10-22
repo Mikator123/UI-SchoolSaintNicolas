@@ -3,12 +3,10 @@ mat-card {
     margin: 2em auto;
     text-align: center;
     max-height: 300px;
-    
   }
-  
-  mat-form-field {
-    display: block;
-  }
+mat-form-field {
+  display: block;
+}
 
 .forgotPwdLabel{
     color:gray;
@@ -17,6 +15,11 @@ mat-card {
 
 .hideButton{
     color:gray;
-    
 }
 
+textarea{
+  font-weight:540;
+}
+input{
+  font-weight:540;
+}

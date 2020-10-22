@@ -17,18 +17,18 @@
                 <p>Email: {{userDetailed.email}}</p>
 
         <button mat-icon-button (click)="openDialog()" matTooltip="Changer votre mot de passe">
-            <mat-icon>vpn_key</mat-icon>
+            <mat-icon class="userDetailedButton">vpn_key</mat-icon>
         </button>
 
         <button mat-icon-button [color]="showContact ? 'primary': ''" *ngIf="userDetailed.contacts != null"
             (click)="openContacts()" matTooltip="Contact(s)">
-            <mat-icon>people</mat-icon>
+            <mat-icon class="userDetailedButton">people</mat-icon>
         </button>
         <input hidden [matDatepicker]="picker">
         <mat-datepicker touchUi #picker [dateClass]="dateClass"></mat-datepicker>
 
         <button [color]="" mat-icon-button (click)="picker.open()" *ngIf="userDetailed.lunches" matTooltip="Repas">
-            <mat-icon>calendar_today</mat-icon>
+            <mat-icon class="userDetailedButton">calendar_today</mat-icon>
         </button>
         <div *ngIf="showContact">
             <div *ngFor="let contact of userDetailed.contacts">

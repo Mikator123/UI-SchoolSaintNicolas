@@ -9,6 +9,7 @@ import { UserService } from '../../Modules/User/Services/user.service';
 import { SendMailComponent } from '../send-mail/send-mail.component';
 import {ClassService} from '../../Modules/school/Services/class.service';
 import { UserForEntities } from 'src/app/Modules/school/Models/UserForEntities.model';
+import { Router } from '@angular/router';
 
 export interface sendEmailToDialog{
   email:string;
@@ -28,6 +29,7 @@ export class NavComponent implements OnInit, OnDestroy{
   contactList : UserContactMail[] = [];
   myMailsSubscription : Subscription;
   professor: UserForEntities;
+  currentUrl: string;
 
   @Output()
   readonly darkModeSwitched = new EventEmitter<Boolean>();
@@ -60,9 +62,9 @@ export class NavComponent implements OnInit, OnDestroy{
           this._class.getClassById(user.classId).subscribe(x => this.professor = x.users.find(y => y.statusCode == 2));
       }
       this.user = user;
-    })
+    });
     this.greetingClass = 'bounce-in-top';
-    setTimeout(() => {this.greetingClass = 'bounce-out-top';}, 6000)
+    setTimeout(() => {this.greetingClass = 'text-flicker-out-glow';}, 5000)
   }
 
   ngOnDestroy(): void {

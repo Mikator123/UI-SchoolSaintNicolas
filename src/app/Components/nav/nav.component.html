@@ -2,25 +2,20 @@
   <mat-toolbar color="primary" *ngIf="user" class="bounce-in-top">
 
     <button [matMenuTriggerFor]="StudentMenu" matTooltip="Menu" *ngIf="user.statusCode != 2" mat-icon-button>
-      <mat-icon>apps</mat-icon>
+      <mat-icon class="buttonHover">apps</mat-icon>
     </button>
 
     <button [matMenuTriggerFor]="ProfessorMenu" matTooltip="Menu" *ngIf="user.statusCode != 1" mat-icon-button>
-      <mat-icon>apps</mat-icon>
+      <mat-icon class="buttonHover">apps</mat-icon>
     </button>
 
 
     <button mat-icon-button [routerLink]="['home']" matTooltip="Home">
-      <mat-icon>home</mat-icon>
+      <mat-icon class="buttonHover">home</mat-icon>
     </button>
 
     <button mat-icon-button [routerLink]="['login']" matTooltip="login" *ngIf="user == null">
-      <mat-icon>login</mat-icon>
-    </button>
-
-
-    <button mat-icon-button [routerLink]="['login']" matTooltip="logout" (click)="logout()">
-      <mat-icon>logout</mat-icon>
+      <mat-icon class="buttonHover">login</mat-icon>
     </button>
 
 
@@ -28,18 +23,22 @@
       <div [class]="greetingClass">{{WelcomeMsg}}</div>
     </span>
 
-    <button mat-icon-button matTooltip="ToDo" matBadge="5" matBadgeColor="accent">
+    <!-- <button mat-icon-button matTooltip="ToDo" matBadge="5" matBadgeColor="accent">
       <mat-icon>content_paste</mat-icon>
-    </button>
+    </button> -->
 
     <button mat-icon-button (click)="onDarkModeSwitched()" matTooltip="Adapte le thème de la page" *ngIf="!ThemeLight"
       type="button">
-      <mat-icon>nights_stay</mat-icon>
+      <mat-icon class="buttonHover">nights_stay</mat-icon>
     </button>
 
     <button mat-icon-button (click)="onDarkModeSwitched()" matTooltip="Adapte le thème de la page" *ngIf="ThemeLight"
       type="button">
-      <mat-icon>wb_sunny</mat-icon>
+      <mat-icon class="buttonHover">wb_sunny</mat-icon>
+    </button>
+
+    <button mat-icon-button [routerLink]="['login']" matTooltip="logout" (click)="logout()">
+      <mat-icon class="buttonHover">logout</mat-icon>
     </button>
     <!-- END -->
 
@@ -130,7 +129,7 @@
 
     <mat-menu #ProfessorMenu="matMenu">
 
-      <button mat-menu-item [matMenuTriggerFor]="class">
+      <button mat-menu-item [matMenuTriggerFor]="class"  >
         <mat-icon>groups</mat-icon>
         <span>Classe</span>
       </button>
@@ -209,7 +208,7 @@
       <!--  MENU StudentList -->
 
       <mat-menu #StudentList="matMenu">
-        <button mat-menu-item *ngFor="let user of contactList" (click)="this.openEmailDialog(null,user)">
+        <button id="contactsColor" mat-menu-item *ngFor="let user of contactList" (click)="this.openEmailDialog(null,user)">
           <img matCardAvatar [src]="user.photo">
           <span>{{user.fullName}}</span>
         </button>

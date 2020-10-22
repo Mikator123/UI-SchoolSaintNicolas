@@ -1,50 +1,34 @@
 <div class="grid-container">
   <div class="bounce-in-top">
-    <mat-grid-list cols="4" rowHeight="10vh">
+    <mat-grid-list cols="4" rowHeight="9vh">
 
       <mat-grid-tile [colspan]="2" [rowspan]="3">
         <mat-card class="dashboard-card">
-          <mat-card-header>
-            <mat-card-title>
-              <app-lunch></app-lunch>
-            </mat-card-title>
-          </mat-card-header>
-          <mat-card-content class="dashboard-card-content">
-
-          </mat-card-content>
+          <img mat-card-image style="height: 24vh;" src="../../../assets/bientot-construction-conception-fond-jaune_1017-25509.jpg"/>   
         </mat-card>
       </mat-grid-tile>
 
-      <mat-grid-tile [colspan]="2" [rowspan]="3">
+      <mat-grid-tile [colspan]="2" [rowspan]="3" style="display: flex;">
         <mat-card class="dashboard-card">
-          <mat-card-header>
-            <mat-card-title>
-            </mat-card-title>
-          </mat-card-header>
-          <mat-card-content class="dashboard-card-content" *ngIf="user.statusCode == 2">
-          </mat-card-content>
-          <mat-card-content class="dashboard-card-content" *ngIf="user.statusCode == 1">
-            <app-school-rules></app-school-rules>
-          </mat-card-content>
+            <img mat-card-image style="height: 24vh;" src="../../../assets/bientot-construction-conception-fond-jaune_1017-25509.jpg"/>   
         </mat-card>
       </mat-grid-tile>
 
-      <mat-grid-tile [colspan]="4" [rowspan]="5">
-        <mat-card class="dashboard-card">
-          <mat-card-header>
-            <mat-card-title>
 
-            </mat-card-title>
-          </mat-card-header>
-          <mat-card-content class="dashboard-card-content" *ngIf="user.statusCode == 2">
-            <app-results class="card-content"></app-results>
+
+      <mat-grid-tile [colspan]="4" [rowspan]="6">
+        <mat-card class="dashboard-card" style="padding: 0px;">
+
+
+          <mat-card-content class="dashboard-card-content"*ngIf="user.statusCode == 2">
+              <app-results></app-results>
           </mat-card-content>
           <mat-card-content class="dashboard-card-content" *ngIf="user.statusCode == 1">
             <app-school-event></app-school-event>
           </mat-card-content>
         </mat-card>
       </mat-grid-tile>
+      </mat-grid-list>
 
-    </mat-grid-list>
   </div>
 </div>
