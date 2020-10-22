@@ -1,8 +1,65 @@
-<mat-card>
-    <mat-card-header>
-        <mat-card-title>
-            <p>lunch works!</p>
+<H1 style="margin: 40px">Repas</H1>
 
-        </mat-card-title>
-    </mat-card-header>
-</mat-card>
+
+
+<!-- DEBUT SELECTION -->
+<mat-slide-toggle style="margin-left: 20px;"
+[color]="slideColor"
+[checked]="slideCheck"
+[(ngModel)]="slideCheck"
+>
+    <label style="color:gray; font-size:x-small;">Voulez-vous filtrer entre plusieurs dates ?</label>
+</mat-slide-toggle>
+<br/>
+<mat-form-field color="primary" appearance="fill" style="margin: 20px; width: 300px;">
+    <mat-label *ngIf="slideCheck == false">Selectionnez une date</mat-label>
+    <mat-label *ngIf="slideCheck == true">Selectionnez une date de <label style="color: lightseagreen; font-weight: bold;">début</label></mat-label>
+    <input matInput [matDatepicker]="picker">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+</mat-form-field>
+
+<mat-form-field color="accent" appearance="fill" style="margin: 20px; width: 300px;" *ngIf="slideCheck == true">
+    <mat-label >Selectionnez une date de <label style="color:hotpink; font-weight: bold;">fin</label></mat-label>
+    <input matInput [matDatepicker]="picker2">
+    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+    <mat-datepicker #picker2></mat-datepicker>
+</mat-form-field>
+
+<button mat-button (click)="selectedChoices()">Chercher</button>
+<button mat-button (click)="resetChoices()">Reset</button>
+<!-- FIN SELECTIONS -->
+
+<div *ngIf="emptyMsg == true">
+    <p style="text-align: center;">Il n'y a actuellement aucun contenu pour votre recherche, voulez vous en créer un ?
+    </p>
+</div>
+
+<div *ngIf="lunches != null || lunches.length != 0" style="margin: 20px">
+    <div *ngFor="let lunch of lunches; let i = index">
+        <mat-accordion>
+            <mat-expansion-panel (opened)="lunchPanelState[i] = true" (closed)="lunchPanelState[i] = false">
+                <mat-expansion-panel-header >
+                    <mat-panel-title>
+                        <label [style]="lunchPanelState[i] ? 'color: #50b59c ; font-weight:bold' :''"> {{lunch.date | date: 'dd/MM/yyyy'}} <label style="color: grey; margin-left: 10px; font-size:x-small;"> ({{lunch.users.length}} personnes inscrites)</label>
+                        </label>
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <label>{{lunch.name}}</label>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <p>{{lunch.description}}</p>
+                <button mat-button color="primary" (click)="openListDialog(lunch)">Liste des personnes inscrites</button>
+                <button mat-icon-button (click)="openIngredientDialog()" matTooltip="Visualiser les ingrédients">
+                    <mat-icon>
+                        visibility
+                    </mat-icon>
+                </button>
+
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+</div>
+<div style="margin: 20px">
+    <button mat-button color="war" [routerLink]="['../home']">Retour</button>
+</div>

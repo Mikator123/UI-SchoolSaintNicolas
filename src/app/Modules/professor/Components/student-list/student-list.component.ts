@@ -42,8 +42,6 @@ export class StudentListComponent implements OnInit {
 
   openDetailDialog(id: number){
     let ref = this._dialog.open(StudentDetailedComponent, {
-      
-
       data:{
         studentId: id,
         },

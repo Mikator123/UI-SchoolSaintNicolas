@@ -20,7 +20,10 @@ export class SchoolRulesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this._schoolService.getRules().subscribe(r => this.rules = r);
+    this._schoolService.getRules().subscribe({
+      next : r => {this.rules = r},
+      error: error => console.log(error),
+    });
   }
 
   invertShowRules(){

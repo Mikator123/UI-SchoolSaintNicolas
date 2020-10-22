@@ -1,0 +1,30 @@
+.additional-selection {
+    opacity: 0.75;
+    font-size: 0.75em;
+  }
+
+  .blink-1 {
+    -webkit-animation: blink-1 2s 2 both;
+            animation: blink-1 2s 2 both;
+            font-weight: bolder;
+            
+  }
+  
+  @keyframes blink-1 {
+      0%,
+      50%,
+      100% {
+        opacity: 1;
+      }
+      25%,
+      75% {
+        opacity: 0;
+      }
+    }
+
+    mat-icon:hover{
+        color:lightseagreen;
+        font-weight: bold;
+        font-size:30px
+    }
+    

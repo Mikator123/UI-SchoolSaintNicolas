@@ -19,7 +19,7 @@ export class ProfessorService {
   studentSubject: Subject<Student[]> = new Subject<Student[]>();
   class = new Class();
   classes : Class []= [];
-  classSubject: Subject<Class> = new Subject<Class>();
+  classSubject: Subject<Class> = new Subject<Class>(); // has to be checked
   token : string;
 
 

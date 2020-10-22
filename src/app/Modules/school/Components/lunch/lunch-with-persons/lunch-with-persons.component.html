@@ -1,0 +1,22 @@
+<mat-dialog-content *ngIf="data != null || data != undefined">
+
+<h1>{{data.name}}</h1>
+<h2>{{data.date  | date: 'dd/MM/yyyy'}}</h2>
+<h3>{{data.description}}</h3>
+<div>
+    
+</div>
+<mat-list>
+    <mat-list-item *ngFor="let user of data.users">
+        <p><label (click)="openDetailDialog(user.id)" matTooltip="Details" style="margin-right: 20px;">{{user.lastName}} {{user.firstName}}</label></p>
+        <mat-divider></mat-divider>
+    </mat-list-item>
+    
+</mat-list>
+
+<div style="text-align: center; margin: 10px;">
+
+    <button mat-dialog-close mat-raised-button color="accent" style="margin:auto">Annuler</button>
+</div>
+</mat-dialog-content>
+
