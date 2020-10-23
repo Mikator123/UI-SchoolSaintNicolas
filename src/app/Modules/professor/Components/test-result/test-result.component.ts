@@ -176,7 +176,6 @@ export class TestResultComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.resultSubscription.unsubscribe();
-    console.log(this.resultSubscription)
   }
 
 

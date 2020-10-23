@@ -31,7 +31,7 @@ export class NoteService {
   }
 
   sendNotes(){
-    this.noteSubject.next(this.notes.slice());
+    this.noteSubject.next(this.notes);
   }
 
   getNotes(studentId : number)

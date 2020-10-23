@@ -87,6 +87,9 @@ export class TrimestrialNoteComponent implements OnInit {
       this.student = this._profService.Student$.find(s => s.id == this.studentId)
     
   }
+  ngOnDestroy():void{
+    this.myNoteSubscritption.unsubscribe();
+  }
 
   openDeleteDialog(noteId: number){
     let actualeNoteId = noteId;

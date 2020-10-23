@@ -35,28 +35,38 @@
     </p>
 </div>
 
-<div *ngIf="lunches != null || lunches.length != 0" style="margin: 20px">
+<div *ngIf="user != null || user != undefined" style="margin: 20px">
     <div *ngFor="let lunch of lunches; let i = index">
-        <mat-accordion>
+        <mat-accordion *ngIf="lunches != null || lunches != undefined">
             <mat-expansion-panel (opened)="lunchPanelState[i] = true" (closed)="lunchPanelState[i] = false">
                 <mat-expansion-panel-header >
                     <mat-panel-title>
                         <label [style]="lunchPanelState[i] ? 'color: #50b59c ; font-weight:bold' :''"> {{lunch.date | date: 'dd/MM/yyyy'}} 
+                            <label *ngIf="user.statusCode > 1">
                             <label style="color: grey; margin-left: 10px; font-size:x-small;" *ngIf="lunch.users.length != 1"> ({{lunch.users.length}} personnes inscrites)</label>
                             <label style="color: grey; margin-left: 10px; font-size:x-small;" *ngIf="lunch.users.length == 1"> ({{lunch.users.length}} personne inscrite)</label>
+                            </label>
                         </label>
                     </mat-panel-title>
                     <mat-panel-description>
                         <label>{{lunch.name}}</label>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
-                <p>{{lunch.description}}</p>
-                <button mat-button color="primary" (click)="openListDialog(lunch)">Liste des personnes inscrites</button>
-                <button mat-icon-button (click)="openIngredientDialog()" matTooltip="Visualiser les ingrédients">
-                    <mat-icon>
+                <p>{{lunch.description}} 
+                    <button mat-icon-button (click)="openIngredientDialog()" matTooltip="Visualiser les ingrédients">
+                        <mat-icon>
                         visibility
-                    </mat-icon>
+                        </mat-icon>
+                    </button>
+                </p>
+                <button mat-button  color="accent" (click)="UnSubscribeFromLunch(lunch.id, index)">
+                    Se désinscrire
                 </button>
+                <button mat-button  color="primary" (click)="SubscribeToLunch(lunch.id, index)">
+                    S'inscrire
+                </button>
+                <button mat-button color="primary" (click)="openListDialog(lunch)" *ngIf="user.statusCode > 1">Liste des personnes inscrites</button>
+
 
             </mat-expansion-panel>
         </mat-accordion>

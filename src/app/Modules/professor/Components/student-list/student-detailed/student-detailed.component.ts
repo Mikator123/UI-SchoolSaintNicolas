@@ -30,8 +30,9 @@ export class StudentDetailedComponent implements OnInit {
   ngOnInit(): void {
     this._userService.getById(this.data.studentId).subscribe(user => {
       this.userDetailed = user;
-      this.panelState.length = user.contacts.length;
-    this.panelState.map(x => x = false)});
+      if(user.contacts != null || user.contacts != undefined)
+        this.panelState.length = user.contacts.length;
+    })
 
     };
   
