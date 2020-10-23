@@ -3,7 +3,6 @@ import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { mdiTruckDelivery } from '@mdi/js';
 import { catchError, map } from 'rxjs/operators';
 import { Category } from '../../../Models/Category.model';
 import { TestResult } from '../../../Models/testResult.model';

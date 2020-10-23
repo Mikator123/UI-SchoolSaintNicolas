@@ -1,5 +1,5 @@
-<mat-toolbar color="primary">
-  <mat-toolbar color="primary" *ngIf="user" class="bounce-in-top">
+<mat-toolbar color="primary" style="height: 10vh">
+  <mat-toolbar color="primary"  style="height: 10vh" *ngIf="user" class="bounce-in-top">
 
     <button [matMenuTriggerFor]="StudentMenu" matTooltip="Menu" *ngIf="user.statusCode != 2" mat-icon-button>
       <mat-icon class="buttonHover">apps</mat-icon>
@@ -12,10 +12,6 @@
 
     <button mat-icon-button [routerLink]="['home']" matTooltip="Home">
       <mat-icon class="buttonHover">home</mat-icon>
-    </button>
-
-    <button mat-icon-button [routerLink]="['login']" matTooltip="login" *ngIf="user == null">
-      <mat-icon class="buttonHover">login</mat-icon>
     </button>
 
 

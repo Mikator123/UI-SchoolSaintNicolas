@@ -49,7 +49,7 @@ export class TestResultComponent implements OnInit, OnDestroy {
   classId : number;
   userId: number;
   passage = 0;
-  student: Student;
+  student : Student = new Student();
   emptyMsg = false;
 
 
@@ -113,6 +113,12 @@ export class TestResultComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this._authService.user$.subscribe(data => {
       if (data == null) return;
+      if(data.statusCode == 1){
+        this.student.lastName = data.lastName
+        this.student.firstName = data.firstName
+        this.student.id = data.id
+        this.student.statusCode = data.statusCode
+      }
       this.statusCode = data.statusCode, this.classId = data.classId, this.userId = data.id})
     this.studentId = parseInt(this._routing.snapshot.params['studentId']);
     this._resultService.getCategories().subscribe(data => {
@@ -124,7 +130,8 @@ export class TestResultComponent implements OnInit, OnDestroy {
         this.BarChartLabels.push(cat.name);
         });
     });
-    this.student = this._profService.Student$.find(s => s.id == this.studentId)
+    if(this.statusCode != 1)
+      this.student = this._profService.Student$.find(s => s.id == this.studentId)
     this._resultService.getByStudentId(this.studentId);
     this.resultSubscription = this._resultService.testSubject.subscribe((list:TestResult[]) => {
     this.results = list;

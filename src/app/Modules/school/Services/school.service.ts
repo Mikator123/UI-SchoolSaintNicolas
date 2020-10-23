@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import {AuthService} from '../../auth/Services/Auth/auth.service'
 import { UserDetailed } from '../../User/Models/UserDetailed.model';
+import { SchoolEvent } from '../Models/SchoolEvent.model';
 import { SchoolRule } from '../Models/SchoolRule.model';
 
 @Injectable({
@@ -11,6 +12,7 @@ import { SchoolRule } from '../Models/SchoolRule.model';
 export class SchoolService {
 
   rulesURL : string = "https://localhost:5001/api/schoolRule/";
+  eventsURL: string= "https://localhost:5001/api/schoolEvent/"
   token: string;
 
 
@@ -29,8 +31,16 @@ export class SchoolService {
     return this._client.get<SchoolRule[]>(this.rulesURL, this.HttpOptions(this.token));
   }
 
-  getRulesByIt(id: number): Observable<SchoolRule>{
+  getRuleById(id: number): Observable<SchoolRule>{
     return this._client.get<SchoolRule>(this.rulesURL+id, this.HttpOptions(this.token))
+  }
+
+  getEvents(): Observable<SchoolEvent[]>{
+    return this._client.get<SchoolEvent[]>(this.eventsURL, this.HttpOptions(this.token))
+  }
+
+  getEventById(eventId: number): Observable<SchoolEvent>{
+    return this._client.get<SchoolEvent>(this.eventsURL+eventId, this.HttpOptions(this.token))
   }
   
   private HttpOptions(token:string){

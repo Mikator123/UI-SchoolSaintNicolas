@@ -1,5 +1,7 @@
+import { JsonPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { ThemePalette } from '@angular/material/core';
+import { FormControl } from '@angular/forms';
+import { DateAdapter, ThemePalette } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Lunch } from '../../Models/Lunch.model';
 import {LunchService} from '../../Services/lunch.service';
@@ -24,13 +26,18 @@ export class LunchComponent implements OnInit {
   lunchPanelState : Boolean[] = [];
   slideColor: ThemePalette = 'primary';
   slideCheck = false;
+  disabledButton = true;
+  date1Selected = new FormControl();
+  date2Selected = new FormControl();
 
   constructor(
     private _lunchService: LunchService,
     public dialog : MatDialog,
+    private _dateAdapter: DateAdapter<any>,
   ) { }
 
   ngOnInit(): void {
+    this._dateAdapter.setLocale('fr');
     this._lunchService.getLunches().subscribe({
       next: data => {
         this.lunches = data;
@@ -55,15 +62,42 @@ export class LunchComponent implements OnInit {
       }},
       error: error => console.log(error),
     })
-
   }
 
-  selectedChoices(){
+  // addUserToLunch(lunchId: number, userId: number){
+  //   this._lunchService.linkLunchWithUser(lunchId, userId) 
+  // }
 
+  selectedChoices(){
+    if(this.emptyMsg == true) this.emptyMsg = false;
+    let selectedLunchesByDates : Lunch[] = [];
+    if(this.slideCheck == false){
+      this.savedLunches.forEach(lunch => {
+        lunch.date = new Date(lunch.date)
+        if(lunch.date.getTime() == this.date1Selected.value.getTime()){
+          selectedLunchesByDates.push(lunch)
+          return;
+        }
+      });
+    }
+    if(this.slideCheck == true){
+      this.savedLunches.forEach(lunch => {
+        lunch.date = new Date(lunch.date);
+        if(lunch.date >= this.date1Selected.value && lunch.date <= this.date2Selected.value){
+          selectedLunchesByDates.push(lunch)
+        }
+      })
+    }
+    if(selectedLunchesByDates.length == 0)
+      this.emptyMsg = true;
+    this.lunches = selectedLunchesByDates;
   }
 
   resetChoices(){
-
+    this.lunches = this.savedLunches;
+    this.date1Selected.setValue(null);
+    this.date2Selected.setValue(null);
+    this.emptyMsg = false;
   }
 
   openListDialog(lunch: Lunch){
@@ -73,8 +107,26 @@ export class LunchComponent implements OnInit {
     })
   }
 
+
+  myFilter = (d: Date | null): boolean => {
+    const day = (d || new Date()).getDay();
+    return day !== 0 && day !== 6;
+  }
+
   openIngredientDialog(/*lunch.ingredients*/){
     let ref = this.dialog.open(LunchIngredientsComponent)
   }
 
+  get disablingButton(){
+    let check = true;
+    if(this.slideCheck == false){
+      if(this.date1Selected.value || this.date1Selected.value != null)
+        check = false;
+    }
+    else{
+      if(this.date1Selected.value && this.date2Selected.value)
+        check = false;
+    }
+    return check
+  }
 }

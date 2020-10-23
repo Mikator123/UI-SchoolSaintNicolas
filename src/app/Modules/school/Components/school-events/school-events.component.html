@@ -1,7 +1,33 @@
-<mat-card>
+<button style="margin: 10px;" mat-icon-button [color]="showEvents == true ?'primary':''" (click)="invertShowEvents()">    
+    <mat-icon>construction</mat-icon>
+    This is still under construction (but you can click on me to check it :-))
+</button>
+
+<mat-card *ngIf="showEvents == true">
+
     <mat-card-header>
-        <p>school-event works!</p>
+        <mat-card-title>
+            <p>Evenements</p>
+        </mat-card-title>
 
     </mat-card-header>
-</mat-card>
+    <mat-card-content>
 
+        <div *ngFor="let schoolEvent of schoolEvents" >
+            <mat-accordion >
+                <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <label> <b>{{schoolEvent.name}}</b></label>
+                        </mat-panel-title>
+                        <mat-panel-description>
+                            {{schoolEvent.date | date: 'dd/MM/yyyy'}}
+                        </mat-panel-description>
+                    </mat-expansion-panel-header>
+                        {{schoolEvent.description}}
+                </mat-expansion-panel>
+
+            </mat-accordion>
+        </div>
+    </mat-card-content>
+</mat-card>

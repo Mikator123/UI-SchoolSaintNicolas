@@ -17,6 +17,11 @@
             (click)="openContacts()">
             <mat-icon>people</mat-icon>
         </button>
+        <button style="margin-left: 7px;" mat-icon-button *ngIf="userDetailed.contacts != null"
+        (click)="openEmailDialog(userDetailed.contacts)">
+        <mat-icon>mail_outline</mat-icon>
+    </button>
+
         <div *ngIf="showContact">
             <div *ngFor="let contact of userDetailed.contacts; let i = index">
                 <mat-accordion>

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { SchoolService } from '../../Services/school.service';
+import {SchoolEvent} from '../../Models/SchoolEvent.model';
 
 @Component({
   selector: 'app-school-event',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SchoolEventsComponent implements OnInit {
 
-  constructor() { }
+  showEvents = false;
+  schoolEvents : SchoolEvent[] = []
+
+  constructor(
+    private _schoolService: SchoolService
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  invertShowEvents(){
+    this.showEvents = !this.showEvents
+    this._schoolService.getEvents().subscribe({
+      next: data => {this.schoolEvents = data},
+      error: error => {console.log(error)}
+    })
   }
 
 }

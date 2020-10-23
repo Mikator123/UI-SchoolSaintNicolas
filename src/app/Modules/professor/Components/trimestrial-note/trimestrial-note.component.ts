@@ -43,7 +43,7 @@ export class TrimestrialNoteComponent implements OnInit {
   notes : Note[];
   myNoteSubscritption: Subscription;
   class : Class;
-  student: Student;
+  student: Student = new Student();
   statusCode: number;
   emptyMsg = false;
 
@@ -62,6 +62,12 @@ export class TrimestrialNoteComponent implements OnInit {
     this.studentId = parseInt(this._routing.snapshot.params['studentId']);
     this._authService.user$.subscribe(data => {
       if (data == null) return;
+      if(data.statusCode == 1){
+        this.student.lastName = data.lastName
+        this.student.firstName = data.firstName
+        this.student.id = data.id
+        this.student.statusCode = data.statusCode
+      }
       this.classId = data.classId;
       this.statusCode = data.statusCode})
     this._noteService.getNotes(this.studentId);
@@ -77,7 +83,8 @@ export class TrimestrialNoteComponent implements OnInit {
 
     this._profService.getClassById(this.classId);
     this._profService.classSubject.subscribe((data: Class) => { this.class = data});
-    this.student = this._profService.Student$.find(s => s.id == this.studentId)
+    if(this.statusCode != 1)
+      this.student = this._profService.Student$.find(s => s.id == this.studentId)
     
   }
 

@@ -38,15 +38,16 @@ export class ProfessorService {
   
     
 
-  getStudents(classId: number)
+  getStudents(classId: number, statuscode?: number)
   {
-    this._client.get<Student[]>(this.userURL+"getByClassId/"+classId, this.HttpOptions(this.token)).subscribe({
-      next: data =>{
-        this.students = data;
-      this.studentSubject.next(this.students.slice());
-      },
-      error: error => console.log(error)
-    });
+      this._client.get<Student[]>(this.userURL+"getByClassId/"+classId, this.HttpOptions(this.token)).subscribe({
+        next: data =>{
+          this.students = data;
+        this.studentSubject.next(this.students.slice());
+        },
+        error: error => console.log(error)
+      });
+    
   }
 
   

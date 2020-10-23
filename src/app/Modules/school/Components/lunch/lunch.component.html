@@ -14,24 +14,24 @@
 <mat-form-field color="primary" appearance="fill" style="margin: 20px; width: 300px;">
     <mat-label *ngIf="slideCheck == false">Selectionnez une date</mat-label>
     <mat-label *ngIf="slideCheck == true">Selectionnez une date de <label style="color: lightseagreen; font-weight: bold;">début</label></mat-label>
-    <input matInput [matDatepicker]="picker">
+    <input matInput [max]="date2Selected.value ? date2Selected.value : ''" [matDatepicker]="picker" [formControl]="date1Selected" [matDatepickerFilter]="myFilter">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
 </mat-form-field>
 
 <mat-form-field color="accent" appearance="fill" style="margin: 20px; width: 300px;" *ngIf="slideCheck == true">
     <mat-label >Selectionnez une date de <label style="color:hotpink; font-weight: bold;">fin</label></mat-label>
-    <input matInput [matDatepicker]="picker2">
+    <input matInput [min]="date1Selected.value ? date1Selected.value: ''" [matDatepicker]="picker2" [formControl]="date2Selected" [matDatepickerFilter]="myFilter">
     <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
     <mat-datepicker #picker2></mat-datepicker>
 </mat-form-field>
 
-<button mat-button (click)="selectedChoices()">Chercher</button>
+<button mat-button color="primary" (click)="selectedChoices()" [disabled]="disablingButton">Chercher</button>
 <button mat-button (click)="resetChoices()">Reset</button>
 <!-- FIN SELECTIONS -->
 
 <div *ngIf="emptyMsg == true">
-    <p style="text-align: center;">Il n'y a actuellement aucun contenu pour votre recherche, voulez vous en créer un ?
+    <p style="text-align: center;">Il n'y a actuellement aucun contenu pour votre recherche.
     </p>
 </div>
 
@@ -41,7 +41,9 @@
             <mat-expansion-panel (opened)="lunchPanelState[i] = true" (closed)="lunchPanelState[i] = false">
                 <mat-expansion-panel-header >
                     <mat-panel-title>
-                        <label [style]="lunchPanelState[i] ? 'color: #50b59c ; font-weight:bold' :''"> {{lunch.date | date: 'dd/MM/yyyy'}} <label style="color: grey; margin-left: 10px; font-size:x-small;"> ({{lunch.users.length}} personnes inscrites)</label>
+                        <label [style]="lunchPanelState[i] ? 'color: #50b59c ; font-weight:bold' :''"> {{lunch.date | date: 'dd/MM/yyyy'}} 
+                            <label style="color: grey; margin-left: 10px; font-size:x-small;" *ngIf="lunch.users.length != 1"> ({{lunch.users.length}} personnes inscrites)</label>
+                            <label style="color: grey; margin-left: 10px; font-size:x-small;" *ngIf="lunch.users.length == 1"> ({{lunch.users.length}} personne inscrite)</label>
                         </label>
                     </mat-panel-title>
                     <mat-panel-description>
