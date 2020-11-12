@@ -14,7 +14,7 @@ I wanted to digitalize my daughter school by having some informations more accur
 • Integration of the front-end with Angular 9 using Materials component library.
 
 
-## FRONT-END ARCHITECTURE (MVVM):
+## FRONTEND ARCHITECTURE (MVVM):
 APP ROUTING
   - MODULES with specified routing
     * COMPONENTS
@@ -26,7 +26,7 @@ APP ROUTING
     * SERVICES (connection to my private API)
       - TypeScript
      
-## BACK-END ARCHITECTURE:
+## BACKEND ARCHITECTURE:
   - REST API (with API Models) -> Repositories (with POCO Models) -> DB
 
 
