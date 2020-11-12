@@ -1,3 +1,4 @@
+# WHAT AND WHY
 I wanted to digitalize my daughter school by having some informations more accurate and faster. On the website you can find, as a parent, all the informations about your child (meals subscriptions, actual results by categories with charts, trimestrial notes and overtaking/catching up depending of the child average result by categories).
 
 
