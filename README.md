@@ -22,7 +22,7 @@ APP ROUTING
       - CSS
     * MODELS
       - TypeScript
-    * Services (connection to my private API)
+    * SERVICES (connection to my private API)
       - TypeScript
      
 BACK-END ARCHITECTURE:
