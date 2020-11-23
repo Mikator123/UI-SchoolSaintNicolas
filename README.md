@@ -27,7 +27,7 @@ APP ROUTING
       - TypeScript
      
 ## BACKEND ARCHITECTURE:
-  - REST API (with API Models) -> Repositories (with POCO Models) -> DB
+  - REST API (with API Models) -> DAL Repositories (with POCO Models) -> DB
 
 
 Second front-end architecture (admin side) will be with ASP.NET (MVC):
